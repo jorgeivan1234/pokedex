@@ -14,6 +14,12 @@ final appRouter = GoRouter(
       builder: (context, state) => const HomeScreen()
     ),
 
+    //ruta de busqueda
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
+    ),
+
     GoRoute(
       //trae los diferentes pokemon para cada details sin que  
       path: '/details',
@@ -32,19 +38,10 @@ final appRouter = GoRouter(
         );
       },
     ),
-
-    // GoRoute(
-    //   //trae los diferentes pokemon para cada details sin que  
-    //   path: '/generation',
-    //   builder: (context, state) {
-    //     final pokemon = state.extra;
-
-        
-    //     //en caso de que no exista el pokemon o no este disponible
-    //     return const Scaffold(
-    //       body: Center(child: Text('No se recibieron los datos del Pokémon')),
-    //     );
-    //   },
-    // ),
+    
+    GoRoute(
+      path: '/generation',
+      builder: (context, state) => const GenerationScreen(),
+    )
   ],
 );

@@ -1,0 +1,119 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'package:pokedex/widget/widget.dart';
+
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final _searchController = TextEditingController();
+  Map<String, dynamic>? _pokemon;
+  String? _error;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _searchPokemon(String value) async {
+    final query = value.trim().toLowerCase();
+    if (query.isEmpty) {
+      setState(() {
+        _pokemon = null;
+        _error = 'Escribe el nombre o número de un Pokémon.';
+      });
+      return;
+    }
+
+    setState(() {
+      _pokemon = null;
+      _error = null;
+      _isLoading = true;
+    });
+
+    try {
+      final response = await http.get(
+        Uri.https('pokeapi.co', '/api/v2/pokemon/$query'),
+      );
+
+      if (response.statusCode == 404) {
+        setState(() {
+          _error = 'No se encontró ningún Pokémon con ese nombre o número.';
+        });
+      } else if (response.statusCode != 200) {
+        throw Exception('La API respondió con ${response.statusCode}.');
+      } else {
+        setState(() {
+          _pokemon = jsonDecode(response.body) as Map<String, dynamic>;
+        });
+      }
+    } catch (error) {
+      setState(() {
+        _error = 'No se pudo realizar la búsqueda. Revisa tu conexión.';
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: const Text('Buscar Pokémon'),
+        backgroundColor: Colors.red,
+        foregroundColor: Colors.black,
+        centerTitle: true,
+      ),
+      bottomNavigationBar: PokedexNavigationBar(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 0) context.go('/search');
+        },
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              controller: _searchController,
+              textInputAction: TextInputAction.search,
+              onSubmitted: _searchPokemon,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Nombre o número del Pokémon',
+                suffixIcon: IconButton(
+                  onPressed: () => _searchPokemon(_searchController.text),
+                  icon: const Icon(Icons.search),
+                ),
+                border: const OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (_isLoading) const CircularProgressIndicator(),
+            if (_error != null)
+              Text(
+                _error!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+            if (_pokemon != null) CardPokemon(pokemon: _pokemon!),
+          ],
+        ),
+      ),
+    );
+  }
+}

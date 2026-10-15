@@ -42,7 +42,7 @@ class DrawerScreen extends StatelessWidget {
             title: const Text('Generaciones'),
             textColor: Colors.black,
             iconColor: Colors.black,
-            onTap: () => context.go('/generacion'),
+            onTap: () => context.go('/generation'),
           ),
 
           //por juego
@@ -53,6 +53,26 @@ class DrawerScreen extends StatelessWidget {
             iconColor: Colors.black,
             onTap: () => context.go('/juego'),
           ),
+
+                    //por juego
+          ListTile(
+            leading: const Icon(Icons.class_outlined),
+            title: const Text('Tabla de tipos'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/table_tipe'),
+          ),
+
+                    //por juego
+          ListTile(
+            leading: const Icon(Icons.present_to_all),
+            title: const Text('estrategias'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/strategi'),
+          ),
+
+          
         ],
       ),
     );

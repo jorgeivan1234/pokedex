@@ -13,92 +13,66 @@ class CardPokemon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final types = pokemon['types'];
+
     return SizedBox(
-      //tamaño y altura de la tarjeta
-      width: 400,
-      height: 400,
+      height: 300,
+      width: 300,
       child: Card(
-
-        //permite que no se desborde y sea mas suave el borde
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(50)
+        ),
         clipBehavior: Clip.antiAlias,
-        //color de la tajeta
         color: Colors.blue.shade800,
-
         child: InkWell(
-          //envia a details
-          onTap: () => context.push('/details', extra: pokemon), 
-
-          child: Column(
-            // centra el texto dentro de la columna
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //trae la imagen desde la api en linea
-              Image.network(
-                pokemon['sprites']['front_default'],
-                height: 100,
-                width: 100,
-              ),
-          
-              Text(
-                pokemon['name'], 
-                style: TextStyle(
-                  //color de las letras
-                  color: Colors.white,
+          onTap: () => context.push('/details', extra: pokemon),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(
+                  //si la imagen no hay nada entonces es nullo
+                  pokemon['sprites']['front_default'] ?? '',
+                  height: 150,
+                  width: 150,
+                  //en caso que no exista mostrara una pokebola
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.catching_pokemon, size: 100, color: Colors.red),
                 ),
-              ),
-                
-              SizedBox(width: 12),
-                
-              Text(
-                'Pokemon #${pokemon['id']}',
-                style: TextStyle(
-                  color: Colors.white
+                const SizedBox(height: 8),
+                Text(
+                  pokemon['name'].toString().toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-          
-              SizedBox(width: 12),
-          
-              Text(
-                'Experiencia base: ${pokemon['base_experience']} XP',
-                style: TextStyle(
-                  color: Colors.white
+                Text(
+                  '#${pokemon['id']}',
+                  style: const TextStyle(color: Colors.white70),
                 ),
-              ),
-          
-              SizedBox(width: 12),
-          
-              Text(
-                'Tamaño: ${pokemon['height']} M',
-                style: TextStyle(
-                  color: Colors.white
+                const SizedBox(height: 6),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 4,
+                  children: [
+                    for (final item in types)
+                      Chip(
+                        label: Text(item['type']['name'].toString()),
+                        visualDensity: VisualDensity.compact,
+                        labelStyle: const TextStyle(fontSize: 11),
+                        padding: EdgeInsets.zero,
+                      ),
+                  ],
                 ),
-              ),
-          
-              Text(
-                'Peso: ${pokemon['weight']} Kg',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-          
-              Text(
-                'Habilidad: ${pokemon['abilities'][1]['ability']['name']}',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-
-              // Text(
-              //   'Habilidad 2: ${pokemon['abilities'][2]['ability']['name']}',
-              //   style: TextStyle(
-              //     color: Colors.white
-              //   ),
-              // ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
