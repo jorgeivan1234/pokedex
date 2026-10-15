@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
 //api de obtenerPokemon
 Future<Map<String, dynamic>>obtenerPokemon() async {
   final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/pokemon/snorlax')
+    Uri.parse('https://pokeapi.co/api/v2/pokemon/mudkip')
   );
 
   return jsonDecode(respuesta.body);
