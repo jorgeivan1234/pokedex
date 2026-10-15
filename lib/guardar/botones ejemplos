@@ -1,0 +1,97 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:go_router/go_router.dart';
+
+// class BottonsPokemon extends StatelessWidget {
+//   const BottonsPokemon({super.key});
+
+//  @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text(
+//           'Buttons Screen'),
+//       ),
+//       body: _ButtonsView(),
+//       floatingActionButton: FloatingActionButton(
+//         child: Icon(Icons.arrow_back_ios_new_rounded),
+//         onPressed: () {
+//           context.pop();
+//         },
+//       ),
+//     );
+//   }
+// }
+
+
+// class _ButtonsView extends StatelessWidget {
+//   const _ButtonsView();
+
+//   @override
+//   Widget build(BuildContext context) {
+
+//     final colors = Theme.of(context).colorScheme;
+//     return SizedBox(
+//       width: double.infinity,
+//       child: Padding(
+//         padding:  const EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+//         child: Wrap(
+//           spacing: 10,
+//           alignment: WrapAlignment.center,
+//           children: [
+//             //boton sombreado con letras
+//             ElevatedButton(onPressed: (){}, child: Text('elevate ')),
+//             //boton sombreado descativado 
+//             ElevatedButton(onPressed: null, child: Text('disable')),
+//             //boton sombreado con icono
+//             ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.access_alarm_rounded), label: Text('elevated icon')),
+//             //boton relleno
+//             FilledButton(onPressed: (){}, child: Text('filled')),
+//             //boton relleno con icono
+//             FilledButton.icon(onPressed: (){}, icon: Icon(Icons.assessment_rounded), label: Text('filled Icon')),
+//             //boton sin rombreado y sin relleno 
+//             OutlinedButton(onPressed: (){}, child: Text('outline')),
+//             //boton sin rombreado y sin relleno con icono
+//             OutlinedButton.icon(onPressed: (){},label: Text('outline Icon'), icon: Icon(Icons.outbond_rounded)),
+//             //texto sin circulo de boton (si es boton)
+//             TextButton(onPressed: (){}, child: Text('Text')),
+//             //texto sin circulo de boton con icono (si es boton)
+//             TextButton.icon(onPressed: (){}, label: Text('Text icon'), icon: Icon(Icons.cable_outlined)),
+
+//             CustomBotton(),
+//             //boton icono
+//             IconButton(onPressed: (){}, icon: Icon(Icons.airport_shuttle)),
+//             //boton icono con relleno
+//             IconButton(onPressed: (){}, icon: Icon(Icons.airport_shuttle),style: ButtonStyle(
+//               backgroundColor: WidgetStatePropertyAll(colors.primary),
+//               iconColor: WidgetStatePropertyAll(Colors.white)
+//             )),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+// class CustomBotton extends StatelessWidget {
+//   const CustomBotton({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final colors = Theme.of(context).colorScheme;
+//     return ClipRRect(
+//       borderRadius: BorderRadiusGeometry.circular(20),
+//       child: Material(
+//         color: colors.primary,
+//         child: InkWell(
+//           onTap: (){},
+//           child: Padding(
+//             padding:EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 10),
+//             child: Text('Hola', style: TextStyle(color: Colors.white))
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

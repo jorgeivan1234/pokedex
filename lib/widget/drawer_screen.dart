@@ -29,20 +29,11 @@ class DrawerScreen extends StatelessWidget {
           ),
           //boton a inicio o home
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: const Icon(Icons.catching_pokemon_outlined),
             title: const Text('Inicio'),
             textColor: Colors.black,
             iconColor: Colors.black,
             onTap: () => context.go('/home'),
-          ),
-          
-          //etalles
-          ListTile(
-            leading: const Icon(Icons.padding_rounded),
-            title: const Text('Detelles'),
-            textColor: Colors.black,
-            iconColor: Colors.black,
-            onTap: () => context.go('/details'),
           ),
 
           //Generacional
@@ -51,7 +42,16 @@ class DrawerScreen extends StatelessWidget {
             title: const Text('Generaciones'),
             textColor: Colors.black,
             iconColor: Colors.black,
-            onTap: () => context.go('/Generacion'),
+            onTap: () => context.go('/generacion'),
+          ),
+
+          //por juego
+          ListTile(
+            leading: const Icon(Icons.gamepad_outlined),
+            title: const Text('Juegos'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/juego'),
           ),
         ],
       ),

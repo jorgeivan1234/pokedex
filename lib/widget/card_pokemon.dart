@@ -59,7 +59,7 @@ class CardPokemon extends StatelessWidget {
               SizedBox(width: 12),
           
               Text(
-                'Experiencia: ${pokemon['base_experience']} XP',
+                'Experiencia base: ${pokemon['base_experience']} XP',
                 style: TextStyle(
                   color: Colors.white
                 ),
@@ -88,15 +88,12 @@ class CardPokemon extends StatelessWidget {
                 ),
               ),
 
-              Text(
-                'Habilidad 2: ${pokemon['abilities'][2]['ability']['name']}',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
+              // Text(
+              //   'Habilidad 2: ${pokemon['abilities'][2]['ability']['name']}',
+              //   style: TextStyle(
+              //     color: Colors.white
+              //   ),
+              // ),
             ],
           ),
         ),
