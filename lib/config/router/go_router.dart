@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/screens/region_screen.dart';
 import 'package:pokedex/screens/screens.dart';
 
 final appRouter = GoRouter(
@@ -12,6 +13,12 @@ final appRouter = GoRouter(
       //ruta de home
       path: '/home', 
       builder: (context, state) => const HomeScreen()
+    ),
+
+    //ruta de busqueda
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
     ),
 
     GoRoute(
@@ -32,19 +39,21 @@ final appRouter = GoRouter(
         );
       },
     ),
+    
+    GoRoute(
+      path: '/generation',
+      builder: (context, state) => const GenerationScreen(),
+    ),
 
-    // GoRoute(
-    //   //trae los diferentes pokemon para cada details sin que  
-    //   path: '/generation',
-    //   builder: (context, state) {
-    //     final pokemon = state.extra;
-
-        
-    //     //en caso de que no exista el pokemon o no este disponible
-    //     return const Scaffold(
-    //       body: Center(child: Text('No se recibieron los datos del Pokémon')),
-    //     );
-    //   },
-    // ),
+    GoRoute(
+      path: '/region',
+      builder: (context, state){
+        final datos = state.extra as Map<String, dynamic>;
+        return RegionScreen(
+          name: datos['name'], 
+          generation: datos['generation']
+        );
+      }
+    ),
   ],
 );
