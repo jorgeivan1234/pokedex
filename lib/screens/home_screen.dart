@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   //guardara lista de cantidades de pokemon mas grandes
   late Future<List<Map<String, dynamic>>> _pokemonFuture;
 
+  String? _selectedType;
+
   //aqui guardaremos en pokemonFuture los pokemon obtenidos de la api
   void _retyLoadingPokemon(){
     setState(() {
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       //llamada al draweScreen
       drawer: const DrawerScreen(),
+
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
         onTap: (index) {
@@ -63,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator()
               );
             }
+
             //en caso de que no pueda cargar la informacion
             if (snapshot.hasError ) {
               return Center(
@@ -77,21 +81,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }
-            
 
             SizedBox(height: 50);
             
-            //el mejor de lo casos trae la data del pokemon
             final pokemon = snapshot.data!;
 
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1
-              ), 
-              itemCount: pokemon.length,
-              itemBuilder: (context, index) {
-                return CardPokemon(pokemon: pokemon[index]);
-              },
+            final filtrados = pokemon.where ((p){
+              if (_selectedType == null) return true;
+              return p['types'].any (
+                (item) => item['type']['name'] == _selectedType,
+              );
+            }).toList();
+            
+            // acomoda la columna para poder traer la informacion recolectada de PokemonFiltres
+            return Column(
+              children: [
+                PokemonFiltres(
+                  selectedTypes: _selectedType, 
+                  onTyeChanged: (value){
+                    setState(() => _selectedType = value);
+                  }, 
+                   selectGeneration: null, 
+                   onGenetarionChanged: (int? value) {  },
+                   ),
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2
+                    ), 
+                    itemCount: filtrados.length,
+                    itemBuilder: (context, index) {
+                      return CardPokemon(pokemon: filtrados[index]);
+                    },
+                  )
+                ),
+              ]
             );
           },
         ),

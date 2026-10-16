@@ -23,7 +23,8 @@ class PokedexNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: 'Busqueda',
-        )
+        ),
+
       ],
     );
   }

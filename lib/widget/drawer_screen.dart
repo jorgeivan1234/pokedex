@@ -72,7 +72,21 @@ class DrawerScreen extends StatelessWidget {
             onTap: () => context.go('/strategi'),
           ),
 
-          
+          ListTile(
+            leading: const Icon(Icons.data_object),
+            title: const Text('Objetos'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/items'),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.move_down),
+            title: const Text('Movimientos'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/moves'),
+          ),
         ],
       ),
     );

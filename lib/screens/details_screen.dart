@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-
 import '../widget/widget.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -19,7 +17,37 @@ class DetailsScreen extends StatelessWidget {
     final abilities = pokemon['abilities'];
     final type = pokemon['types'];
     final stats = pokemon['stats'];
-    final number_generational = pokemon['game_indices'];
+    final numberGenerational = pokemon['game_indices'];
+    // final evolution = pokemon['species']; 
+
+    final types = pokemon['types'];
+    final typePrincipal = types.isNotEmpty
+      ? types.first['type']['name'].toString()
+      : '';
+
+      final colorCard = switch (typePrincipal){
+        'fire' => Colors.red,
+        'water' => const Color.fromARGB(255, 10, 123, 215),
+        'grass' => Colors.green,
+        'fighting' => Colors.grey,
+        'flying' => const Color.fromARGB(186, 239, 197, 194),
+        'poison' => Colors.purple,
+        'ground' => Colors.brown,
+        'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
+        'rock' => const Color.fromARGB(255, 52, 29, 20), 
+        'bug' => Colors.greenAccent,
+        'ghost' => Colors.deepPurple,
+        'steel' => Colors.blueGrey,
+        'electric' => Colors.yellow,
+        'psychic' => Colors.purpleAccent,
+        'ice' => Colors.lightBlue,
+        'dark' => Colors.black,        
+        'dragon' => const Color.fromARGB(255, 116, 2, 255), 
+        'fairy' =>  Colors.pinkAccent, 
+        'stellar' => Colors.deepOrange,
+        'unknown' =>  Colors.amber, 
+        _ => Colors.indigo              
+      };
 
     return Scaffold(
       //color del fondo scafoold
@@ -40,62 +68,75 @@ class DetailsScreen extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Image.network(
-                pokemon['sprites']['front_default'],
-                width: 100,
-                height: 100,
-              ),
-        
-              // Text(
-              //   pokemon['name'],
-              //   style: const TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 24,
-              //   )
-              //),
-        
-              SizedBox(width: 12),
-                  
-              Text(
-                'Pokemon #${pokemon['id']}',
-                style: TextStyle(
-                  color: Colors.white,
-                  ),
-                ),
-          
-               SizedBox(width: 12),
-          
-              Text(
-                'Experience: ${pokemon['base_experience']} XP',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-            
-              SizedBox(width: 12),
-            
-              Text(
-                'height: ${pokemon['height']} M',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-            
-              Text(
-                'weight: ${pokemon['weight']} Kg',
-                style: TextStyle(
-                  color: Colors.white
-                ),
-              ),
-        
+            children: [      
               Card(
+                color: colorCard,
                 margin: const EdgeInsets.all(12),
                 child: Padding(
                   padding: EdgeInsets.all(12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      
+                      Image.network(
+                        pokemon['sprites']['front_default'],
+                        width: 200,
+                        height: 200,
+                        scale:  0.1,
+                      ),  
+
+                      Text(
+                        pokemon['name'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      
+                      SizedBox(width: 12),
+
+                      Text(
+                        'Pokemon #${pokemon['id']}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      SizedBox(width: 12),
+
+
+                      Text(
+                        'Experience: ${pokemon['base_experience']} XP',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      SizedBox(width: 12),
+
+                      Text(
+                        'height: ${pokemon['height']} M',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      SizedBox(width: 12),
+
+                      Text(
+                        'weight: ${pokemon['weight']} Kg',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      
+                      SizedBox(width: 12),
+
                       Text(
                         'Hability', 
                         style: TextStyle(
@@ -169,7 +210,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
         
                       SizedBox(height: 8),
-        
+
                       Text(
                         'Generation', 
                         style: TextStyle(
@@ -184,13 +225,36 @@ class DetailsScreen extends StatelessWidget {
                         spacing: 8,
                         runSpacing: 8,
                         children: [
-                          for (final item in number_generational)
+                          for (final item in numberGenerational)
                           Chip(
                             avatar: const Icon(Icons.catching_pokemon_sharp),
                             label: Text(item['version']['name'].toString()),
                           ),
                         ],
                       ),
+
+                      SizedBox(height: 8),
+
+                      // Text(
+                      //   'Evolutions', 
+                      //   style: TextStyle(
+                      //     fontSize: 20,
+                      //     //hace mas oscuro el texto
+                      //     fontWeight: FontWeight.bold
+                      //   ),
+                      // ),
+
+                      // Wrap(
+                      //   spacing: 8,
+                      //   runSpacing: 8,
+                      //   children: [
+                      //     for (final item in evolution)
+                      //     Chip(
+                      //       avatar: const Icon(Icons.catching_pokemon_sharp),
+                      //       label: Text(item['name'].toString()),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
