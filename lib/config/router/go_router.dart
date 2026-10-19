@@ -14,6 +14,12 @@ final appRouter = GoRouter(
       builder: (context, state) => const HomeScreen()
     ),
 
+    //ruta de busqueda
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
+    ),
+
     GoRoute(
       //trae los diferentes pokemon para cada details sin que  
       path: '/details',
@@ -32,19 +38,40 @@ final appRouter = GoRouter(
         );
       },
     ),
+    
+    GoRoute(
+      path: '/generation',
+      builder: (context, state) => const GenerationScreen(),
+    ),
 
-    // GoRoute(
-    //   //trae los diferentes pokemon para cada details sin que  
-    //   path: '/generation',
-    //   builder: (context, state) {
-    //     final pokemon = state.extra;
+    GoRoute(
+      path: '/region',
+      builder: (context, state){
+        final datos = state.extra as Map<String, dynamic>;
+        return RegionScreen(
+          name: datos['name'], 
+          generation: datos['generation']
+        );
+      }
+    ),
 
-        
-    //     //en caso de que no exista el pokemon o no este disponible
-    //     return const Scaffold(
-    //       body: Center(child: Text('No se recibieron los datos del Pokémon')),
-    //     );
-    //   },
-    // ),
+    GoRoute(
+      //trae los diferentes pokemon para cada details sin que  
+      path: '/sprites',
+      builder: (context, state) {
+        final pokemon = state.extra;
+        //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
+          if ( pokemon is Map<String, dynamic> ){
+            return SpritesScreen(pokemon: pokemon);
+          }
+
+        //en caso de que no exista el pokemon o no este disponible
+        return const Scaffold(
+          body: Center(
+            child: Text('No se recibieron los datos del Pokémon')
+          ),
+        );
+      },
+    ),
   ],
 );
