@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:pokedex/widget/drawer_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widget/widget.dart';

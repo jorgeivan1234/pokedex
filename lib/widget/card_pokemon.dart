@@ -19,7 +19,7 @@ class CardPokemon extends StatelessWidget {
       : '';
 
       final colorCard = switch (typePrincipal){
-        'fire' => Colors.red,
+        'fire' => Colors.red.shade900,
         'water' => const Color.fromARGB(255, 10, 123, 215),
         'grass' => Colors.green,
         'fighting' => Colors.grey,

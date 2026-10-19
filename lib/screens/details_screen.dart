@@ -26,7 +26,7 @@ class DetailsScreen extends StatelessWidget {
       : '';
 
       final colorCard = switch (typePrincipal){
-        'fire' => Colors.red,
+        'fire' => Colors.red.shade900,
         'water' => const Color.fromARGB(255, 10, 123, 215),
         'grass' => Colors.green,
         'fighting' => Colors.grey,
@@ -63,7 +63,7 @@ class DetailsScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      //whidget scroll con el fin de que no se desborden los pixeles 
+      //widget scroll con el fin de que no se desborden los pixeles 
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -77,12 +77,14 @@ class DetailsScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      
-                      Image.network(
-                        pokemon['sprites']['front_default'],
-                        width: 200,
-                        height: 200,
-                        scale:  0.1,
+                      InkWell(
+                        onLongPress: () => context.push('/sprites', extra: pokemon),
+                        child: Image.network(
+                          pokemon['sprites']['front_default'],
+                          width: 200,
+                          height: 200,
+                          scale:  0.1,
+                        ),
                       ),  
 
                       Text(
