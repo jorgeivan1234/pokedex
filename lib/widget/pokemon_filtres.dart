@@ -6,17 +6,49 @@ class PokemonFiltres extends StatelessWidget {
   final int? selectGeneration;
   final ValueChanged<String?> onTyeChanged;
   final ValueChanged<int?> onGenetarionChanged;
+  // final Map<String, dynamic> pokemon;
+
 
   const PokemonFiltres({
     super.key, 
     required this.selectedTypes, 
     required this.selectGeneration, 
     required this.onTyeChanged, 
-    required this.onGenetarionChanged
+    required this.onGenetarionChanged, 
+    // required this.pokemon
   });
 
   @override
   Widget build(BuildContext context) {
+
+    // final types = pokemon['types'];
+    // final typePrincipal = types.isNotEmpty
+    //   ? types.first['type']['name'].toString()
+    //   : '';
+    // final colorCard = switch (typePrincipal){
+    //     'fire' => Colors.red.shade900,
+    //     'water' => const Color.fromARGB(255, 10, 123, 215),
+    //     'grass' => Colors.green,
+    //     'fighting' => Colors.grey,
+    //     'flying' => const Color.fromARGB(186, 239, 197, 194),
+    //     'poison' => Colors.purple,
+    //     'ground' => Colors.brown,
+    //     'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
+    //     'rock' => const Color.fromARGB(255, 52, 29, 20), 
+    //     'bug' => Colors.greenAccent,
+    //     'ghost' => Colors.deepPurple,
+    //     'steel' => Colors.blueGrey,
+    //     'electric' => Colors.yellow,
+    //     'psychic' => Colors.purpleAccent,
+    //     'ice' => Colors.lightBlue,
+    //     'dark' => Colors.black,        
+    //     'dragon' => const Color.fromARGB(255, 116, 2, 255), 
+    //     'fairy' =>  Colors.pinkAccent, 
+    //     'stellar' => Colors.deepOrange,
+    //     'unknown' =>  Colors.amber, 
+    //     _ => Colors.indigo              
+    //   };
+
     return Column(
       children: [
         DropdownButtonFormField(

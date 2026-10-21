@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PokedexNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -10,11 +11,25 @@ class PokedexNavigationBar extends StatelessWidget {
     required this.onTap,
   });
 
+  // void onItemTapped(BuildContext context, int index){
+  //   switch(index) {
+  //     case 0:
+  //       context.go('/home/0');
+  //     break;
+
+  //     case 1:
+  //       context.go('/home/1');
+  //     break;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      onTap: onTap, 
+      // onTap: (value) => onItemTapped(context, value), 
+      onTap: onTap,
+      elevation: 0,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.catching_pokemon),
@@ -24,7 +39,6 @@ class PokedexNavigationBar extends StatelessWidget {
           icon: Icon(Icons.search),
           label: 'Busqueda',
         ),
-
       ],
     );
   }

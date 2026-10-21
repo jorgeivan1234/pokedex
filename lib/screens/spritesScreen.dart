@@ -44,17 +44,10 @@ class _SpritesScreenState extends State<SpritesScreen> {
           ? defaultSprites.first.value
           :spriteOptions.first.value;
       }
-
-    
   }
   
   @override
   Widget build(BuildContext context) {
-    
-    final abilities = widget.pokemon['abilities'];
-    final type = widget.pokemon['types'];
-    final stats = widget.pokemon['stats'];
-    final numberGenerational = widget.pokemon['game_indices'];
 
     final types = widget.pokemon['types'];
     final typePrincipal = types.isNotEmpty
@@ -146,182 +139,35 @@ class _SpritesScreenState extends State<SpritesScreen> {
                           const Icon(Icons.catching_pokemon_outlined, size: 100),
                       )
                       else 
-                        const Icon(Icons.catching_pokemon, size: 100),
+                      const Icon(Icons.catching_pokemon, size: 100),
 
-                        SpritesFiltres(
-                          selectedGroup: selectedSpriteGroup, 
-                          onGroupChanged: (group){
-                            if (group != null) {
+                      SpritesFiltres(
+                        selectedGroup: selectedSpriteGroup, 
+                        onGroupChanged: (group){
+                          if (group != null) {
+                          setState(() {
+                              selectedSpriteGroup = group;
+                            });
+                          }
+                        },
+                      ),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          for (final sprite in visibleSprites)
+                          SpritesButton(
+                            sprite: sprite,
+                            isSelected: selectedSpriteUrl == sprite.value,
+                            onPressed: () {
                               setState(() {
-                                selectedSpriteGroup = group;
+                                selectedSpriteUrl = sprite.value;
                               });
-                            }
-                          },
-                        ),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          alignment: WrapAlignment.center,
-                          children: [
-                            for (final sprite in visibleSprites)
-                            SpritesButton(
-                              sprite: sprite,
-                              isSelected: selectedSpriteUrl == sprite.value,
-                              onPressed: () {
-                                setState(() {
-                                  selectedSpriteUrl = sprite.value;
-                                });
-                              },
-                            )
-                          ],
-                        ),                      
-                        Text(
-                        widget.pokemon['name'],
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      
-                      SizedBox(width: 12),
-
-                      Text(
-                        'Pokemon #${widget.pokemon['id']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                      SizedBox(width: 12),
-
-
-                      Text(
-                        'Experience: ${widget.pokemon['base_experience']} XP',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                      SizedBox(width: 12),
-
-                      Text(
-                        'height: ${widget.pokemon['height']} M',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                      SizedBox(width: 12),
-
-                      Text(
-                        'weight: ${widget.pokemon['weight']} Kg',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      
-                      SizedBox(width: 12),
-
-                      Text(
-                        'Hability', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-        
-                      SizedBox(height: 8),
-        
-                      //crea un layout para las habilidades
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in abilities)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['ability']['name'].toString()),
+                            },
                           ),
                         ],
-                      ),
-        
-                      SizedBox(height: 8),
-        
-                      Text(
-                        'Type', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-        
-                      //crea un layout para la tabla de su tipo
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in type)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['type']['name'].toString()),
-                          ),
-                        ],
-                      ),
-        
-                      SizedBox(height: 8),
-        
-                      Text(
-                        'Stats', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-        
-                      //crea un layout para la tabla de su tipo
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in stats)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon),
-                            label: Text('${item['stat']['name']} ${item['base_stat']}'),
-                          ),
-                        ],
-                      ),
-        
-                      SizedBox(height: 8),
-
-                      Text(
-                        'Generation', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-        
-                      //crea un layout para la tabla de su tipo
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in numberGenerational)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['version']['name'].toString()),
-                          ),
-                        ],
-                      ),
+                      ),                      
                     ],
                   ),
                 ),

@@ -5,7 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:pokedex/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+
+  // final int pageIndex; 
+
+  const HomeScreen({
+    super.key, 
+    // required this.pageIndex
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -132,6 +138,16 @@ Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   final respuesta = await http.get(
     Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
   );
+
+  //tratando de pedirlo direcot en español
+  // final response = await http.get( 
+  //   Uri.parse(respuesta), 
+  //   headers: {
+  //     'Content-Type' : 'application/json',
+  //     'Accept-Language' : 'es-Es',
+  //   },
+  // ); 
+
   //convierte a respuesta en un JSON
   final datos = jsonDecode(respuesta.body);
   //guarda la lista de los pokemon de espuesta

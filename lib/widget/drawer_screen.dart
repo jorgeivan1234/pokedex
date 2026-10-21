@@ -1,3 +1,4 @@
+//estoy prometiendo demasiado para lo poco que llevo
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -61,7 +62,6 @@ class DrawerScreen extends StatelessWidget {
             onTap: () => context.go('/sprites'),
           ),
 
-          //por juego
           ListTile(
             leading: const Icon(Icons.gamepad_outlined),
             title: const Text('Juegos'),
@@ -70,7 +70,6 @@ class DrawerScreen extends StatelessWidget {
             onTap: () => context.go('/juego'),
           ),
 
-                    //por juego
           ListTile(
             leading: const Icon(Icons.class_outlined),
             title: const Text('Tabla de tipos'),
@@ -79,7 +78,6 @@ class DrawerScreen extends StatelessWidget {
             onTap: () => context.go('/table_tipe'),
           ),
 
-                    //por juego
           ListTile(
             leading: const Icon(Icons.present_to_all),
             title: const Text('estrategias'),
@@ -102,6 +100,14 @@ class DrawerScreen extends StatelessWidget {
             textColor: Colors.black,
             iconColor: Colors.black,
             onTap: () => context.go('/moves'),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Configuracion'),
+            textColor: Colors.black,
+            iconColor: Colors.black,
+            onTap: () => context.go('/config'),
           ),
         ],
       ),

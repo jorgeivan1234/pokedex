@@ -13,11 +13,15 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+
     final abilities = pokemon['abilities'];
     final type = pokemon['types'];
     final stats = pokemon['stats'];
-    final numberGenerational = pokemon['game_indices'];
+    final gameGenerational = pokemon['game_indices'];
+    final heightMeters = (pokemon['height']) / 10;
+    final weightKg = (pokemon['weight']) / 10;
+    final items = pokemon['held_items'];
+    final moves = pokemon['moves'];
     // final evolution = pokemon['species']; 
 
     final types = pokemon['types'];
@@ -34,7 +38,7 @@ class DetailsScreen extends StatelessWidget {
         'poison' => Colors.purple,
         'ground' => Colors.brown,
         'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-        'rock' => const Color.fromARGB(255, 52, 29, 20), 
+        'rock' => const Color.fromARGB(255, 77, 52, 43), 
         'bug' => Colors.greenAccent,
         'ghost' => Colors.deepPurple,
         'steel' => Colors.blueGrey,
@@ -120,7 +124,7 @@ class DetailsScreen extends StatelessWidget {
                       SizedBox(width: 12),
 
                       Text(
-                        'height: ${pokemon['height']} M',
+                        'Altura: ${heightMeters.toStringAsFixed(1)} M',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold
@@ -130,7 +134,7 @@ class DetailsScreen extends StatelessWidget {
                       SizedBox(width: 12),
 
                       Text(
-                        'weight: ${pokemon['weight']} Kg',
+                        'peso: ${weightKg.toStringAsFixed(1)} Kg',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold
@@ -151,16 +155,19 @@ class DetailsScreen extends StatelessWidget {
                       SizedBox(height: 8),
         
                       //crea un layout para las habilidades
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in abilities)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['ability']['name'].toString()),
-                          ),
-                        ],
+                      InkWell(// Cada chip debe navegar con los datos de su propia habilidad
+                        onTap: () => context.push('/habilitys', extra: ['ability']),
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: [
+                            for (final item in abilities)
+                            Chip(
+                              avatar: const Icon(Icons.catching_pokemon_sharp),
+                              label: Text(item['ability']['name'].toString()),
+                            ),
+                          ],
+                        ),
                       ),
         
                       SizedBox(height: 8),
@@ -198,7 +205,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ),
         
-                      //crea un layout para la tabla de su tipo
+                      //crea un layout para la tabla de su stats
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -222,12 +229,12 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ),
         
-                      //crea un layout para la tabla de su tipo
+                      //crea un layout para los juegos que aparece
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
                         children: [
-                          for (final item in numberGenerational)
+                          for (final item in gameGenerational)
                           Chip(
                             avatar: const Icon(Icons.catching_pokemon_sharp),
                             label: Text(item['version']['name'].toString()),
@@ -235,28 +242,59 @@ class DetailsScreen extends StatelessWidget {
                         ],
                       ),
 
+                      SizedBox(width: 12),
+
+                      Text(
+                        'Items', 
+                        style: TextStyle(
+                          fontSize: 20,
+                          //hace mas oscuro el texto
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+        
                       SizedBox(height: 8),
+        
+                      //crea un layout para las items
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          for (final item in items)
+                          Chip(
+                            avatar: pokemon['sprites']?['default'] is String
+                              ? Image.network(pokemon['sprites']['default'])
+                              : null,
+                            label: Text(item['item']['name'].toString()),
+                          ),
+                        ],
+                      ),
 
-                      // Text(
-                      //   'Evolutions', 
-                      //   style: TextStyle(
-                      //     fontSize: 20,
-                      //     //hace mas oscuro el texto
-                      //     fontWeight: FontWeight.bold
-                      //   ),
-                      // ),
+                      SizedBox(width: 12),
 
-                      // Wrap(
-                      //   spacing: 8,
-                      //   runSpacing: 8,
-                      //   children: [
-                      //     for (final item in evolution)
-                      //     Chip(
-                      //       avatar: const Icon(Icons.catching_pokemon_sharp),
-                      //       label: Text(item['name'].toString()),
-                      //     ),
-                      //   ],
-                      // ),
+                      Text(
+                        'Move', 
+                        style: TextStyle(
+                          fontSize: 20,
+                          //hace mas oscuro el texto
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+        
+                      SizedBox(height: 8),
+        
+                      //crea un layout para ls movimientos
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          for (final item in moves)
+                          Chip(
+                            avatar: const Icon(Icons.catching_pokemon_sharp),
+                            label: Text(item['move']['name'].toString()),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
