@@ -52,9 +52,18 @@ class PokemonFiltres extends StatelessWidget {
     return Column(
       children: [
         DropdownButtonFormField(
+          dropdownColor: const Color.fromARGB(130, 53, 155, 238),
           value: selectedTypes,
-          hint: Text('Todos los tipos'),
+          hint: Text(
+            'Todos los tipos',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+            ),
+          ),
           items:[
+            DropdownMenuItem(value: '', child: Text('')),
+            DropdownMenuItem(value: 'type', child: Text('Todos los tipos')),
             DropdownMenuItem(value: 'normal', child: Text('Normal')),
             DropdownMenuItem(value: 'fire', child: Text('Fuego')),
             DropdownMenuItem(value: 'water', child: Text('Agua')),

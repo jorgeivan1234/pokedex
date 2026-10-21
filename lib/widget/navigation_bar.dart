@@ -32,11 +32,17 @@ class PokedexNavigationBar extends StatelessWidget {
       elevation: 0,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.catching_pokemon),
+          icon: Icon(
+            Icons.catching_pokemon,            
+            color: Colors.red,
+          ),
           label: 'Pokedex',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(
+            Icons.search,
+            color: Colors.indigo,
+          ),
           label: 'Busqueda',
         ),
       ],

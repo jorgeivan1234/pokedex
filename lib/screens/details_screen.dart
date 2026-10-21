@@ -58,12 +58,13 @@ class DetailsScreen extends StatelessWidget {
       backgroundColor: Colors.blue,
       //cabeza del codigo 
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: colorCard,
         //llama el nombre del pokemon para el titulo desde la api
         title: Text(pokemon['name']),
         titleTextStyle: TextStyle(
           color: Colors.black,
-          fontSize: 30,
+          fontSize: 24,
+          fontWeight: FontWeight.bold
         ),
         centerTitle: true,
       ),
@@ -85,9 +86,7 @@ class DetailsScreen extends StatelessWidget {
                         onLongPress: () => context.push('/sprites', extra: pokemon),
                         child: Image.network(
                           pokemon['sprites']['front_default'],
-                          width: 200,
-                          height: 200,
-                          scale:  0.1,
+                          scale:  0.4,
                         ),
                       ),  
 

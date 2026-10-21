@@ -92,6 +92,9 @@ class _SpritesScreenState extends State<SpritesScreen> {
           case 'versions':
             return path.startsWith('versions.');
 
+          case 'Generation':
+            return path.startsWith('versions/generation-i.');
+
           case 'ninguno':
             return false;
 
@@ -106,75 +109,79 @@ class _SpritesScreenState extends State<SpritesScreen> {
       backgroundColor: Colors.blue,
       //cabeza del codigo 
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent.shade700,
+        backgroundColor: colorCard,
         //llama el nombre del pokemon para el titulo desde la api
         title: Text(widget.pokemon['name']),
         titleTextStyle: TextStyle(
           color: Colors.black,
           fontSize: 30,
+          fontWeight: FontWeight.bold
         ),
         centerTitle: true,
       ),
 
-      //whidget scroll con el fin de que no se desborden los pixeles 
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [      
-              Card(
-                color: colorCard,
-                margin: const EdgeInsets.all(12),
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      if ( selectedSpriteUrl != null)
-                      Image.network(
-                        selectedSpriteUrl!,
-                        width: 200,
-                        height: 200,
-                        errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.catching_pokemon_outlined, size: 100),
-                      )
-                      else 
-                      const Icon(Icons.catching_pokemon, size: 100),
-
-                      SpritesFiltres(
-                        selectedGroup: selectedSpriteGroup, 
-                        onGroupChanged: (group){
-                          if (group != null) {
-                          setState(() {
-                              selectedSpriteGroup = group;
-                            });
-                          }
-                        },
+      //widget scroll con el fin de que no se desborden los pixeles 
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [      
+          Expanded(
+            child: Card(
+              color: colorCard,
+              margin: const EdgeInsets.all(12),
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    if ( selectedSpriteUrl != null)
+                    Image.network(
+                      selectedSpriteUrl!,
+                      scale: 0.4,
+                      width: 150,
+                      height: 150,
+                      errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.catching_pokemon_outlined, size: 100),
+                    )
+                    else 
+                    const Icon(Icons.catching_pokemon, size: 100),
+              
+                    SpritesFiltres(
+                      selectedGroup: selectedSpriteGroup, 
+                      onGroupChanged: (group){
+                        if (group != null) {
+                        setState(() {
+                            selectedSpriteGroup = group;
+                          });
+                        }
+                      },
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          alignment: WrapAlignment.center,
+                          children: [
+                            for (final sprite in visibleSprites)
+                            SpritesButton(
+                              sprite: sprite,
+                              isSelected: selectedSpriteUrl == sprite.value,
+                              onPressed: () {
+                                setState(() {
+                                  selectedSpriteUrl = sprite.value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        alignment: WrapAlignment.center,
-                        children: [
-                          for (final sprite in visibleSprites)
-                          SpritesButton(
-                            sprite: sprite,
-                            isSelected: selectedSpriteUrl == sprite.value,
-                            onPressed: () {
-                              setState(() {
-                                selectedSpriteUrl = sprite.value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),                      
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
 
       //trae el drawer a details

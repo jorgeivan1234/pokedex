@@ -46,6 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         //titulo de el app bar
         title: const Text('Pokedex'),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold
+        ),
         backgroundColor: Colors.red,
         //color de letra e icono
         foregroundColor: Colors.black,
@@ -113,7 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.82,
                     ), 
                     itemCount: filtrados.length,
                     itemBuilder: (context, index) {
@@ -130,13 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
 //api de obtenerPokemon
 //pide la lista y trae los datos completos
 Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   //consulta la api
   final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
   );
 
   //tratando de pedirlo direcot en español

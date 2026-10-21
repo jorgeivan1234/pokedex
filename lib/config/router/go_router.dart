@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/screens/perfil_screen.dart';
 import 'package:pokedex/screens/screens.dart';
 
 final appRouter = GoRouter(
@@ -50,7 +51,7 @@ final appRouter = GoRouter(
         final datos = state.extra as Map<String, dynamic>;
         return RegionScreen(
           name: datos['name'], 
-          generation: datos['generation']
+          generation: datos['generation'], 
         );
       }
     ),
@@ -96,5 +97,10 @@ final appRouter = GoRouter(
       path: '/config',
       builder: (context, state) => const ConfigScreen(),
     ),
+
+    GoRoute(
+      path: '/perfil',
+      builder: (context, state) => const PerfilScreen(),
+    )
   ],
 );

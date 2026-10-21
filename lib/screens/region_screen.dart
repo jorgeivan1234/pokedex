@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../widget/widget.dart';
 
-class RegionScreen extends StatelessWidget {
+class RegionScreen extends StatefulWidget {
 
   final String name;
   final int generation;
@@ -15,10 +15,19 @@ class RegionScreen extends StatelessWidget {
   });
 
   @override
+  State<RegionScreen> createState() => _RegionScreenState();
+}
+
+class _RegionScreenState extends State<RegionScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(widget.name),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold
+        ),
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
@@ -31,7 +40,7 @@ class RegionScreen extends StatelessWidget {
         },
       ),
       body: Center(
-        child: Text('Generation $generation - $name'),
+        child: Text('Generation ${widget.generation} - ${widget.name}'),
       ),
     );
   }
