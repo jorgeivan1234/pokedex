@@ -142,8 +142,55 @@ Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   final respuesta = await http.get(
     Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
   );
+  
+  if (respuesta.statusCode != 200){
+    throw Exception('No se puedieron cargar los datos.');
+  }
+  
+  //convierte a respuesta en un JSON
+  final datos = jsonDecode(respuesta.body);
 
-  //tratando de pedirlo direcot en español
+  //guarda la lista de los pokemon de respuesta
+  final resultados = datos['results'];
+
+  // final pokemonCompletos = <Map<String, dynamic>>[];
+
+  // //trae un grupo chico para no lanzar tantas peticiones (temporal)
+  // for (var inicio = 0; inicio < resultados.length; inicio += 10){
+  //   var fin = inicio + 10;
+  //   if (fin > resultados.length) fin = resultados.length;
+
+  //   final grupo = resultados.sublist(inicio, fin);
+  
+  //   final pokemonGrupo = await Future.wait<Map<String, dynamic>>(
+  //     grupo.map((resultado) async {
+  //       final pokemonRespuesta = await http.get(
+  //         Uri.parse(resultado['url'])
+  //       );
+
+  //       if(pokemonRespuesta.statusCode != 200){
+  //         throw Exception('No se pudieron cargar los datos de un pokemon.');
+  //       }
+
+  //       final pokemon = jsonDecode(pokemonRespuesta.body);
+
+  //       final especieUrl = pokemon['species']['url'];
+
+  //       final especieRespuesta = await http.get(Uri.parse(especieUrl));
+
+  //       if(especieRespuesta.statusCode != 200){
+  //         throw Exception('No se pudieron cargar los datos de una especie.');
+  //       }
+        
+  //       pokemon['species_data'] = jsonDecode(especieRespuesta.body);
+
+  //       return pokemon;
+  //     })       
+  //   );
+  //   pokemonCompletos.addAll(pokemonGrupo); 
+  // }
+
+  // tratando de pedirlo direcot en español
   // final response = await http.get( 
   //   Uri.parse(respuesta), 
   //   headers: {
@@ -152,10 +199,6 @@ Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   //   },
   // ); 
 
-  //convierte a respuesta en un JSON
-  final datos = jsonDecode(respuesta.body);
-  //guarda la lista de los pokemon de espuesta
-  final resultados = datos['results'];
 
   // pide los detalles de cada pokemon y toma los resultados
   return Future.wait<Map<String, dynamic>>(
@@ -166,5 +209,6 @@ Future<List<Map<String, dynamic>>> obtenerPokemon() async {
       return jsonDecode(detalle.body) as Map<String, dynamic>;
     })
   );
+  // return pokemonCompletos;
 }
 

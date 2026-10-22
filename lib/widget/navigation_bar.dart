@@ -26,6 +26,7 @@ class PokedexNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: const Color.fromARGB(255, 119, 235, 229),
       currentIndex: currentIndex,
       // onTap: (value) => onItemTapped(context, value), 
       onTap: onTap,

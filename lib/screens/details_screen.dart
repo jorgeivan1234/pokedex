@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// import 'package:provider/provider.dart';
+// import '../provider/theme_provider.dart';
 import '../widget/widget.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -13,7 +15,8 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    // final List<Color> colors = context.watch(colorListProvider);
+ 
     final abilities = pokemon['abilities'];
     final type = pokemon['types'];
     final stats = pokemon['stats'];
@@ -24,34 +27,32 @@ class DetailsScreen extends StatelessWidget {
     final moves = pokemon['moves'];
     // final evolution = pokemon['species']; 
 
-    final types = pokemon['types'];
-    final typePrincipal = types.isNotEmpty
-      ? types.first['type']['name'].toString()
-      : '';
-
-      final colorCard = switch (typePrincipal){
-        'fire' => Colors.red.shade900,
-        'water' => const Color.fromARGB(255, 10, 123, 215),
-        'grass' => Colors.green,
-        'fighting' => Colors.grey,
-        'flying' => const Color.fromARGB(186, 239, 197, 194),
-        'poison' => Colors.purple,
-        'ground' => Colors.brown,
-        'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-        'rock' => const Color.fromARGB(255, 77, 52, 43), 
-        'bug' => Colors.greenAccent,
-        'ghost' => Colors.deepPurple,
-        'steel' => Colors.blueGrey,
-        'electric' => Colors.yellow,
-        'psychic' => Colors.purpleAccent,
-        'ice' => Colors.lightBlue,
-        'dark' => Colors.black,        
-        'dragon' => const Color.fromARGB(255, 116, 2, 255), 
-        'fairy' =>  Colors.pinkAccent, 
-        'stellar' => Colors.deepOrange,
-        'unknown' =>  Colors.amber, 
-        _ => Colors.indigo              
-      };
+    final typePrincipal = type.isNotEmpty
+        ? type.first['type']['name'].toString()
+        : '';
+    final colorCard = switch (typePrincipal) {
+      'fire' => Colors.red.shade900,
+      'water' => const Color.fromARGB(255, 10, 123, 215),
+      'grass' => Colors.green,
+      'fighting' => Colors.grey,
+      'flying' => const Color.fromARGB(186, 239, 197, 194),
+      'poison' => Colors.purple,
+      'ground' => Colors.brown,
+      'normal' => const Color.fromARGB(206, 240, 214, 214),
+      'rock' => const Color.fromARGB(255, 77, 52, 43),
+      'bug' => Colors.greenAccent,
+      'ghost' => Colors.deepPurple,
+      'steel' => Colors.blueGrey,
+      'electric' => Colors.yellow,
+      'psychic' => Colors.purpleAccent,
+      'ice' => Colors.lightBlue,
+      'dark' => Colors.black,
+      'dragon' => const Color.fromARGB(255, 116, 2, 255),
+      'fairy' => Colors.pinkAccent,
+      'stellar' => Colors.deepOrange,
+      'unknown' => Colors.amber,
+      _ => Colors.indigo,
+    };
 
     return Scaffold(
       //color del fondo scafoold
@@ -141,7 +142,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       
                       SizedBox(width: 12),
-
+                      
                       Text(
                         'Hability', 
                         style: TextStyle(
@@ -179,6 +180,8 @@ class DetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ),
+
+                      SizedBox(height: 8),
         
                       //crea un layout para la tabla de su tipo
                       Wrap(
@@ -203,6 +206,8 @@ class DetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ),
+
+                      SizedBox(height: 8),
         
                       //crea un layout para la tabla de su stats
                       Wrap(
@@ -217,82 +222,99 @@ class DetailsScreen extends StatelessWidget {
                         ],
                       ),
         
-                      SizedBox(height: 8),
+                      SizedBox(height: 20),
 
-                      Text(
-                        'Generation', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(12)
                         ),
-                      ),
-        
-                      //crea un layout para los juegos que aparece
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in gameGenerational)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['version']['name'].toString()),
+                        child: ExpansionTile(
+                          title: Text(
+                            'Generation',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )
                           ),
-                        ],
+                          children: [
+                            //crea un layout para los juegos que aparece
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                              children: [
+                                for (final item in gameGenerational)
+                                Chip(
+                                  avatar: const Icon(Icons.catching_pokemon_sharp),
+                                  label: Text(item['version']['name'].toString()),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                       SizedBox(width: 12),
 
-                      Text(
-                        'Items', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(12)
                         ),
-                      ),
-        
-                      SizedBox(height: 8),
-        
-                      //crea un layout para las items
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in items)
-                          Chip(
-                            avatar: pokemon['sprites']?['default'] is String
-                              ? Image.network(pokemon['sprites']['default'])
-                              : null,
-                            label: Text(item['item']['name'].toString()),
+                        child: ExpansionTile(
+                          title: Text(
+                            'Items',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )
                           ),
-                        ],
+                          children: [
+                             //crea un layout para las items
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: [
+                                for (final item in items)
+                                Chip(
+                                  avatar: pokemon['sprites']?['default'] is String
+                                    ? Image.network(pokemon['sprites']['default'])
+                                    : null,
+                                  label: Text(item['item']['name'].toString()),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                       SizedBox(width: 12),
 
-                      Text(
-                        'Move', 
-                        style: TextStyle(
-                          fontSize: 20,
-                          //hace mas oscuro el texto
-                          fontWeight: FontWeight.bold
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(12)
                         ),
-                      ),
-        
-                      SizedBox(height: 8),
-        
-                      //crea un layout para ls movimientos
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final item in moves)
-                          Chip(
-                            avatar: const Icon(Icons.catching_pokemon_sharp),
-                            label: Text(item['move']['name'].toString()),
+                        child: ExpansionTile(
+                          title: Text(
+                            'Move',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )
                           ),
-                        ],
+                          children: [
+                            //crea un layout para ls movimientos
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: [
+                                for (final item in moves)
+                                Chip(
+                                  avatar: const Icon(Icons.catching_pokemon_sharp),
+                                  label: Text(item['move']['name'].toString()),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
