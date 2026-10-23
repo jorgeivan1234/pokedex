@@ -5,23 +5,67 @@ import 'package:pokedex/screens/screens.dart';
 final appRouter = GoRouter(
   //pantalla inicial
   initialLocation: '/home',
-
   //ruutas de pantallas
   routes: [
     GoRoute(
       //ruta de home
       path: '/home', 
+      // path: '/home/:page', 
       builder: (context, state) => const HomeScreen()
+    ),
+
+    //ruta de busqueda
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
     ),
 
     GoRoute(
       //trae los diferentes pokemon para cada details sin que  
       path: '/details',
       builder: (context, state) {
+        final extra = state.extra;
+        //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
+          if ( extra is Map<String, dynamic> ){
+            return DetailsScreen(
+              pokemon: extra, 
+              pokemonSpecies: extra
+            );
+          }
+
+        //en caso de que no exista el pokemon o no este disponible
+        return const Scaffold(
+          body: Center(
+            child: Text('No se recibieron los datos del Pokémon')
+          ),
+        );
+      },
+    ),
+    
+    GoRoute(
+      path: '/generation',
+      builder: (context, state) => const GenerationScreen(),
+    ),
+
+    GoRoute(
+      path: '/region',
+      builder: (context, state){
+        final datos = state.extra as Map<String, dynamic>;
+        return RegionScreen(
+          name: datos['name'], 
+          generation: datos['generation'], 
+        );
+      }
+    ),
+
+    GoRoute(
+      //trae los diferentes pokemon para cada details sin que  
+      path: '/sprites',
+      builder: (context, state) {
         final pokemon = state.extra;
         //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
           if ( pokemon is Map<String, dynamic> ){
-            return DetailsScreen(pokemon: pokemon);
+            return SpritesScreen(pokemon: pokemon);
           }
 
         //en caso de que no exista el pokemon o no este disponible
@@ -33,18 +77,32 @@ final appRouter = GoRouter(
       },
     ),
 
-    // GoRoute(
-    //   //trae los diferentes pokemon para cada details sin que  
-    //   path: '/generation',
-    //   builder: (context, state) {
-    //     final pokemon = state.extra;
+    GoRoute(
+      path: '/habilitys',
+      builder: (context, state) {
+        final pokemon = state.extra;
+        //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
+          if ( pokemon is Map<String, dynamic> ){
+            return HabilitysScreen(pokemon: pokemon);
+          }
 
-        
-    //     //en caso de que no exista el pokemon o no este disponible
-    //     return const Scaffold(
-    //       body: Center(child: Text('No se recibieron los datos del Pokémon')),
-    //     );
-    //   },
-    // ),
+        //en caso de que no exista el pokemon o no este disponible
+        return const Scaffold(
+          body: Center(
+            child: Text('No se recibieron los datos del Pokémon')
+          ),
+        );
+      }
+    ),
+
+    GoRoute(
+      path: '/config',
+      builder: (context, state) => const ConfigScreen(),
+    ),
+
+    GoRoute(
+      path: '/perfil',
+      builder: (context, state) => const PerfilScreen(),
+    )
   ],
 );
