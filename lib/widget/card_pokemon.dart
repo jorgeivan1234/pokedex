@@ -4,16 +4,31 @@ import 'package:go_router/go_router.dart';
 class CardPokemon extends StatelessWidget {
 
   final Map<String, dynamic> pokemon; 
+  final Map<String, dynamic> pokemonSpecies; 
 
   const CardPokemon({
     super.key, 
-    required this.pokemon
+    required this.pokemon, 
+    required this.pokemonSpecies
   });
 
   @override
   Widget build(BuildContext context) {
 
-    final types = pokemon['types'];
+    final description = pokemonSpecies['flavor_text_entries'];
+
+    final entradaEs = description.where(
+      (item) => item['language']['name'] == 'es',
+    ).toList();
+
+    final textoDescription = entradaEs.isEmpty
+      ? 'Descripcion en español'
+      : entradaEs.first['flavor_text']
+        .toString()
+        .replaceAll('\n', '');
+
+
+    final types = pokemon['types'] as List<dynamic>;
     final typePrincipal = types.isNotEmpty
       ? types.first['type']['name'].toString()
       : '';
@@ -27,7 +42,7 @@ class CardPokemon extends StatelessWidget {
         'poison' => Colors.purple,
         'ground' => Colors.brown,
         'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-        'rock' => const Color.fromARGB(255, 52, 29, 20), 
+        'rock' => const Color.fromARGB(255, 165, 53, 8), 
         'bug' => Colors.greenAccent,
         'ghost' => Colors.deepPurple,
         'steel' => Colors.blueGrey,
@@ -72,15 +87,16 @@ class CardPokemon extends StatelessWidget {
                 pokemon['name'].toString().toUpperCase(),
                 maxLines: 1,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               Text(
                 '#${pokemon['id']}',
-                style: const TextStyle(color: Colors.white70),
+                style: const TextStyle(color: Colors.black),
               ),
-    
+
               const SizedBox(height: 6),
               
               Wrap(
@@ -88,14 +104,34 @@ class CardPokemon extends StatelessWidget {
                 spacing: 2,
                 children: [
                   for (final item in types)
-                    Chip(
-                      label: Text(item['type']['name'].toString()),
-                      visualDensity: VisualDensity.compact,
-                      labelStyle: const TextStyle(fontSize: 11),
-                      padding: EdgeInsets.zero,
-                    ),
+                  Chip(
+                    label: Text(item['type']['name'].toString()),
+                    visualDensity: VisualDensity.compact,
+                    labelStyle: const TextStyle(fontSize: 11),
+                    padding: EdgeInsets.zero,
+                  ),
                 ],
               ),
+
+              const SizedBox(height: 6),
+
+              Card(
+                shadowColor: Colors.white,
+                surfaceTintColor: Colors.black,
+                color: Colors.black,
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
+                  child: Text(
+                    textoDescription,
+                    maxLines: 3,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
             ],
           ),
         ),

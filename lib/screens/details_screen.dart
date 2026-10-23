@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:provider/provider.dart';
-// import '../provider/theme_provider.dart';
 import '../widget/widget.dart';
 
 class DetailsScreen extends StatelessWidget {
 
   final Map<String, dynamic> pokemon;
+  final Map<String, dynamic> pokemonSpecies;
 
   const DetailsScreen({
     super.key, 
-    required this.pokemon
+    required this.pokemon, 
+    required this.pokemonSpecies
   });
 
   @override
@@ -25,11 +25,23 @@ class DetailsScreen extends StatelessWidget {
     final weightKg = (pokemon['weight']) / 10;
     final items = pokemon['held_items'];
     final moves = pokemon['moves'];
-    // final evolution = pokemon['species']; 
+
+    final description = pokemonSpecies['flavor_text_entries'] as List? ?? [];
+
+    final entradaEs = description.where(
+      (item) => item['language']['name'] == 'es',
+    ).toList();
+
+    final textoDescription = entradaEs.isEmpty 
+      ? 'Descripcion en español'
+      : entradaEs.first['flavor_text']
+        .toString()
+        .replaceAll('\n', '');
 
     final typePrincipal = type.isNotEmpty
         ? type.first['type']['name'].toString()
         : '';
+        
     final colorCard = switch (typePrincipal) {
       'fire' => Colors.red.shade900,
       'water' => const Color.fromARGB(255, 10, 123, 215),
@@ -112,6 +124,22 @@ class DetailsScreen extends StatelessWidget {
 
                       SizedBox(width: 12),
 
+                      Card(
+                        shadowColor: Colors.white,
+                        surfaceTintColor: Colors.black,
+                        color: colorCard,
+                          child: Padding(
+                            padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
+                            child: Text(
+                              textoDescription,
+                              maxLines: 3,
+                              textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ),
 
                       Text(
                         'Experience: ${pokemon['base_experience']} XP',
@@ -197,7 +225,18 @@ class DetailsScreen extends StatelessWidget {
                       ),
         
                       SizedBox(height: 8),
+
+
+                      Text(
+                        'Ratio de Captura: ${pokemonSpecies['capture_rate']}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
         
+                      SizedBox(height: 8),
+
                       Text(
                         'Stats', 
                         style: TextStyle(

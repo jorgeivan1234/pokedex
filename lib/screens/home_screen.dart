@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
+import 'package:pokedex/service/poke_species_api_service.dart';
 import 'package:pokedex/widget/widget.dart';
+
+import '../service/poke_api_service.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -21,21 +22,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //guardara lista de cantidades de pokemon mas grandes
   late Future<List<Map<String, dynamic>>> _pokemonFuture;
+  late Future<List<Map<String, dynamic>>> _pokemonSpeciesFuture;
+
 
   String? _selectedType;
 
   //aqui guardaremos en pokemonFuture los pokemon obtenidos de la api
-  void _retyLoadingPokemon(){
+  void _retryLoadingPokemon(){
     setState(() {
       _pokemonFuture = obtenerPokemon();
+    });
+  }
+
+  void _retryLoadingPokemonSpecies(){
+    setState(() {
+      _pokemonSpeciesFuture = obtenerPokemonSpecies();
     });
   }
 
   @override
   void initState() {
     super.initState();
-      _pokemonFuture = obtenerPokemon();  
+      _pokemonFuture = obtenerPokemon();
+      _pokemonSpeciesFuture = obtenerPokemonSpecies();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +56,19 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.blue,
       //cabeza del codigo 
       appBar: AppBar(
+        //titulo de el app bar
+        // title: const Row(
+        //   children: [
+        //     ImageIcon(
+        //       AssetImage('assets/icon/logo.png'),
+        //       size: 24,
+        //       color: Colors.blue,
+        //     ),
+        //     SizedBox(height: 10),
+            // Text('Pokedex'),
+        //   ],        
+        // ),
+        
         //titulo de el app bar
         title: const Text('Pokedex'),
         titleTextStyle: TextStyle(
@@ -84,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text('${snapshot.error}'),
                     TextButton(
-                      onPressed: _retyLoadingPokemon, 
+                      onPressed: _retryLoadingPokemon, 
                       child: Text('intentar de nuevo')
                     ),
                   ],
@@ -102,113 +127,69 @@ class _HomeScreenState extends State<HomeScreen> {
                 (item) => item['type']['name'] == _selectedType,
               );
             }).toList();
+
+            return FutureBuilder<List<Map<String, dynamic>>>(
+              future: _pokemonSpeciesFuture,
+              builder: (context, speciesSnapshot) {
+                if (speciesSnapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (speciesSnapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('${speciesSnapshot.error}'),
+                        TextButton(
+                          onPressed: _retryLoadingPokemonSpecies,
+                          child: const Text('intentar de nuevo'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                final speciesByName = {
+                  for (final species in speciesSnapshot.data!)
+                    species['name']: species,
+                };
             
-            // acomoda la columna para poder traer la informacion recolectada de PokemonFiltres
-            return Column(
-              children: [
-                PokemonFiltres(
-                  selectedTypes: _selectedType, 
-                  onTyeChanged: (value){
-                    setState(() => _selectedType = value);
-                  }, 
-                   selectGeneration: null, 
-                   onGenetarionChanged: (int? value) {  },
-                   ),
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.82,
-                    ), 
-                    itemCount: filtrados.length,
-                    itemBuilder: (context, index) {
-                      return CardPokemon(pokemon: filtrados[index]);
-                    },
-                  )
-                ),
-              ]
+                // acomoda la columna para poder traer la informacion recolectada de PokemonFiltres
+                return Column(
+                  children: [
+                    PokemonFiltres(
+                      selectedTypes: _selectedType, 
+                      onTyeChanged: (value){
+                        setState(() => _selectedType = value);
+                      }, 
+                      selectGeneration: null, 
+                      onGenetarionChanged: (int? value) {},
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.82,
+                      ), 
+                        itemCount: filtrados.length,
+                        itemBuilder: (context, index) {
+                        final pokemon = filtrados[index];
+                        final species = speciesByName[pokemon['species']['name']];
+                          return CardPokemon(
+                            pokemon: pokemon,
+                            pokemonSpecies: species ?? {},
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        ),
-      ),
+          }
+        )
+      )
     );
   }
 }
-
-//api de obtenerPokemon
-//pide la lista y trae los datos completos
-Future<List<Map<String, dynamic>>> obtenerPokemon() async {
-  //consulta la api
-  final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
-  );
-  
-  if (respuesta.statusCode != 200){
-    throw Exception('No se puedieron cargar los datos.');
-  }
-  
-  //convierte a respuesta en un JSON
-  final datos = jsonDecode(respuesta.body);
-
-  //guarda la lista de los pokemon de respuesta
-  final resultados = datos['results'];
-
-  // final pokemonCompletos = <Map<String, dynamic>>[];
-
-  // //trae un grupo chico para no lanzar tantas peticiones (temporal)
-  // for (var inicio = 0; inicio < resultados.length; inicio += 10){
-  //   var fin = inicio + 10;
-  //   if (fin > resultados.length) fin = resultados.length;
-
-  //   final grupo = resultados.sublist(inicio, fin);
-  
-  //   final pokemonGrupo = await Future.wait<Map<String, dynamic>>(
-  //     grupo.map((resultado) async {
-  //       final pokemonRespuesta = await http.get(
-  //         Uri.parse(resultado['url'])
-  //       );
-
-  //       if(pokemonRespuesta.statusCode != 200){
-  //         throw Exception('No se pudieron cargar los datos de un pokemon.');
-  //       }
-
-  //       final pokemon = jsonDecode(pokemonRespuesta.body);
-
-  //       final especieUrl = pokemon['species']['url'];
-
-  //       final especieRespuesta = await http.get(Uri.parse(especieUrl));
-
-  //       if(especieRespuesta.statusCode != 200){
-  //         throw Exception('No se pudieron cargar los datos de una especie.');
-  //       }
-        
-  //       pokemon['species_data'] = jsonDecode(especieRespuesta.body);
-
-  //       return pokemon;
-  //     })       
-  //   );
-  //   pokemonCompletos.addAll(pokemonGrupo); 
-  // }
-
-  // tratando de pedirlo direcot en español
-  // final response = await http.get( 
-  //   Uri.parse(respuesta), 
-  //   headers: {
-  //     'Content-Type' : 'application/json',
-  //     'Accept-Language' : 'es-Es',
-  //   },
-  // ); 
-
-
-  // pide los detalles de cada pokemon y toma los resultados
-  return Future.wait<Map<String, dynamic>>(
-    resultados.map<Future<Map<String, dynamic>>>((pokemon) async {
-      // los resultados tendran una url con los detalles
-      final detalle = await http.get(Uri.parse(pokemon['url']));
-      //trae los detalles recibidos a un mapa y lo devuelve
-      return jsonDecode(detalle.body) as Map<String, dynamic>;
-    })
-  );
-  // return pokemonCompletos;
-}
-

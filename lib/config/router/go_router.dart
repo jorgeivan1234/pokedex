@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokedex/screens/perfil_screen.dart';
 import 'package:pokedex/screens/screens.dart';
 
 final appRouter = GoRouter(
@@ -25,10 +24,13 @@ final appRouter = GoRouter(
       //trae los diferentes pokemon para cada details sin que  
       path: '/details',
       builder: (context, state) {
-        final pokemon = state.extra;
+        final extra = state.extra;
         //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
-          if ( pokemon is Map<String, dynamic> ){
-            return DetailsScreen(pokemon: pokemon);
+          if ( extra is Map<String, dynamic> ){
+            return DetailsScreen(
+              pokemon: extra, 
+              pokemonSpecies: extra
+            );
           }
 
         //en caso de que no exista el pokemon o no este disponible
