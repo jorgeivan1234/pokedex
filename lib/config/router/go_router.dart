@@ -4,7 +4,7 @@ import 'package:pokedex/screens/screens.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
-  initialLocation: '/home',
+  initialLocation: '/register',
   //ruutas de pantallas
   routes: [
     GoRoute(
@@ -12,6 +12,16 @@ final appRouter = GoRouter(
       path: '/home', 
       // path: '/home/:page', 
       builder: (context, state) => const HomeScreen()
+    ),
+
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
+
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
     ),
 
     //ruta de busqueda
@@ -97,12 +107,17 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/config',
-      builder: (context, state) => const ConfigScreen(),
+      builder: (context, state) => ConfigScreen(),
     ),
 
     GoRoute(
       path: '/perfil',
-      builder: (context, state) => const PerfilScreen(),
-    )
+      builder: (context, state) => PerfilScreen(),
+    ),
+
+    GoRoute(
+      path: '/tutorial',
+      builder: (context, state) => TutorialScreen(),
+    ),
   ],
 );

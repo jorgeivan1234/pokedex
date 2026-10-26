@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokedex/screens/home_screen.dart';
 
 import '../widget/widget.dart';
 
@@ -23,9 +22,7 @@ class ConfigScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_back_ios_new_rounded),
-        onPressed: (){
-          
-        }
+        onPressed: () => context.go('/home'), 
       ),
       drawer: const DrawerScreen(),
       bottomNavigationBar: PokedexNavigationBar(
@@ -42,7 +39,9 @@ class ConfigScreen extends StatelessWidget {
 
 
 class _ButtonsView extends StatelessWidget {
-  const _ButtonsView({super.key});
+  const _ButtonsView({
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +51,19 @@ class _ButtonsView extends StatelessWidget {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
         child: Wrap(
           children: [
-            TextButton(
-              onPressed: (){
-                
-              }, 
-              child: Text('Introduccion')
-            )
-          ],
-        ),
+            Card(
+              child: ListTile(
+              leading: Icon(
+                  Icons.settings,
+                  color: Colors.red,
+                ),
+                title: Text('Introduccion'),
+                trailing: Text('0'),
+                 onTap: () => context.go('/tutorial'),
+              ),
+            ),
+          ]
+        )
       ),
     );
   }

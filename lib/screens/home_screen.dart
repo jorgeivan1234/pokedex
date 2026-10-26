@@ -47,8 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _pokemonSpeciesFuture = obtenerPokemonSpecies();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,8 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.82,
+                        crossAxisCount:2,
+                        childAspectRatio: 0.7,
                       ), 
                         itemCount: filtrados.length,
                         itemBuilder: (context, index) {

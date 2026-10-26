@@ -66,23 +66,19 @@ class CardPokemon extends StatelessWidget {
       child: InkWell(
         onTap: () => context.push('/details', extra: pokemon),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.network(
                 //si la imagen no hay nada entonces es nullo
                 pokemon['sprites']['front_default'] ?? '',
-                // height: 150,
-                // width: 150,
-                scale: 0.8,
+                scale: 1,
                 //en caso que no exista mostrara una pokebola
                 errorBuilder: (context, error, stackTrace) =>
                     const Icon(Icons.catching_pokemon, size: 100, color: Colors.red),
               ),
-    
-              // const SizedBox(height: 8),
-              
+                
               Text(
                 pokemon['name'].toString().toUpperCase(),
                 maxLines: 1,
@@ -97,8 +93,6 @@ class CardPokemon extends StatelessWidget {
                 style: const TextStyle(color: Colors.black),
               ),
 
-              const SizedBox(height: 6),
-              
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 2,
@@ -113,12 +107,10 @@ class CardPokemon extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 6),
-
               Card(
                 shadowColor: Colors.white,
                 surfaceTintColor: Colors.black,
-                color: Colors.black,
+                color: Colors.white,
                 child: Padding(
                   padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
                   child: Text(
@@ -129,9 +121,6 @@ class CardPokemon extends StatelessWidget {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 6),
-
             ],
           ),
         ),

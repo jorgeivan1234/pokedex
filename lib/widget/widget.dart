@@ -6,3 +6,5 @@ export 'sprites_button.dart';
 export 'sprites_filtres.dart';
 export 'pokemon_navigation.dart';
 export 'sound_pokemon_filter.dart';
+export 'bottons_pokemon.dart';
+export '../guardar/custom_filled_button.dart';
