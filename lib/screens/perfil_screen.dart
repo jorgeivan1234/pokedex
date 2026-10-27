@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../widget/widget.dart';
+import '../shared/widget/widget.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({

@@ -24,7 +24,6 @@ class SpritesFiltres extends StatelessWidget {
             DropdownMenuItem(value: 'main', child: Text('sprites principales')),
             DropdownMenuItem(value: 'other', child: Text('other')),
             DropdownMenuItem(value: 'versions', child: Text('sprites generacionales')),
-            DropdownMenuItem(value: 'generation-i', child: Text('Generation-i')),
           ],
           onChanged: onGroupChanged,
         )

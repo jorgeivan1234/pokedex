@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../widget/widget.dart';
-
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({
+    super.key
+  });
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
-
 
 class _RegisterScreenState extends State<RegisterScreen> {
 
@@ -19,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    _passwordController:dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -28,13 +27,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text(
-          'No se que poner aun '
-        )
+        content: Text('Formulario valido')
       )
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Form(
+              key: _formKey,
               child: Column(
                 // key: 
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: 300,
                     child: Image.asset(
-                      'assets/icon/red.jpg',
+                      'assets/icon/logo.png',
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) =>
                           const Center(child: Text('No se pudo cargar la imagen')),
@@ -90,6 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 24),
 
                   TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration:  const InputDecoration(
                       labelText: 'Correo electronico',
                       prefixIcon: Icon(Icons.email),
@@ -97,7 +95,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     textInputAction: TextInputAction.next,
                     validator: (value){
-                      if(value == null || value.contains('@')){
+                      final email = value?.trim() ?? '';
+                      final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+                      if(!emailIsValid){
                         return 'escribe tu correo valido';
                       }
                       return null;
@@ -107,14 +107,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 24),
 
                   TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
                     decoration:  const InputDecoration(
-                      labelText: 'contraseña',
+                      labelText: 'Contraseña',
                       prefixIcon: Icon(Icons.person_outline),
                       border: OutlineInputBorder(),
                     ),
-                    textInputAction: TextInputAction.next,
                     validator: (value){
-                      if(value == null || value.length < 6){
+                      if(value == null || value.isEmpty){
+                        return 'Escribre tu contaseña';
+                      }
+                    if(value.length < 6){
                         return 'usa al menos 6 caracteres';
                       }
                       return null;
@@ -124,15 +128,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 24),
 
                   TextFormField(
+                    obscureText: true,
                     decoration:  const InputDecoration(
                       labelText: 'confirma tu contraseña',
                       prefixIcon: Icon(Icons.person_outline),
                       border: OutlineInputBorder(),
                     ),
-                    textInputAction: TextInputAction.next,
                     validator: (value){
-                      if(value !=_passwordController.text){
-                        return 'La contraseña no conincide';
+                      if(value == null || value.isEmpty){
+                        return 'Confirma tu contraseña';
+                      }
+                      if(value != _passwordController.text){
+                        return 'Las contraseñas no coinciden';
                       }
                       return null;
                     }
@@ -142,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   FilledButton(
                     //temporal en lo que funciona
-                    onPressed: () => context.go('/home'),
+                    onPressed: _registrar,
                     // onPressed: _registrar, 
                     child: const Text('Registrarme'),
                   ),

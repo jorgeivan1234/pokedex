@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../mappers/sprites_mapper.dart';
 
 List<MapEntry<String, String>> collectSprites(
   Map<String, dynamic> sprites, [
@@ -37,7 +38,8 @@ class SpritesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChoiceChip(
       backgroundColor: Colors.grey,
-      label: Text(sprite.key.replaceAll('.', ' / ')),
+      // label: Text(sprite.key.replaceAll('.', ' / ')),
+      label: Text(SpritesMapper.buttonLabel(sprite.key)),
       selected: isSelected,
       onSelected: (_) => onPressed(),
     );

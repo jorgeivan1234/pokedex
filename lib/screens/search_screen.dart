@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../widget/widget.dart';
+import '../shared/widget/widget.dart';
 
 class SearchScreen extends StatefulWidget {
   

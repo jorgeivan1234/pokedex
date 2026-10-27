@@ -28,6 +28,7 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
           ),
+          
 
           ListTile(
             leading: const Icon(Icons.person),
@@ -108,6 +109,16 @@ class DrawerScreen extends StatelessWidget {
             textColor: Colors.black,
             iconColor: Colors.black,
             onTap: () => context.go('/config'),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: FilledButton(
+              onPressed:(){
+
+              },
+              child: Text('Cerrar sesion'),
+            ),
           ),
         ],
       ),

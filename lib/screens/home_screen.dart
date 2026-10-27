@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokedex/service/poke_species_api_service.dart';
-import 'package:pokedex/widget/widget.dart';
+import 'package:pokedex/shared/infraestructure/service/poke_species_api_service.dart';
+import 'package:pokedex/shared/widget/widget.dart';
 
-import '../service/poke_api_service.dart';
+import '../shared/infraestructure/service/poke_api_service.dart';
 
 class HomeScreen extends StatefulWidget {
 

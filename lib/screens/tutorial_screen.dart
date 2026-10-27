@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widget/widget.dart';
+import '../shared/widget/widget.dart';
 
 class SlideInfo{
   final String title;

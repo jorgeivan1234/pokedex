@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({
     super.key
   });
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+    final _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login(){
+    if(!_formKey.currentState!.validate()) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Formulario valido')
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +103,8 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
                     decoration:  const InputDecoration(
                       labelText: 'contraseña',
                       prefixIcon: Icon(Icons.person_outline),
@@ -95,7 +123,7 @@ class LoginScreen extends StatelessWidget {
 
                   FilledButton(
                     //temporal en lo que funciona
-                    onPressed: () => context.go('/home'),
+                    onPressed: _login,
                     // onPressed: _registrar, 
                     child: const Text('Iniciar'),
                   ),
