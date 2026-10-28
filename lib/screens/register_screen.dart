@@ -96,7 +96,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (value){
                       final email = value?.trim() ?? '';
-                      final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+                      if(email.isEmpty){
+                        return 'Escribe tu correo';
+                      }
+                      final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(email);
                       if(!emailIsValid){
                         return 'escribe tu correo valido';
                       }

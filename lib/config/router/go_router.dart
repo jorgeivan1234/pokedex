@@ -36,18 +36,24 @@ final appRouter = GoRouter(
       builder: (context, state) {
         final extra = state.extra;
         //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
-          if ( extra is Map<String, dynamic> ){
+          if (extra is Map<String, dynamic> &&
+              extra['pokemon'] is Map<String, dynamic> &&
+              extra['pokemonSpecies'] is Map<String, dynamic>) {
             return DetailsScreen(
-              pokemon: extra, 
-              pokemonSpecies: extra
-            );
+                pokemon: extra['pokemon'] as Map<String, dynamic>,
+                pokemonSpecies: extra['pokemonSpecies'] as Map<String, dynamic>,
+              );
           }
 
         //en caso de que no exista el pokemon o no este disponible
-        return const Scaffold(
-          body: Center(
+        return Scaffold(
+          body: const Center(
             child: Text('No se recibieron los datos del Pokémon')
           ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => context.go('/home'), 
+          ),          
         );
       },
     ),
@@ -79,9 +85,14 @@ final appRouter = GoRouter(
           }
 
         //en caso de que no exista el pokemon o no este disponible
-        return const Scaffold(
-          body: Center(
+        return Scaffold(
+
+          body: const Center(
             child: Text('No se recibieron los datos del Pokémon')
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => context.go('/home'), 
           ),
         );
       },
@@ -97,9 +108,13 @@ final appRouter = GoRouter(
           }
 
         //en caso de que no exista el pokemon o no este disponible
-        return const Scaffold(
-          body: Center(
+        return  Scaffold(
+          body: const Center(
             child: Text('No se recibieron los datos del Pokémon')
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => context.go('/home'), 
           ),
         );
       }

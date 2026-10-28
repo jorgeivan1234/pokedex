@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   //consulta la api
   final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
+    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=300&offset=0')
   );
 
   if (respuesta.statusCode != 200){

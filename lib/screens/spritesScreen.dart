@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 
 class SpritesScreen extends StatefulWidget {
@@ -54,29 +55,7 @@ class _SpritesScreenState extends State<SpritesScreen> {
       ? types.first['type']['name'].toString()
       : '';
 
-      final colorCard = switch (typePrincipal){
-        'fire' => Colors.red,
-        'water' => const Color.fromARGB(255, 10, 123, 215),
-        'grass' => Colors.green,
-        'fighting' => Colors.grey,
-        'flying' => const Color.fromARGB(186, 239, 197, 194),
-        'poison' => Colors.purple,
-        'ground' => Colors.brown,
-        'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-        'rock' => const Color.fromARGB(255, 52, 29, 20), 
-        'bug' => Colors.greenAccent,
-        'ghost' => Colors.deepPurple,
-        'steel' => Colors.blueGrey,
-        'electric' => Colors.yellow,
-        'psychic' => Colors.purpleAccent,
-        'ice' => Colors.lightBlue,
-        'dark' => Colors.black,        
-        'dragon' => const Color.fromARGB(255, 116, 2, 255), 
-        'fairy' =>  Colors.pinkAccent, 
-        'stellar' => Colors.deepOrange,
-        'unknown' =>  Colors.amber, 
-        _ => Colors.indigo              
-      };
+    final colorCard = pokemonTypeColor(typePrincipal);
 
       final visibleSprites = spriteOptions.where((sprite){
         final path = sprite.key;
@@ -119,7 +98,10 @@ class _SpritesScreenState extends State<SpritesScreen> {
         ),
         centerTitle: true,
       ),
-
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => context.go('/home'), 
+      ),
       //widget scroll con el fin de que no se desborden los pixeles 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

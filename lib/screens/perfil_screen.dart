@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:typed_data';
 import '../shared/widget/widget.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -17,15 +15,17 @@ class PerfilScreen extends StatefulWidget {
 
 class _PerfilScreenState extends State<PerfilScreen> {
 
-  XFile? _foto;
+  // XFile? _foto;
+  Uint8List? _fotoBytes;
 
   Future<void> _elegirFoto() async{
     final imagen = await ImagePicker().pickImage(
       source: ImageSource.gallery
     );
     if (imagen != null && mounted){
+      final bytes = await imagen.readAsBytes();
       setState(()   {
-        _foto = imagen;
+        _fotoBytes = bytes;
       });
     }
   }
@@ -42,6 +42,10 @@ class _PerfilScreenState extends State<PerfilScreen> {
         centerTitle: true,
         backgroundColor: Colors.red,
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => context.go('/home'), 
+      ),
       backgroundColor: Colors.blue,
       body: SingleChildScrollView(
         padding: const EdgeInsetsDirectional.all(20),
@@ -51,11 +55,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
               GestureDetector(
                 onTap: _elegirFoto,
                 child: CircleAvatar(
-                  radius: 50,
-                    backgroundImage: _foto == null
+                  radius: 80,
+                    backgroundImage: _fotoBytes == null
                       ? null
-                      : FileImage(File(_foto!.path)),
-                    child: _foto == null
+                      : MemoryImage(_fotoBytes!),
+                    child: _fotoBytes == null
                       ? const Icon(Icons.person, size: 50)
                       : null,
                 ),

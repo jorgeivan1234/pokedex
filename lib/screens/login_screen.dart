@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
 
 
@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Form(
+              key: _formKey,
               child: Column(
                 // key: 
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,7 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     textInputAction: TextInputAction.next,
                     validator: (value){
-                      if(value == null || value.contains('@')){
+                      final email = value?.trim() ?? '';
+                      if(email.isEmpty){
+                        return 'Escribe tu correo';
+                      }
+                      final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(email);
+                      if(!emailIsValid){
                         return 'escribe tu correo valido';
                       }
                       return null;
@@ -112,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     textInputAction: TextInputAction.next,
                     validator: (value){
-                      if(value == null || value.length < 6){
+                      if(value == null || value.isEmpty){
+                        return 'Escribre tu contaseña';
+                      }
+                    if(value.length < 6){
                         return 'usa al menos 6 caracteres';
                       }
                       return null;

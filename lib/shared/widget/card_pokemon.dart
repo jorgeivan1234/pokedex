@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/shared/utils/pokemon_type_color.dart';
 
 class CardPokemon extends StatelessWidget {
 
@@ -27,35 +28,13 @@ class CardPokemon extends StatelessWidget {
         .toString()
         .replaceAll('\n', '');
 
-
     final types = pokemon['types'] as List<dynamic>;
     final typePrincipal = types.isNotEmpty
       ? types.first['type']['name'].toString()
       : '';
 
-      final colorCard = switch (typePrincipal){
-        'fire' => Colors.red.shade900,
-        'water' => const Color.fromARGB(255, 10, 123, 215),
-        'grass' => Colors.green,
-        'fighting' => Colors.grey,
-        'flying' => const Color.fromARGB(186, 239, 197, 194),
-        'poison' => Colors.purple,
-        'ground' => Colors.brown,
-        'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-        'rock' => const Color.fromARGB(255, 165, 53, 8), 
-        'bug' => Colors.greenAccent,
-        'ghost' => Colors.deepPurple,
-        'steel' => Colors.blueGrey,
-        'electric' => Colors.yellow,
-        'psychic' => Colors.purpleAccent,
-        'ice' => Colors.lightBlue,
-        'dark' => Colors.black,        
-        'dragon' => const Color.fromARGB(255, 116, 2, 255), 
-        'fairy' =>  Colors.pinkAccent, 
-        'stellar' => Colors.deepOrange,
-        'unknown' =>  Colors.amber, 
-        _ => Colors.indigo              
-      };
+    final colorCard = pokemonTypeColor(typePrincipal);
+    final colorCard2 = pokemonTypeColor2(typePrincipal);
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -64,7 +43,13 @@ class CardPokemon extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       color: colorCard,
       child: InkWell(
-        onTap: () => context.push('/details', extra: pokemon),
+        onTap: () => context.push(
+          '/details',
+          extra: {
+            'pokemon': pokemon,
+            'pokemonSpecies': pokemonSpecies,
+          },
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Column(
@@ -99,10 +84,10 @@ class CardPokemon extends StatelessWidget {
                 children: [
                   for (final item in types)
                   Chip(
-                    label: Text(item['type']['name'].toString()),
+                    label: Text(item['type']['name'].toString()), 
                     visualDensity: VisualDensity.compact,
                     labelStyle: const TextStyle(fontSize: 11),
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.zero,                  
                   ),
                 ],
               ),
@@ -110,7 +95,7 @@ class CardPokemon extends StatelessWidget {
               Card(
                 shadowColor: Colors.white,
                 surfaceTintColor: Colors.black,
-                color: Colors.white,
+                color: colorCard2,
                 child: Padding(
                   padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
                   child: Text(

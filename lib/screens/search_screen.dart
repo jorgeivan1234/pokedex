@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../shared/widget/widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -11,6 +10,9 @@ class SearchScreen extends StatefulWidget {
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
+
+//   late Future<List<Map<String, dynamic>>> _pokemonFuture;
+// String _busqueda = '';
   
 }
 
@@ -25,7 +27,11 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-      
+
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => context.go('/home'), 
+      ),      
       //trae el drawer a details
       drawer: const DrawerScreen(),
 

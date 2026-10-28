@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -41,30 +42,9 @@ class DetailsScreen extends StatelessWidget {
     final typePrincipal = type.isNotEmpty
         ? type.first['type']['name'].toString()
         : '';
-        
-    final colorCard = switch (typePrincipal) {
-      'fire' => Colors.red.shade900,
-      'water' => const Color.fromARGB(255, 10, 123, 215),
-      'grass' => Colors.green,
-      'fighting' => Colors.grey,
-      'flying' => const Color.fromARGB(186, 239, 197, 194),
-      'poison' => Colors.purple,
-      'ground' => Colors.brown,
-      'normal' => const Color.fromARGB(206, 240, 214, 214),
-      'rock' => const Color.fromARGB(255, 77, 52, 43),
-      'bug' => Colors.greenAccent,
-      'ghost' => Colors.deepPurple,
-      'steel' => Colors.blueGrey,
-      'electric' => Colors.yellow,
-      'psychic' => Colors.purpleAccent,
-      'ice' => Colors.lightBlue,
-      'dark' => Colors.black,
-      'dragon' => const Color.fromARGB(255, 116, 2, 255),
-      'fairy' => Colors.pinkAccent,
-      'stellar' => Colors.deepOrange,
-      'unknown' => Colors.amber,
-      _ => Colors.indigo,
-    };
+
+    final colorCard = pokemonTypeColor(typePrincipal);
+    final colorCard2 = pokemonTypeColor2(typePrincipal);
 
     return Scaffold(
       //color del fondo scafoold
@@ -80,6 +60,10 @@ class DetailsScreen extends StatelessWidget {
           fontWeight: FontWeight.bold
         ),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => context.go('/home'), 
       ),
       //widget scroll con el fin de que no se desborden los pixeles 
       body: SingleChildScrollView(
@@ -124,15 +108,23 @@ class DetailsScreen extends StatelessWidget {
 
                       SizedBox(width: 12),
 
+                      Text(
+                        'Descripcion',
+                          style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
                       Card(
                         shadowColor: Colors.white,
                         surfaceTintColor: Colors.black,
-                        color: colorCard,
+                        color: colorCard2,
                           child: Padding(
                             padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
                             child: Text(
                               textoDescription,
-                              maxLines: 3,
+                              maxLines: 5,
                               textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold
@@ -140,6 +132,8 @@ class DetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+
+                      SizedBox(width: 12),
 
                       Text(
                         'Experience: ${pokemon['base_experience']} XP',
@@ -191,6 +185,7 @@ class DetailsScreen extends StatelessWidget {
                           children: [
                             for (final item in abilities)
                             Chip(
+                              backgroundColor: colorCard2,
                               avatar: const Icon(Icons.catching_pokemon_sharp),
                               label: Text(item['ability']['name'].toString()),
                             ),
@@ -218,6 +213,7 @@ class DetailsScreen extends StatelessWidget {
                         children: [
                           for (final item in type)
                           Chip(
+                            backgroundColor: colorCard2,
                             avatar: const Icon(Icons.catching_pokemon_sharp),
                             label: Text(item['type']['name'].toString()),
                           ),
@@ -255,6 +251,7 @@ class DetailsScreen extends StatelessWidget {
                         children: [
                           for (final item in stats)
                           Chip(
+                            backgroundColor: colorCard2,
                             avatar: const Icon(Icons.catching_pokemon),
                             label: Text('${item['stat']['name']} ${item['base_stat']}'),
                           ),
@@ -268,10 +265,10 @@ class DetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadiusGeometry.circular(12)
                         ),
                         child: ExpansionTile(
+                          backgroundColor: colorCard2,
                           title: Text(
                             'Generation',
-                            style: TextStyle(
-                              fontSize: 20,
+                            style: TextStyle(                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             )
                           ),
@@ -283,6 +280,7 @@ class DetailsScreen extends StatelessWidget {
                               children: [
                                 for (final item in gameGenerational)
                                 Chip(
+                                  backgroundColor: colorCard2,
                                   avatar: const Icon(Icons.catching_pokemon_sharp),
                                   label: Text(item['version']['name'].toString()),
                                 ),
@@ -299,6 +297,7 @@ class DetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadiusGeometry.circular(12)
                         ),
                         child: ExpansionTile(
+                          backgroundColor: colorCard2,
                           title: Text(
                             'Items',
                             style: TextStyle(
@@ -314,6 +313,7 @@ class DetailsScreen extends StatelessWidget {
                               children: [
                                 for (final item in items)
                                 Chip(
+                                  backgroundColor: colorCard2,
                                   avatar: pokemon['sprites']?['default'] is String
                                     ? Image.network(pokemon['sprites']['default'])
                                     : null,
@@ -332,6 +332,7 @@ class DetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadiusGeometry.circular(12)
                         ),
                         child: ExpansionTile(
+                          backgroundColor: colorCard2,
                           title: Text(
                             'Move',
                             style: TextStyle(
@@ -347,6 +348,7 @@ class DetailsScreen extends StatelessWidget {
                               children: [
                                 for (final item in moves)
                                 Chip(
+                                  backgroundColor: colorCard2,
                                   avatar: const Icon(Icons.catching_pokemon_sharp),
                                   label: Text(item['move']['name'].toString()),
                                 ),

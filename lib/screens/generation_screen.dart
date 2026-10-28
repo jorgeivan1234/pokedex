@@ -14,7 +14,7 @@ class GenerationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Generation'),
+        title: Text('Genercion'),
         centerTitle: true,
       ),
       drawer: const DrawerScreen(),
@@ -26,11 +26,16 @@ class GenerationScreen extends StatelessWidget {
           return context.go('/home');
         },
       ),
+    
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => context.go('/home'), 
+      ),
       body: ListView(
         children: [
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.red,),
-            title: Text('Generation 1'),
+            title: Text('Generacion 1'),
             subtitle: Text('Kanto'),
             onTap: (){
               context.push(
@@ -41,7 +46,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.blue.shade900),
-            title: Text('Generation 2'),
+            title: Text('Generacion 2'),
             subtitle: Text('Johto'),
             onTap: (){
               context.push(
@@ -52,7 +57,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.black),
-            title: Text('Generation 3'),
+            title: Text('Generacion 3'),
             subtitle: Text('Hoenn'),
             onTap: (){
               context.push(
@@ -63,7 +68,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.deepPurple.shade900),
-            title: Text('Generation 4'),
+            title: Text('Generacion 4'),
             subtitle: Text('Sinnoh'),
             onTap: (){
               context.push(
@@ -74,7 +79,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.white),
-            title: Text('Generation 5'),
+            title: Text('Generacion 5'),
             subtitle: Text('Unova'),
             onTap: (){
               context.push(
@@ -85,7 +90,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.green.shade900),
-            title: Text('Generation 6'),
+            title: Text('Generacion 6'),
             subtitle: Text('Kalos'),
             onTap: (){
               context.push(
@@ -96,7 +101,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.cyan.shade900),
-            title: Text('Generation 7'),
+            title: Text('Generacion 7'),
             subtitle: Text('Alola'),
             onTap: (){
               context.push(
@@ -107,7 +112,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.yellow.shade900),
-            title: Text('Generation 8'),
+            title: Text('Generacion 8'),
             subtitle: Text('Galar'),
             onTap: (){
               context.push(
@@ -118,7 +123,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon, color: Colors.teal.shade900),
-            title: Text('Generation 9'),
+            title: Text('Generacion 9'),
             subtitle: Text('Paldea'),
             onTap: (){
               context.push(
@@ -129,7 +134,7 @@ class GenerationScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.catching_pokemon),
-            title: Text('Generation 10'),
+            title: Text('Generacion 10'),
             subtitle: Text('Proximamente...'),
           ),
         ],
