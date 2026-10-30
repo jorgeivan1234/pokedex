@@ -137,7 +137,7 @@ class _HabilitysScreenState extends State<HabilitysScreen> {
                             },
                           ),
                         ],
-                      ),                      
+                      ),
                     ],
                   ),
                 ),

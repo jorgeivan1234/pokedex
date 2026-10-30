@@ -41,7 +41,7 @@ class CardPokemon extends StatelessWidget {
         borderRadius: BorderRadiusGeometry.circular(50)
       ),
       clipBehavior: Clip.antiAlias,
-      color: colorCard,
+      color: colorCard.withValues(alpha: 0.8),
       child: InkWell(
         onTap: () => context.push(
           '/details',

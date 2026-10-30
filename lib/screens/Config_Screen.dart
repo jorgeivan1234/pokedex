@@ -31,8 +31,19 @@ class ConfigScreen extends StatelessWidget {
           if ( index == 1) context.go('/search');
         }
       ),
-      backgroundColor: Colors.blue,
-      body: _ButtonsView(),
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/down.gif',
+              fit: BoxFit.cover 
+            ),
+          ),
+          SafeArea(
+            child: _ButtonsView(), 
+          )
+        ],
+      ),
     );
   }
 }

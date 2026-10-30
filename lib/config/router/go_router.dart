@@ -86,14 +86,31 @@ final appRouter = GoRouter(
 
         //en caso de que no exista el pokemon o no este disponible
         return Scaffold(
-
-          body: const Center(
-            child: Text('No se recibieron los datos del Pokémon')
-          ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () => context.go('/home'), 
           ),
+          body: Stack(
+            children: [
+              SizedBox.expand(
+                child: Image.asset(
+                  'assets/images/volcan.gif',
+                  fit: BoxFit.cover 
+                ),
+              ),
+              SafeArea(
+                child: Center(
+                  child: Text(
+                    'No se recibieron los datos del Pokémon',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white
+                    )
+                  )
+                ),
+              )
+            ],
+          )
         );
       },
     ),

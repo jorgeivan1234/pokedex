@@ -35,49 +35,61 @@ class _RegionScreenState extends State<RegionScreen> {
         child: Icon(Icons.arrow_back_ios_new_rounded),
         onPressed: () => context.go('/generation'), 
       ),
-      body: Center(
-        child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-
-              Text('Generacion ${widget.generation} - ${widget.name}'),
-              
-              ListTile(
-                leading: const Icon(Icons.swap_calls),
-                title: Text('Movimientos'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const Divider(height: 2),
-
-              ListTile(
-                leading: const Icon(Icons.catching_pokemon_rounded),
-                title: Text('Species'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const Divider(height: 2),
-
-              ListTile(
-                leading: const Icon(Icons.category),
-                title: Text('Tipos'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const Divider(height: 2),
-
-              ListTile(
-                leading: const Icon(Icons.videogame_asset_outlined),
-                title: Text('Generacion'),
-                subtitle: Text('Debut'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const Divider(height: 2),
-            ],
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/iniciales.gif',
+              fit: BoxFit.fill
+            ),
           ),
-        ),
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.4),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Generacion ${widget.generation} - ${widget.name}'),
+                    ListTile(
+                      leading: const Icon(Icons.swap_calls),
+                      title: const Text('Movimientos'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {},
+                    ),
+                    const Divider(height: 2),
+                    ListTile(
+                      leading: const Icon(Icons.catching_pokemon_rounded),
+                      title: const Text('Species'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {},
+                    ),
+                    const Divider(height: 2),
+                    ListTile(
+                      leading: const Icon(Icons.category),
+                      title: const Text('Tipos'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {},
+                    ),
+                    const Divider(height: 2),
+                    ListTile(
+                      leading: const Icon(Icons.videogame_asset_outlined),
+                      title: const Text('Generacion'),
+                      subtitle: const Text('Debut'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {},
+                    ),
+                    const Divider(height: 2),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       drawer: const DrawerScreen(),
       backgroundColor: Colors.blue,
@@ -87,7 +99,6 @@ class _RegionScreenState extends State<RegionScreen> {
           if (index == 1) context.go('/search');
         },
       ),
-      
     );
   }
 }

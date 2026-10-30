@@ -47,112 +47,188 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                // key: 
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: 300,
-                    child: Image.asset(
-                      'assets/images/red.jpg',
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Center(child: Text('No se pudo cargar la imagen')),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  TextFormField(
-                    decoration:  const InputDecoration(
-                      labelText: 'Nombre de usuario',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(),
-                    ),
-                    textInputAction: TextInputAction.next,
-                    validator: (value){
-                      if(value == null || value.trim().isEmpty){
-                        return 'Escribe tu nombre';
-                      }
-                      return null;
-                    }
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  TextFormField(
-                    decoration:  const InputDecoration(
-                      labelText: 'Correo electronico',
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(),
-                    ),
-                    textInputAction: TextInputAction.next,
-                    validator: (value){
-                      final email = value?.trim() ?? '';
-                      if(email.isEmpty){
-                        return 'Escribe tu correo';
-                      }
-                      final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(email);
-                      if(!emailIsValid){
-                        return 'escribe tu correo valido';
-                      }
-                      return null;
-                    }
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration:  const InputDecoration(
-                      labelText: 'contraseña',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(),
-                    ),
-                    textInputAction: TextInputAction.next,
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return 'Escribre tu contaseña';
-                      }
-                    if(value.length < 6){
-                        return 'usa al menos 6 caracteres';
-                      }
-                      return null;
-                    }
-                  ),
-
-                  SizedBox(height: 10),
-
-                  FilledButton(
-                    //temporal en lo que funciona
-                    onPressed: _login,
-                    // onPressed: _registrar, 
-                    child: const Text('Iniciar'),
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/arcanite_gold_night.gif',
+              fit: BoxFit.cover
+            ),
+          ),
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.4),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,                     
                     children: [
-                      const Text('¿No tienes cuenta?'),
-                      TextButton(
-                        onPressed: () => context.go('/register'),
-                        child: const Text('Ingresa aqui')
-                      )
+                      // SizedBox(
+                      //   height: 450,
+                      // ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Nombre',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          prefixIcon: Icon(
+                          Icons.person_outline,
+                            color: Colors.white,
+                          ),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Colors.cyan,
+                              width: 2,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width:1.5,
+                            ),
+                          ),
+                        ),
+                        textInputAction: TextInputAction.next,
+                        validator: (value){
+                          if(value == null || value.trim().isEmpty){
+                            return 'Escribe tu nombre';
+                          }
+                        return null;
+                      }
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Correo electronico',
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        prefixIcon: Icon(
+                        Icons.email,
+                          color: Colors.white,
+                        ),
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.cyan,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width:1.5,
+                          ),
+                        ),
+                      ),
+                      textInputAction: TextInputAction.next,
+                      validator: (value){
+                        final email = value?.trim() ?? '';
+                        if(email.isEmpty){
+                          return 'Escribe tu correo';
+                        }
+                        final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(email);
+                        if(!emailIsValid){
+                          return 'escribe tu correo valido';
+                        }
+                        return null;
+                      }
+                    ),
+
+
+                    const SizedBox(height: 24),
+
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Contraseña',
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                            color: Colors.white,
+                        ),
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.cyan,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width:1.5,
+                          ),
+                        ),
+                      ),
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return 'Escribre tu contaseña';
+                        }
+                        if(value.length < 6){
+                          return 'usa al menos 6 caracteres';
+                        }
+                        return null;
+                      }
+                    ),
+
+                    SizedBox(height: 10),
+
+                      FilledButton(
+                        //temporal en lo que funciona
+                        // onPressed: _login,
+                        onPressed: () => context.go('/home'),
+                        child: const Text('Iniciar'),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            '¿No tienes cuenta?',
+                            style: TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => context.go('/register'),
+                            child: const Text(
+                              'Ingresa aqui',
+                              style: TextStyle(
+                                color: Colors.cyan
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -27,7 +27,36 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/pikachu_vulpix.gif',
+              fit: BoxFit.cover,
+            ),    
+          ),
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.4),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                children: const [
+                  TextField(
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    cursorColor: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_back_ios_new_rounded),
         onPressed: () => context.go('/home'), 
@@ -41,16 +70,6 @@ class _SearchScreenState extends State<SearchScreen> {
         onTap: (index) {
           if (index == 1) context.go('/search');
         },
-      ),
-      body: Padding(
-        padding: EdgeInsetsGeometry.all(10),
-        child: Column(
-          children: [
-            TextField(
-              
-            )
-          ],
-        ),
       ),
     );
   }

@@ -15,7 +15,7 @@ class PerfilScreen extends StatefulWidget {
 
 class _PerfilScreenState extends State<PerfilScreen> {
 
-  // XFile? _foto;
+  XFile? _foto;
   Uint8List? _fotoBytes;
 
   Future<void> _elegirFoto() async{
@@ -47,123 +47,142 @@ class _PerfilScreenState extends State<PerfilScreen> {
         onPressed: () => context.go('/home'), 
       ),
       backgroundColor: Colors.blue,
-      body: SingleChildScrollView(
-        padding: const EdgeInsetsDirectional.all(20),
-        child: Center(
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: _elegirFoto,
-                child: CircleAvatar(
-                  radius: 80,
-                    backgroundImage: _fotoBytes == null
-                      ? null
-                      : MemoryImage(_fotoBytes!),
-                    child: _fotoBytes == null
-                      ? const Icon(Icons.person, size: 50)
-                      : null,
-                ),
-              ),
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/lapras.gif',
+              fit: BoxFit.cover
+            ),
+          ),
+          SafeArea(
+            child:  SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.all(20),
+              child: Center(
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: _elegirFoto,
+                      child: CircleAvatar(
+                        radius: 80,
+                        backgroundImage: _fotoBytes == null
+                          ? null
+                          : MemoryImage(_fotoBytes!),
+                        child: _fotoBytes == null
+                          ? const Icon(Icons.person, size: 50)
+                          : null,
+                      ),
+                    ),
 
-              SizedBox(height: 10),
+                    SizedBox(height: 10),
 
-              Text(
-                'Fas',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
+                    Text(
+                      'Fas',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
               
 
-              SizedBox(height: 15),
+                    SizedBox(height: 15),
 
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.yellow,
-                  ),
-                  title: Text('Pokemon Favoritos'),
-                  trailing: Text('0'),
-                  onTap: (){},
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.yellow,
+                        ),
+                        title: Text('Pokemon Favoritos'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.red,
+                        ),
+                        title: Text('Pokemon Capturados'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.green,
+                        ),
+                        title: Text('Pokemon Vistos'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.blue,
+                        ),
+                        title: Text('Victorias'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.black,
+                        ),
+                        title: Text('Derrotas'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.grey,
+                        ),
+                        title: Text('Amigos'),
+                        trailing: Text('0'),
+                        onTap: (){},
+                      ),
+                    ),
+
+                    Card(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.catching_pokemon,
+                          color: Colors.grey,
+                        ),
+                        title: Text('Regitro de entrenador'),
+                        trailing: Text('0'),
+                        onTap: () => context.go('/register'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.red,
-                  ),
-                  title: Text('Pokemon Capturados'),
-                  trailing: Text('0'),
-                  onTap: (){},
-                ),
-              ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.green,
-                  ),
-                  title: Text('Pokemon Vistos'),
-                  trailing: Text('0'),
-                  onTap: (){},
-                ),
-              ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.blue,
-                  ),
-                  title: Text('Victorias'),
-                  trailing: Text('0'),
-                  onTap: (){},
-                ),
-              ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.black,
-                  ),
-                  title: Text('Derrotas'),
-                  trailing: Text('0'),
-                  onTap: (){},
-                ),
-              ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.grey,
-                  ),
-                  title: Text('Amigos'),
-                  trailing: Text('0'),
-                  onTap: (){},
-                ),
-              ),
-
-              Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.grey,
-                  ),
-                  title: Text('Regitro de entrenador'),
-                  trailing: Text('0'),
-                  onTap: () => context.go('/register'),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          )
+        ]
       ),
       //trae el drawer a details
       drawer: const DrawerScreen(),

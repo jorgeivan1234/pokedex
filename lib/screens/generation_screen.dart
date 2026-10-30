@@ -31,111 +31,226 @@ class GenerationScreen extends StatelessWidget {
         child: Icon(Icons.arrow_back_ios_new_rounded),
         onPressed: () => context.go('/home'), 
       ),
-      body: ListView(
+      body: Stack(
         children: [
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.red,),
-            title: Text('Generacion 1'),
-            subtitle: Text('Kanto'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Kanto', 'generation': 1},
-              );
-            },          
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/bulbasaur_totodile.gif',
+              fit: BoxFit.fill
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.blue.shade900),
-            title: Text('Generacion 2'),
-            subtitle: Text('Johto'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Johto', 'generation': 2},
-              );
-            },  
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.4),
+            ),
           ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.black),
-            title: Text('Generacion 3'),
-            subtitle: Text('Hoenn'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Hoenn', 'generation': 3},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.deepPurple.shade900),
-            title: Text('Generacion 4'),
-            subtitle: Text('Sinnoh'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Sinnoh', 'generation': 4},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.white),
-            title: Text('Generacion 5'),
-            subtitle: Text('Unova'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Unova', 'generation': 5},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.green.shade900),
-            title: Text('Generacion 6'),
-            subtitle: Text('Kalos'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Kalos', 'generation': 6},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.cyan.shade900),
-            title: Text('Generacion 7'),
-            subtitle: Text('Alola'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Alola', 'generation': 7},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.yellow.shade900),
-            title: Text('Generacion 8'),
-            subtitle: Text('Galar'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Galar', 'generation': 8},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon, color: Colors.teal.shade900),
-            title: Text('Generacion 9'),
-            subtitle: Text('Paldea'),
-            onTap: (){
-              context.push(
-                '/region',
-                extra: {'name': 'Paldea', 'generation': 9},
-              );
-            },  
-          ),
-          ListTile(
-            leading: Icon(Icons.catching_pokemon),
-            title: Text('Generacion 10'),
-            subtitle: Text('Proximamente...'),
+          ListView(
+            children: [
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.red,),
+                title: Text(
+                  'Generacion 1',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Kanto',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Kanto', 'generation': 1},
+                  );
+                },          
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.blue.shade900),
+                title: Text(
+                  'Generacion 2',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Johto',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Johto', 'generation': 2},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.black),
+                title: Text(
+                  'Generacion 3',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Hoenn',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Hoenn', 'generation': 3},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.deepPurple.shade900),
+                title: Text(
+                  'Generacion 4',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Sinnoh',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Sinnoh', 'generation': 4},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.white),
+                title: Text(
+                  'Generacion 5',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Unova',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Unova', 'generation': 5},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.green.shade900),
+                title: Text(
+                  'Generacion 6',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Kalos',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Kalos', 'generation': 6},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.cyan.shade900),
+                title: Text(
+                  'Generacion 7',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Alola',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Alola', 'generation': 7},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.yellow.shade900),
+                title: Text(
+                  'Generacion 8',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Galar',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Galar', 'generation': 8},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon, color: Colors.teal.shade900),
+                title: Text(
+                  'Generacion 9',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Paldea',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                onTap: (){
+                  context.push(
+                    '/region',
+                    extra: {'name': 'Paldea', 'generation': 9},
+                  );
+                },  
+              ),
+              ListTile(
+                leading: Icon(Icons.catching_pokemon),
+                title: Text(
+                  'Generacion 10',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+                subtitle: Text(
+                  'Proximamente...',
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                ),
+              ),
+            ],
           ),
         ],
       ),
