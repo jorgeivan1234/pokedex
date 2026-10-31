@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SpritesFiltres extends StatelessWidget {
-  
+
   final String selectedGroup;
   final ValueChanged<String?> onGroupChanged;
 
@@ -11,12 +11,14 @@ class SpritesFiltres extends StatelessWidget {
     required this.onGroupChanged, 
   });
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         DropdownButtonFormField<String>(
-          value: selectedGroup, 
+          initialValue: selectedGroup, 
           hint: Text('Sprites'),
           items: [
             DropdownMenuItem(value: 'ninguno', child: Text('Ninguno')),

@@ -38,6 +38,23 @@ Future<List<Map<String, dynamic>>> obtenerPokemon() async {
       return jsonDecode(detalle.body) as Map<String, dynamic>;
     })
   );
-  // return pokemonCompletos;
 }
+
+Future<Map<String, dynamic>> obtenerPokemonPorNombre(String nombre) async {
+  final respuesta = await http.get(
+    Uri.parse('https://pokeapi.co/api/v2/pokemon/$nombre'),
+  );
+
+  if(respuesta.statusCode != 200){
+    throw Exception('No se pudo encontrar el pokemon $nombre');
+  }
+
+  return jsonDecode(respuesta.body) as Map<String, dynamic>;
+}
+
+
+
+
+
+
 

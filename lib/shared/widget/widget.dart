@@ -7,3 +7,4 @@ export 'sprites_filtres.dart';
 export 'pokemon_navigation.dart';
 export 'sound_pokemon_filter.dart';
 export 'bottons_pokemon.dart';
+export 'evolution_selected.dart';

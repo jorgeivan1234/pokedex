@@ -20,22 +20,7 @@ Future<List<Map<String, dynamic>>> obtenerPokemonSpecies() async {
   final resultados = datos['results'];
 
   final entradas = datos['flavor_text_entries'];
-
-  // final descripcion = entradas.fristWhere(
-  //   (entrada) => entrada['language']['name'] == 'es',
-  //   orelse: () => null,
-  // );
-
-  // tratando de pedirlo direcot en español
-  // final response = await http.get( 
-  //   Uri.parse(respuesta), 
-  //   headers: {
-  //     'Content-Type' : 'application/json',
-  //     'Accept-Language' : 'es-Es',
-  //   },
-  // ); 
-
-
+  
   // pide los detalles de cada pokemon y toma los resultados
   return Future.wait<Map<String, dynamic>>(
     resultados.map<Future<Map<String, dynamic>>>((pokemonSpecies) async {
@@ -45,5 +30,16 @@ Future<List<Map<String, dynamic>>> obtenerPokemonSpecies() async {
       return jsonDecode(detalle.body) as Map<String, dynamic>;
     })
   );
-  // return pokemonCompletos;
+}
+
+Future<Map<String, dynamic>> obtenerEvolucion(String url) async {
+  
+  final respuesta = await http.get(Uri.parse(url));
+  
+  if (respuesta.statusCode != 200){
+    throw Exception('No se puedieron cargar las evoluciones.');
+  }
+
+  return jsonDecode(respuesta.body) as Map<String, dynamic>;
+
 }
