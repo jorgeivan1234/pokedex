@@ -7,8 +7,6 @@ import '../shared/infraestructure/service/poke_api_service.dart';
 
 class HomeScreen extends StatefulWidget {
 
-  // final int pageIndex; 
-
   const HomeScreen({
     super.key, 
     // required this.pageIndex

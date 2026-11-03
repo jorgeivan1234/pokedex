@@ -151,5 +151,10 @@ final appRouter = GoRouter(
       path: '/tutorial',
       builder: (context, state) => TutorialScreen(),
     ),
+
+    GoRoute(
+      path: '/proximamente',
+      builder: (context, state) => Proximamente(),
+    ),
   ],
 );

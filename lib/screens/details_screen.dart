@@ -309,6 +309,37 @@ class DetailsScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
+
+                              SizedBox(height: 20),
+
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusGeometry.circular(12)
+                                ),
+                                child: ExpansionTile(
+                                  backgroundColor: colorCard2,
+                                  title: Text(
+                                    'Ubicaciones',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    )
+                                  ),
+                                  children: [
+                                    // crea un layout para ls movimientos
+                                    Wrap(
+                                      spacing: 8,
+                                      runSpacing: 8,
+                                      children: [
+                                        if (evolutionUrl != null)
+                                        EvolutionSelected(url: evolutionUrl)
+                                        else 
+                                        const Text('No hay datos de Ubicaciones disponibles.'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                                                     
                               SizedBox(width: 12),
 

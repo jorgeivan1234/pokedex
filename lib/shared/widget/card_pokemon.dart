@@ -33,6 +33,7 @@ class CardPokemon extends StatelessWidget {
       ? types.first['type']['name'].toString()
       : '';
 
+
     final colorCard = pokemonTypeColor(typePrincipal);
     final colorCard2 = pokemonTypeColor2(typePrincipal);
 

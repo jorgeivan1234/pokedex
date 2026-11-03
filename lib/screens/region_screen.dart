@@ -19,6 +19,19 @@ class RegionScreen extends StatefulWidget {
 }
 
 class _RegionScreenState extends State<RegionScreen> {
+
+  final mapasPorRegion = <String, dynamic> {
+    'kanto': 'assets/images/mapas/kanto.webp',
+    'johto': 'assets/images/mapas/johto.png',
+    'hoenn': 'assets/images/mapas/hoenn.png',
+    'sinnoh': 'assets/images/mapas/Sinnoh.webp',
+    'unova': 'assets/images/mapas/unova.png',
+    'kalos': 'assets/images/mapas/kalos.jpg',
+    'alola': 'assets/images/mapas/alola.webp',
+    'galar': 'assets/images/mapas/galar.jpg',
+    'paldea': 'assets/images/mapas/paldea.jpg',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,25 +68,48 @@ class _RegionScreenState extends State<RegionScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('Generacion ${widget.generation} - ${widget.name}'),
+
+                    ListTile(
+                      leading: const Icon(Icons.map_outlined),
+                      title: const Text('Mapas'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        final ruta = mapasPorRegion[widget.name.toLowerCase()];
+                        if (ruta == null) return;
+
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Image.asset(
+                                ruta, fit: BoxFit.cover,
+                                scale: 0.4
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                     ListTile(
                       leading: const Icon(Icons.swap_calls),
                       title: const Text('Movimientos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () {},
+                      onTap: () => context.go('/proximamente'),
                     ),
                     const Divider(height: 2),
                     ListTile(
                       leading: const Icon(Icons.catching_pokemon_rounded),
                       title: const Text('Species'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () {},
+                      onTap: () => context.go('/proximamente'),
                     ),
                     const Divider(height: 2),
                     ListTile(
                       leading: const Icon(Icons.category),
                       title: const Text('Tipos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () {},
+                      onTap: () => context.go('/proximamente'),
                     ),
                     const Divider(height: 2),
                     ListTile(
@@ -81,7 +117,7 @@ class _RegionScreenState extends State<RegionScreen> {
                       title: const Text('Generacion'),
                       subtitle: const Text('Debut'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () {},
+                      onTap: () => context.go('/proximamente'),
                     ),
                     const Divider(height: 2),
                   ],
