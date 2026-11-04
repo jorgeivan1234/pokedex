@@ -4,7 +4,7 @@ import 'package:pokedex/screens/screens.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
-  initialLocation: '/register',
+  initialLocation: '/login',
   //ruutas de pantallas
   routes: [
     GoRoute(
