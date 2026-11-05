@@ -186,7 +186,7 @@ class DetailsScreen extends StatelessWidget {
                               SizedBox(width: 12),
                               
                               Text(
-                                'Hability', 
+                                'Ability', 
                                 style: TextStyle(
                                   fontSize: 20,
                                   //hace mas oscuro el texto
@@ -198,16 +198,17 @@ class DetailsScreen extends StatelessWidget {
                 
                               //crea un layout para las habilidades
                               InkWell(// Cada chip debe navegar con los datos de su propia habilidad
-                                onTap: () => context.push('/habilitys', extra: ['ability']),
+                                onTap: () => context.push('/abilities', extra: ['ability']),
                                 child: Wrap(
                                   spacing: 8,
                                   runSpacing: 8,
                                   children: [
                                     for (final item in abilities)
-                                    Chip(
+                                    ActionChip(
                                       backgroundColor: colorCard2,
                                       avatar: const Icon(Icons.catching_pokemon_sharp),
                                       label: Text(item['ability']['name'].toString()),
+                                      onPressed: () => context.push('/abilities', extra: item['ability']),
                                     ),
                                   ],
                                 ),
@@ -295,7 +296,6 @@ class DetailsScreen extends StatelessWidget {
                                     )
                                   ),
                                   children: [
-                                    // crea un layout para ls movimientos
                                     Wrap(
                                       spacing: 8,
                                       runSpacing: 8,
@@ -309,7 +309,7 @@ class DetailsScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
+                              
                               SizedBox(height: 20),
 
                               Card(

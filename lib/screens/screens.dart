@@ -11,3 +11,4 @@ export 'register_screen.dart';
 export 'tutorial_screen.dart';
 export 'login_screen.dart';
 export 'proximamente.dart';
+export 'ability_list_screen.dart'; 

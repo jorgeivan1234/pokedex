@@ -53,7 +53,15 @@ Future<Map<String, dynamic>> obtenerPokemonPorNombre(String nombre) async {
 }
 
 
+Future<Map<String, dynamic>> obtenerHabilidad() async {
+  final respuesta = await http.get(Uri.parse('https://pokeapi.co/api/v2/ability?offset=20&limit=20'));
 
+  if ( respuesta.statusCode != 200){
+    throw Exception('No se pudo cargar la habilidad.');
+  }
+
+  return jsonDecode(respuesta.body) as Map<String, dynamic>;
+}
 
 
 

@@ -11,18 +11,6 @@ class PokedexNavigationBar extends StatelessWidget {
     required this.onTap,
   });
 
-  // void onItemTapped(BuildContext context, int index){
-  //   switch(index) {
-  //     case 0:
-  //       context.go('/home/0');
-  //     break;
-
-  //     case 1:
-  //       context.go('/home/1');
-  //     break;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -35,6 +23,10 @@ class PokedexNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.catching_pokemon,            
+            color: Colors.red,
+          ),
+          activeIcon: Icon(
+            Icons.catching_pokemon,
             color: Colors.red,
           ),
           label: 'Pokedex',
