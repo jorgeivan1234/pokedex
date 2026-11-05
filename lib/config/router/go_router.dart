@@ -116,18 +116,23 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/habilitys',
-      builder: (context, state) {
-        final pokemon = state.extra;
-        //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
-          if ( pokemon is Map<String, dynamic> ){
-            return HabilitysScreen(pokemon: pokemon);
-          }
+      path: '/abilities',
+      builder: (context, state) => const AbilityListScreen(),
+    ),
 
-        //en caso de que no exista el pokemon o no este disponible
-        return  Scaffold(
+    GoRoute(
+      path: '/abilities',
+      builder: (context, state) {
+        final ability = state.extra;
+        if (ability is Map<String, dynamic> &&
+            ability['name'] is String &&
+            ability['url'] is String) {
+          return AbilitiesScreen(ability: ability, pokemon: {},);
+        }
+
+        return Scaffold(
           body: const Center(
-            child: Text('No se recibieron los datos del Pokémon')
+            child: Text('No se recibieron los datos de la habilidad.'),
           ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.arrow_back_ios_new_rounded),
