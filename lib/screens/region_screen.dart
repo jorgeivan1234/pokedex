@@ -94,7 +94,8 @@ class _RegionScreenState extends State<RegionScreen> {
                     ListTile(
                       leading: const Icon(Icons.psychology),
                       title: const Text('Habilidades'),
-                      trailing: const Icon(Icons.chevron_right),                      onTap: () => context.push('/abilities'),
+                      trailing: const Icon(Icons.chevron_right),                      
+                      onTap: () => context.push('/abilitiesList', extra: widget.generation),
                     ),
                     ListTile(
                       leading: const Icon(Icons.swap_calls),

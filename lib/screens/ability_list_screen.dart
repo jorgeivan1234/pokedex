@@ -4,38 +4,28 @@ import 'package:pokedex/shared/infraestructure/service/services.dart';
 
 import '../shared/widget/widget.dart';
 
-class AbilityListScreen extends StatefulWidget {
+class AbilitieListScreen extends StatefulWidget {
 
-  const AbilityListScreen({
-    super.key
+  final int generation;
+
+  const AbilitieListScreen({
+    super.key, 
+    required this.generation
   });
 
   @override
-  State<AbilityListScreen> createState() => _AbilityListScreenState();
+  State<AbilitieListScreen> createState() => _AbilitieListScreenState();
 }
 
-class _AbilityListScreenState extends State<AbilityListScreen> {
+class _AbilitieListScreenState extends State<AbilitieListScreen> {
 
   late final Future<List<Map<String, dynamic>>> abilities;
   String searchText = '';
-
+// abilities = obtenerHabilidadesPorGeneracion(widget.generation);
   @override
   void initState() {
     super.initState();
-    abilities = obtenerHabilidad().then((response) {
-      final results = response['results'];
-      if (results is! List) {
-        throw const FormatException('La respuesta no contiene habilidades.');
-      }
-
-      return results
-          .whereType<Map>()
-          .map((ability) => Map<String, dynamic>.from(ability))
-          .where(
-            (ability) => ability['name'] is String && ability['url'] is String,
-          )
-          .toList();
-    });
+    abilities = obtenerHabilidadPorGeneracion(widget.generation);
   }
 
   @override
@@ -48,7 +38,7 @@ class _AbilityListScreenState extends State<AbilityListScreen> {
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: Colors.black,
-          fontSize: 30,
+          fontSize: 25,
         ),
       ),
 
@@ -65,10 +55,6 @@ class _AbilityListScreenState extends State<AbilityListScreen> {
         child: Icon(Icons.arrow_back_ios_new_rounded),
         onPressed: () => context.go('/home'), 
       ),
-
-
-
-
       body: Stack(
         children: [
           SizedBox.expand(
@@ -123,7 +109,15 @@ class _AbilityListScreenState extends State<AbilityListScreen> {
                   ),
                   Expanded(
                     child: filteredAbilities.isEmpty 
-                    ? const Center(child: Text('No se encontraron habilidades.'))
+                    ? const Center(child: Text(
+                      'Esta Generacion no implemento Habilidades (Hasta los remakes).',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
+                    ))
                     : ListView.builder(
                       itemCount: filteredAbilities.length,
                       itemBuilder: (context, index) {

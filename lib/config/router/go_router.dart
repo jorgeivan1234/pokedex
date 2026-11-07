@@ -116,8 +116,20 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/abilities',
-      builder: (context, state) => const AbilityListScreen(),
+      path: '/abilitiesList',
+      builder: (context, state) {
+        final generation = state.extra;
+
+        if (generation is int) {
+          return AbilitieListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
+          ),
+        );
+      },
     ),
 
     GoRoute(
@@ -155,6 +167,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/tutorial',
       builder: (context, state) => TutorialScreen(),
+    ),
+    
+    GoRoute(
+      path: '/juego',
+      builder: (context, state) => JuegosScreen(),
     ),
 
     GoRoute(
