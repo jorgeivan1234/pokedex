@@ -45,16 +45,33 @@ class EvolutionSelected extends StatelessWidget {
           return Text('No se pudo cagar ${species['name']}.');
         }
 
-        final pokemon = snapshot.data as Map<String, dynamic>?;
-        final sprite = (pokemon?['Sprites'] as Map<String, dynamic>?)?['front_default'] as String?;
-
+        final pokemon = snapshot.data!;
+        final sprites = pokemon['sprites'] as Map<String, dynamic>?;
+        final otherSprites = sprites?['other'] as Map<String, dynamic>?;
+        final officialArtwork = otherSprites?['official-artwork'] as Map<String, dynamic>?;
+        final homeSprite = otherSprites?['home'] as Map<String, dynamic>?;
+        final sprite = 
+          sprites?['front_default'] as String ? 
+          ?? officialArtwork?['front_default'] as String? 
+          ?? homeSprite?['front_default'] as String?;
+        
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 if(sprite != null)
-                  Image.network(sprite, width: 64, height: 64)
+                  Image.network(
+                    sprite, 
+                    width: 100, 
+                    height: 100,
+                    errorBuilder: (
+                      context, error, stackTrace
+                    ) => const Icon(
+                      Icons.catching_pokemon_rounded, 
+                      size: 64
+                    )
+                  )
                 else 
                   const Icon(Icons.catching_pokemon_rounded, size: 64),
                 Text(species['name'].toString()),

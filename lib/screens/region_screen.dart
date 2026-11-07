@@ -84,12 +84,18 @@ class _RegionScreenState extends State<RegionScreen> {
                               padding: const EdgeInsets.all(12),
                               child: Image.asset(
                                 ruta, fit: BoxFit.cover,
-                                scale: 0.4
+                                scale: 0.9
                               ),
                             ),
                           ),
                         );
                       },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.psychology),
+                      title: const Text('Habilidades'),
+                      trailing: const Icon(Icons.chevron_right),                      
+                      onTap: () => context.push('/abilitiesList', extra: widget.generation),
                     ),
                     ListTile(
                       leading: const Icon(Icons.swap_calls),

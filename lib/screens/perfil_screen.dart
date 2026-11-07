@@ -165,18 +165,18 @@ class _PerfilScreenState extends State<PerfilScreen> {
                       ),
                     ),
 
-                    Card(
-                      color: Colors.white.withValues(alpha: 0.4),
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.catching_pokemon,
-                          color: Colors.grey,
-                        ),
-                        title: Text('Regitro de entrenador'),
-                        trailing: Text('0'),
-                        onTap: () => context.go('/register'),
-                      ),
-                    ),
+                    // Card(
+                    //   color: Colors.white.withValues(alpha: 0.4),
+                    //   child: ListTile(
+                    //     leading: Icon(
+                    //       Icons.catching_pokemon,
+                    //       color: Colors.grey,
+                    //     ),
+                    //     title: Text('Regitro de entrenador'),
+                    //     trailing: Text('0'),
+                    //     onTap: () => context.go('/register'),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
