@@ -99,8 +99,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,                     
                     children: [
                       // SizedBox(
-                      //   height: 450,
+                      //   height: 300,
+                      //   child: Image.asset(
+                      //     'assets/icon/pokemon.png',
+                      //     fit: BoxFit.contain,
+                      //     errorBuilder: (context, error, stackTrace) =>
+                      //     const Center(child: Text('No se pudo cargar la imagen')),
+                      //   ),
                       // ),
+
+
                       TextFormField(
                         style: TextStyle(
                           color: Colors.white,

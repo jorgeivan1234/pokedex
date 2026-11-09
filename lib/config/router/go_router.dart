@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/screens/screens.dart';
+import 'package:pokedex/screens/type_list_screen.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
@@ -178,5 +179,40 @@ final appRouter = GoRouter(
       path: '/proximamente',
       builder: (context, state) => Proximamente(),
     ),
+
+    GoRoute(
+      path: '/movesList',
+      builder: (context, state) {
+        final generation = state.extra;
+
+        if (generation is int) {
+          return MoveListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
+          ),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/typeList',
+      builder: (context, state) {
+        final generation = state.extra;
+
+        if (generation is int) {
+          return TypeListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
+          ),
+        );
+      },
+    ),
+
   ],
 );

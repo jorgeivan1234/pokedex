@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 Future<List<Map<String, dynamic>>> obtenerPokemon() async {
   //consulta la api
   final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
+    Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=251&offset=0')
   );
 
   if (respuesta.statusCode != 200){
@@ -71,6 +71,50 @@ Future<List<Map<String, dynamic>>> obtenerHabilidadPorGeneracion(int generation)
 
   return habilidades
     .whereType<Map>()
-    .map((habilidades) => Map<String, dynamic>.from(habilidades))
+    .map((habilidad) => Map<String, dynamic>.from(habilidad))
+    .toList();
+}
+
+Future<List<Map<String, dynamic>>> obtenerMovimientosPorGeneracion(
+  int generation,
+) async {
+  final respuesta = await  http.get(Uri.parse('https://pokeapi.co/api/v2/generation/$generation/'));
+
+  if(respuesta.statusCode != 200) {
+    throw Exception('No se pudo cargar los movimientos de la generacion.');
+  }
+  final datos = jsonDecode(respuesta.body) as Map<String, dynamic>;
+  final movimientos = datos['moves'];
+
+  if(movimientos is! List) {
+    throw const FormatException(
+      'La respuesta no continene la lista de Movimientos.'
+    );
+  }
+  return movimientos
+    .whereType<Map>()
+    .map((movimiento) => Map<String, dynamic>.from(movimiento))
+    .toList();
+}
+
+Future<List<Map<String, dynamic>>> obtenerTiposPorGeneracion(
+  int generation,
+) async {
+  final respuesta = await http.get(Uri.parse('https://pokeapi.co/api/v2/generation/$generation/'));
+  
+  if(respuesta.statusCode != 200) {
+    throw Exception('N se pudo cargar los tipos de la generacion.');
+  }
+  final datos = jsonDecode(respuesta.body) as Map<String, dynamic>;
+  final types = datos['types'];
+
+  if(types is! List) {
+    throw const FormatException(
+      'La respuesta no contiene la lista de tipos.'
+    );
+  }
+  return types
+    .whereType<Map>()
+    .map((type) => Map<String, dynamic>.from(type))
     .toList();
 }

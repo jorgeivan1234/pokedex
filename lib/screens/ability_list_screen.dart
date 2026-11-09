@@ -44,7 +44,7 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
 
       //trae el drawer a details
       drawer: const DrawerScreen(),
-      //trae el widget de podexnavigatio
+      //trae el widget de podexnavigatioa
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
         onTap: (index) {
@@ -53,7 +53,7 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_back_ios_new_rounded),
-        onPressed: () => context.go('/home'), 
+        onPressed: () => context.go('/generation'), 
       ),
       body: Stack(
         children: [
@@ -88,7 +88,7 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
               return Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsetsGeometry.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Buscar habilidad',
@@ -148,7 +148,7 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
   }
 
   String _formatName(String name) {
-    final formatted = name.replaceAll('-', '');
+    final formatted = name.replaceAll('-', ' ');
     return formatted.isEmpty
       ? formatted
       : '${formatted[0].toUpperCase()} ${formatted.substring(1)}';
