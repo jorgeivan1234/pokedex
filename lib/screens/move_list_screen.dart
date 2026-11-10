@@ -54,6 +54,11 @@ class _MoveListScreenState extends State<MoveListScreen> {
               fit: BoxFit.cover,
             ),
           ),
+          SizedBox(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.1)
+            ),
+          ),
           FutureBuilder<List<Map<String, dynamic>>>(
             future: moves, 
             builder: (context, snapshot) {

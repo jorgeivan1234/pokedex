@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/models/models.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/screens/type_list_screen.dart';
 
@@ -214,5 +215,22 @@ final appRouter = GoRouter(
       },
     ),
 
+
+    GoRoute(
+      path: '/Game-Description',
+      builder: (context, state){
+        final game = state.extra;
+
+        if(game is PokemonGameModel){
+          return GameDescriptionScreen(game: game);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se recibieron ninguno de los datos del juego.'),
+          ),
+        );
+      }
+    )
   ],
 );

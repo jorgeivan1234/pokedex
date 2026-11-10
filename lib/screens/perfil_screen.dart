@@ -55,6 +55,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
               fit: BoxFit.cover
             ),
           ),
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.1)
+            ),
+          ),
           SafeArea(
             child:  SingleChildScrollView(
               padding: const EdgeInsetsDirectional.all(20),

@@ -31,7 +31,6 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: const Text('Lista de Habilidades'),
         backgroundColor: Colors.blueAccent.shade700,

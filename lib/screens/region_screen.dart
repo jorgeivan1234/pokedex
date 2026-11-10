@@ -115,7 +115,7 @@ class _RegionScreenState extends State<RegionScreen> {
                       leading: const Icon(Icons.category),
                       title: const Text('Tipos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/typeList'),
+                      onTap: () => context.go('/typeList', extra: widget.generation),
                     ),
                     const Divider(height: 2),
                     ListTile(
