@@ -1,9 +1,12 @@
+import 'dart:ui';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
 
   final Map<String, dynamic> pokemon;
   final Map<String, dynamic> pokemonSpecies;
@@ -15,20 +18,44 @@ class DetailsScreen extends StatelessWidget {
   });
 
   @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+
+  final AudioPlayer _player  = AudioPlayer();
+
+  Future<void> _playCry(String version) async {
+    final id = widget.pokemon['id'];
+    final url = 'https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/$version/$id.ogg';
+
+    await _player.stop();
+    await _player.play(UrlSource(url));
+  }
+
+  @override
+  void dispose(){
+    _player.dispose();
+    super.dispose();
+  }
+  
+  @override
   Widget build(BuildContext context) {
  
-    final abilities = pokemon['abilities'];
-    final type = pokemon['types'];
-    final stats = pokemon['stats'];
-    final gameGenerational = pokemon['game_indices'];
-    final heightMeters = (pokemon['height']) / 10;
-    final weightKg = (pokemon['weight']) / 10;
-    final items = pokemon['held_items'];
-    final moves = pokemon['moves'];
+    final abilities = widget.pokemon['abilities'];
+    final type = widget.pokemon['types'];
+    final stats = widget.pokemon['stats'];
+    final gameGenerational = widget.pokemon['game_indices'];
+    final heightMeters = (widget.pokemon['height']) / 10;
+    final weightKg = (widget.pokemon['weight']) / 10;
+    final items = widget.pokemon['held_items'];
+    final moves = widget.pokemon['moves'];
 
-    final description = pokemonSpecies['flavor_text_entries'] as List? ?? [];
-    final evolutionData = pokemonSpecies['evolution_chain'];
+    final description = widget.pokemonSpecies['flavor_text_entries'] as List? ?? [];
+    final evolutionData = widget.pokemonSpecies['evolution_chain'];
     final evolutionUrl = evolutionData is Map ? evolutionData['url'] as String? : null;
+    final number = widget.pokemonSpecies['pokedex_numbers'];
+
 
     final entradaEs = description.where(
       (item) => item['language']['name'] == 'es',
@@ -45,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
         : '';
 
     final colorCard = pokemonTypeColor(typePrincipal);
-    final colorCard2 = pokemonTypeColor2(typePrincipal);
+    // final colorCard2 = pokemonTypeColor2(typePrincipal);
 
     return Scaffold(
       //color del fondo scafoold
@@ -54,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: colorCard,
         //llama el nombre del pokemon para el titulo desde la api
-        title: Text(pokemon['name']),
+        title: Text(widget.pokemon['name']),
         titleTextStyle: TextStyle(
           color: Colors.black,
           fontSize: 24,
@@ -95,352 +122,175 @@ class DetailsScreen extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              InkWell(
-                                onLongPress: () => context.push('/sprites', extra: pokemon),
-                                child: Image.network(
-                                  pokemon['sprites']['front_default'],
-                                  scale:  0.4,
-                                ),
-                              ),  
-                              
-                              Text(
-                                pokemon['name'],
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                      
-                              SizedBox(width: 12),
-
-                              Text(
-                                'Pokemon #${pokemon['id']}',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
+                              PokemonHero(
+                                name: widget.pokemon['name'].toString(), 
+                                id: int.parse(
+                                  widget.pokemon['id'].toString()
+                                ), 
+                                imageUrl: widget.pokemon['sprites']['front_default']?.toString() ?? '', 
+                                types: [
+                                  for (final item in type)
+                                  item ['type']['name'].toString()
+                                ],
+                                color: colorCard, 
+                                onCry: () => _playCry('legacy'), 
+                                onLongpress: () => context.push (
+                                  '/sprites',
+                                  extra: widget.pokemon
+                                ),                                
                               ),
 
-                              SizedBox(width: 12),
+                              const SizedBox(height: 10),
 
-                              Text(
-                                'Descripcion',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Card(
-                                shadowColor: Colors.white,
-                                surfaceTintColor: Colors.black,
-                                color: colorCard2,
-                                child: Padding(
-                                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 5),
-                                  child: Text(
-                                    textoDescription,
-                                    maxLines: 5,
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontSize: 12, fontWeight: FontWeight.bold
-                                    ),
+                              _DetailsSection(
+                                title: 'Descripcion', 
+                                icon: Icons.menu_book_outlined, 
+                                child: Text(
+                                  textoDescription,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    height: 1.5,
                                   ),
                                 ),
                               ),
 
-                              SizedBox(width: 12),
-
-                              Text(
-                                'Experience: ${pokemon['base_experience']} XP',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                              _DetailsSection(
+                                title: 'Datos principales',
+                                icon: Icons.info_outline_rounded, 
+                                child: Wrap(
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  children: [
+                                    _InfoBadge(
+                                      label: 'Altura', 
+                                      value: '${heightMeters.toStringAsFixed(1)} M',
+                                    ),
+                                    _InfoBadge(
+                                      label: 'Peso', 
+                                      value: '${weightKg.toStringAsFixed(1)} Kg',
+                                    ),
+                                    _InfoBadge(
+                                      label: 'Experiencia', 
+                                      value: '${widget.pokemon['base_experience']} EXP',
+                                    ),
+                                    _InfoBadge(
+                                      label: 'R.Captura', 
+                                      value: '${widget.pokemonSpecies['capture_rate']}',
+                                    ),
+                                    _InfoBadge(
+                                      label: 'Felicidad Base', 
+                                      value: '${widget.pokemonSpecies['base_happiness']}',
+                                    ),
+                                    _InfoBadge(
+                                      label: 'Eclosiones', 
+                                      value: '${widget.pokemonSpecies['hatch_counter']}',
+                                    ),
+                                  ],
                                 ),
                               ),
 
-                              SizedBox(width: 12),
-
-                              Text(
-                                'Altura: ${heightMeters.toStringAsFixed(1)} M',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
+                              _DetailsSection(
+                                title: 'Caracteristicas', 
+                                icon: Icons.auto_awesome_rounded, 
+                                child: Column(
+                                  children: [
+                                    _FactRow(
+                                      label: 'Legendario', 
+                                      value: '${widget.pokemonSpecies['is_legendary']}',
+                                    ),
+                                    _FactRow(
+                                      label: 'Mitico', 
+                                      value: '${widget.pokemonSpecies['is_mythical']}',
+                                    ),
+                                    _FactRow(
+                                      label: 'Diferencia de genero', 
+                                      value: '${widget.pokemonSpecies['has_gender_differences']}',
+                                    ),
+                                  ],
                                 ),
                               ),
 
-                              SizedBox(width: 12),
+                              _DetailsSection(
+                                title: 'Habilidades', 
+                                icon: Icons.bolt_rounded, 
+                                child: Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  children: [
+                                    for (final item in abilities)
+                                      ActionChip(
+                                        avatar: Icon(
+                                          item['is_hidden'] == true
+                                            ? Icons.visibility_off_rounded
+                                            :Icons.bolt_rounded,
+                                          size: 18,
+                                        ),
+                                        label: Text(
+                                          '${item['ability']['name']}' 
+                                          '${item['is_hidden'] == true ? ' (oculta)' : ''}',
+                                        ),
+                                        onPressed: () => context.push(
+                                          '/abilities',
+                                          extra: item['ability']
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              _DetailsSection(
+                                title: 'Estadisticas', 
+                                icon: Icons.bar_chart_rounded, 
+                                child: Column(
+                                  children: [
+                                    for (final item in stats)
+                                      _StatsRow(
+                                        name: item['stat']['name'].toString(), 
+                                        value: item['base_stat'] as int, 
+                                        color: colorCard
+                                      ),
+                                  ],
+                                ),
+                              ),
 
-                              Text(
-                                'peso: ${weightKg.toStringAsFixed(1)} Kg',
-                                style: TextStyle(
-                                  fontSize: 15,                                  
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
+                              _ExpandableDetails(
+                                title: 'Evoluciones', 
+                                icon: Icons.alt_route_rounded, 
+                                child: evolutionUrl == null   
+                                  ? const Text('No hay datos de evolucion disponible.')
+                                  : EvolutionSelected(url: evolutionUrl)
                               ),
-                              
-                              SizedBox(width: 12),
-                              
-                              Text(
-                                'Hability', 
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  //hace mas oscuro el texto
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                
-                              SizedBox(height: 8),
-                
-                              //crea un layout para las habilidades
-                              InkWell(// Cada chip debe navegar con los datos de su propia habilidad
-                                onTap: () => context.push('/habilitys', extra: ['ability']),
+
+                              _ExpandableDetails(
+                                title: 'Juegos y Generaciones', 
+                                icon: Icons.videogame_asset_rounded, 
                                 child: Wrap(
                                   spacing: 8,
                                   runSpacing: 8,
                                   children: [
-                                    for (final item in abilities)
-                                    Chip(
-                                      backgroundColor: colorCard2,
-                                      avatar: const Icon(Icons.catching_pokemon_sharp),
-                                      label: Text(item['ability']['name'].toString()),
-                                    ),
+                                    for(final item in gameGenerational)
+                                      Chip(
+                                        avatar: const Icon(Icons.catching_pokemon_rounded),
+                                        label: Text(item['version']['name'].toString()),
+                                      ),
                                   ],
                                 ),
                               ),
-                
-                              SizedBox(height: 8),
-                
-                              Text(
-                                'Type', 
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  //hace mas oscuro el texto
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
 
-                              SizedBox(height: 8),
-                
-                              //crea un layout para la tabla de su tipo
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
-                                children: [
-                                  for (final item in type)
-                                  Chip(
-                                    backgroundColor: colorCard2,
-                                    avatar: const Icon(Icons.catching_pokemon_sharp),
-                                    label: Text(item['type']['name'].toString()),
-                                  ),
-                                ],
-                              ),
-                
-                              SizedBox(height: 10),
-
-
-                              Text(
-                                'Ratio de Captura: ${pokemonSpecies['capture_rate']}',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                
-                              SizedBox(height: 8),
-
-                              Text(
-                                'Stats', 
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  //hace mas oscuro el texto
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-
-                              SizedBox(height: 8),
-                
-                              //crea un layout para la tabla de su stats
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
-                                children: [
-                                  for (final item in stats)
-                                  Chip(
-                                    backgroundColor: colorCard2,
-                                    avatar: const Icon(Icons.catching_pokemon),
-                                    label: Text('${item['stat']['name']} ${item['base_stat']}'),
-                                  ),
-                                ],
-                              ),
-                
-                              SizedBox(height: 20),
-
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(12)
-                                ),
-                                child: ExpansionTile(
-                                  backgroundColor: colorCard2,
-                                  title: Text(
-                                    'Evoluciones',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )
-                                  ),
+                              _ExpandableDetails(
+                                title: 'Objetos que pueden llevar', 
+                                icon: Icons.inventory_2_rounded, 
+                                child: Wrap(
+                                  spacing: 8,
+                                  runSpacing: 8,
                                   children: [
-                                    // crea un layout para ls movimientos
-                                    Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      children: [
-                                        if (evolutionUrl != null)
-                                        EvolutionSelected(url: evolutionUrl)
-                                        else 
-                                        const Text('No hay datos de evolucion disponibles.'),
-                                      ],
-                                    ),
+                                    for(final item in items)
+                                      Chip(
+                                        label: Text(item['item']['name'].toString()),
+                                      ),
                                   ],
                                 ),
                               ),
 
-                              SizedBox(height: 20),
-
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(12)
-                                ),
-                                child: ExpansionTile(
-                                  backgroundColor: colorCard2,
-                                  title: Text(
-                                    'Ubicaciones',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )
-                                  ),
-                                  children: [
-                                    // crea un layout para ls movimientos
-                                    Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      children: [
-                                        if (evolutionUrl != null)
-                                        EvolutionSelected(url: evolutionUrl)
-                                        else 
-                                        const Text('No hay datos de Ubicaciones disponibles.'),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                                                    
-                              SizedBox(width: 12),
-
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(12)
-                                ),
-                                child: ExpansionTile(
-                                  backgroundColor: colorCard2,
-                                  title: Text(
-                                    'Generation',
-                                    style: TextStyle(                              
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )
-                                  ),
-                                  children: [
-                                    //crea un layout para los juegos que aparece
-                                      Wrap(
-                                        spacing: 8,
-                                        runSpacing: 8,
-                                      children: [
-                                        for (final item in gameGenerational)
-                                        Chip(
-                                          backgroundColor: colorCard2,
-                                          avatar: const Icon(Icons.catching_pokemon_sharp),
-                                          label: Text(item['version']['name'].toString()),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-              
-                              SizedBox(width: 12),
-
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(12)
-                                ),
-                                child: ExpansionTile(
-                                  backgroundColor: colorCard2,
-                                  title: Text(
-                                    'Items',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )
-                                  ),
-                                  children: [
-                                    //crea un layout para las items
-                                    Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      children: [
-                                        for (final item in items)
-                                        Chip(
-                                          backgroundColor: colorCard2,
-                                          avatar: pokemon['sprites']?['default'] is String
-                                            ? Image.network(pokemon['sprites']['default'])
-                                            : null,
-                                          label: Text(item['item']['name'].toString()),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(width: 12),
-
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusGeometry.circular(12)
-                                ),
-                                child: ExpansionTile(
-                                  backgroundColor: colorCard2,
-                                  title: Text(
-                                    'Move',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )
-                                  ),
-                                  children: [
-                                    //crea un layout para ls movimientos
-                                    Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      children: [
-                                        for (final item in moves)
-                                        Chip(
-                                          backgroundColor: colorCard2,
-                                          avatar: const Icon(Icons.catching_pokemon_sharp),
-                                          label: Text(item['move']['name'].toString()),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -465,3 +315,213 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 }           
+
+class _DetailsSection extends StatelessWidget {
+
+  final String title;
+  final IconData icon;
+  final Widget child;
+
+  const _DetailsSection({
+    required this.title, 
+    required this.icon, 
+    required this.child
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(top: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ),
+      child: Padding(
+        padding: const EdgeInsetsGeometry.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+
+                Icon(icon, size: 20),
+
+                const SizedBox(width: 10),
+
+                Text(
+                  title, 
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 10),
+
+            child
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoBadge extends StatelessWidget {
+
+  final String label;
+  final String value;
+  
+  const _InfoBadge({
+    required this.label, 
+    required this.value
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(minWidth: 105),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium
+          ),
+
+          const SizedBox(width: 6),
+
+          Text(
+            value, style: const TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FactRow extends StatelessWidget {
+
+  final String label;
+  final dynamic value;
+  
+  const _FactRow({
+    required this.label, 
+    required this.value
+  });
+
+  @override
+  Widget build(BuildContext context) { 
+    final displayValue = value is bool ? ( value ? 'Si' : 'No') : '$value';
+    return Padding(
+      padding: const EdgeInsetsGeometry.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Text(
+            displayValue,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatsRow extends StatelessWidget {
+
+  final String name;
+  final int value;
+  final Color color;
+
+  const _StatsRow({
+    required this.name, 
+    required this.value, 
+    required this.color
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final progress = (value / 255).clamp(0.0, 1.0).toDouble();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(name.replaceAll('-', ' ')),
+              ),
+
+              Text(
+                '$value', style: const TextStyle(
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 5),
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: LinearProgressIndicator(
+              value: progress,
+              minHeight: 8,
+              color: color,
+              backgroundColor: color.withValues(alpha: 0.18),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExpandableDetails extends StatelessWidget {
+
+  final String title;
+  final IconData icon; 
+  final Widget child;
+
+  const _ExpandableDetails({
+    required this.title, 
+    required this.icon, 
+    required this.child
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(top: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(20)
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: ExpansionTile(
+        leading: Icon(icon),
+        title: Text(
+          title, 
+          style: TextStyle(
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+        children: [
+          child
+        ],
+      ),
+    );
+  }
+}

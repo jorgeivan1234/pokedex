@@ -5,18 +5,19 @@ import 'package:go_router/go_router.dart';
 
 import '../shared/widget/widget.dart';
 
-class HabilitysScreen extends StatefulWidget {
+class AbilitiesScreen extends StatefulWidget {
 
   final Map<String, dynamic> pokemon;
 
 
-  const HabilitysScreen({
+  const AbilitiesScreen({
     super.key, 
     required this.pokemon, 
+    required Map<String, dynamic> ability, 
   });
 
   @override
-  State<HabilitysScreen> createState() => _HabilitysScreenState();
+  State<AbilitiesScreen> createState() => _AbilitiesScreenState();
 }
 
   late Map<String, dynamic> currentPokemon;
@@ -68,7 +69,7 @@ class HabilitysScreen extends StatefulWidget {
         }
       }).toList();
 
-class _HabilitysScreenState extends State<HabilitysScreen> {
+class _AbilitiesScreenState extends State<AbilitiesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
