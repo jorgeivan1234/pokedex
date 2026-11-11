@@ -88,7 +88,13 @@ class GameDescriptionScreen extends StatelessWidget {
                         
                         const SizedBox(height: 12),
                     
-                        Text(description?.descripcion ?? game.descripcion),
+                        Text(
+                          description?.descripcion ?? game.descripcion,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
                         if (description == null) ...[
                           const SizedBox(height: 12),
                           const Text(
