@@ -55,6 +55,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
               fit: BoxFit.cover
             ),
           ),
+          SizedBox.expand(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.1)
+            ),
+          ),
           SafeArea(
             child:  SingleChildScrollView(
               padding: const EdgeInsetsDirectional.all(20),
@@ -165,18 +170,18 @@ class _PerfilScreenState extends State<PerfilScreen> {
                       ),
                     ),
 
-                    Card(
-                      color: Colors.white.withValues(alpha: 0.4),
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.catching_pokemon,
-                          color: Colors.grey,
-                        ),
-                        title: Text('Regitro de entrenador'),
-                        trailing: Text('0'),
-                        onTap: () => context.go('/register'),
-                      ),
-                    ),
+                    // Card(
+                    //   color: Colors.white.withValues(alpha: 0.4),
+                    //   child: ListTile(
+                    //     leading: Icon(
+                    //       Icons.catching_pokemon,
+                    //       color: Colors.grey,
+                    //     ),
+                    //     title: Text('Regitro de entrenador'),
+                    //     trailing: Text('0'),
+                    //     onTap: () => context.go('/register'),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

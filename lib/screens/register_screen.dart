@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -13,23 +14,62 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
 
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  bool _isRegistering = false;
+  bool _ocultar = true;
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void _registrar(){
+  Future <void> _registrar() async {
     if(!_formKey.currentState!.validate()) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Formulario valido')
-      )
-    );
+    setState(() => _isRegistering = true);
+
+    try {
+      final response = await Supabase.instance.client.auth.signUp(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        data: {'display_name': _nameController.text.trim()}
+      );
+      if (!mounted) return;
+
+      final message = response.session == null
+        ? 'Registro enviado. Revisa tu correo para configurar la cuenta.'
+        : 'Tu cuenta se creo correctamente.';
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message)
+        )
+      );
+    } on AuthException catch(error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message)
+        )
+      );
+    } catch (error, stackTrace) {
+      debugPrint('Error al registrar al usuario: $error\n$stackTrace');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No se pudo completar el registro. Intentalo de nuevo.'),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isRegistering = false);
+      }
+    }
   }
 
   @override
@@ -82,6 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 24),
 
                       TextFormField(
+                        controller: _nameController,
                         decoration: InputDecoration(
                           labelText: 'Nombre',
                           labelStyle: TextStyle(
@@ -119,6 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 24),
 
                       TextFormField(
+                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: 'Correo electronico',
@@ -164,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _ocultar,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
                           labelStyle: TextStyle(
@@ -187,6 +229,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderSide: BorderSide(
                               color: Colors.black,
                               width:1.5,
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _ocultar = !_ocultar;
+                              });
+                            }, 
+                            icon: Icon(
+                             _ocultar ? Icons.visibility_off : Icons.visibility
                             ),
                           ),
                         ),
@@ -244,10 +296,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 10),
 
                       FilledButton(
-                        //temporal en lo que funciona
-                        onPressed: _registrar,
-                        // onPressed: _registrar, 
-                        child: const Text('Registrarme'),
+                        onPressed: _isRegistering ? null : _registrar,
+                        child: _isRegistering
+                          ? const SizedBox(
+                              width: 20,
+                              height:20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            ): const Text ('registrarme'),
                       ),
 
                       Row(
@@ -266,8 +323,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                 color: Colors.cyan
                               ),
-                            )
-                          )
+                            ),
+                          ),
                         ],
                       ),
                     ],
