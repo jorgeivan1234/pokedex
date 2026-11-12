@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
   bool _isRegistering = false;
-
+  bool _ocultar = true;
 
   @override
   void dispose() {
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _ocultar,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
                           labelStyle: TextStyle(
@@ -168,6 +168,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefixIcon: Icon(
                             Icons.person_outline,
                               color: Colors.white,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _ocultar = !_ocultar;
+                              });
+                            }, 
+                            icon: Icon(
+                              _ocultar ? Icons.visibility_off : Icons.visibility
+                            ),
                           ),
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(

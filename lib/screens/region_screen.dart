@@ -84,7 +84,7 @@ class _RegionScreenState extends State<RegionScreen> {
                               padding: const EdgeInsets.all(12),
                               child: Image.asset(
                                 ruta, fit: BoxFit.cover,
-                                scale: 0.9
+                                scale: 0.8
                               ),
                             ),
                           ),

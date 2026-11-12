@@ -18,6 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isRegistering = false;
+  bool _ocultar = true;
 
   @override
   void dispose() {
@@ -205,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _ocultar,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
                           labelStyle: TextStyle(
@@ -228,6 +229,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderSide: BorderSide(
                               color: Colors.black,
                               width:1.5,
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _ocultar = !_ocultar;
+                              });
+                            }, 
+                            icon: Icon(
+                             _ocultar ? Icons.visibility_off : Icons.visibility
                             ),
                           ),
                         ),

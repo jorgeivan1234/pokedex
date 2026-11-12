@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/mappers/caracteristicas_mapper.dart';
 import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 
@@ -196,15 +195,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   children: [
                                     _FactRow(
                                       label: 'Legendario', 
-                                      value: '${widget.pokemonSpecies['is_legendary']}',
+                                      value: CaracteristicasMapper.booleanLabels(widget.pokemonSpecies['is_legendary']),
                                     ),
                                     _FactRow(
                                       label: 'Mitico', 
-                                      value: '${widget.pokemonSpecies['is_mythical']}',
+                                      value: CaracteristicasMapper.booleanLabels(widget.pokemonSpecies['is_mythical']),
                                     ),
                                     _FactRow(
                                       label: 'Diferencia de genero', 
-                                      value: '${widget.pokemonSpecies['has_gender_differences']}',
+                                      value: CaracteristicasMapper.booleanLabels(widget.pokemonSpecies['has_gender_differences']),
                                     ),
                                   ],
                                 ),
@@ -290,7 +289,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ],
                                 ),
                               ),
-
                             ],
                           ),
                         ),
