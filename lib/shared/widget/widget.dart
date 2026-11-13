@@ -9,3 +9,5 @@ export 'sound_pokemon_filter.dart';
 export 'bottons_pokemon.dart';
 export 'evolution_selected.dart';
 export 'pokemon_hero.dart';
+export 'mega_evolution_section.dart';
+export 'new_section.dart';

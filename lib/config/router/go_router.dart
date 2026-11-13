@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex/models/models.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/screens/type_list_screen.dart';
+import 'package:pokedex/shared/widget/widget.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
@@ -231,6 +232,11 @@ final appRouter = GoRouter(
           ),
         );
       }
-    )
+    ),
+
+    GoRoute(
+      path: '/noticias',
+      builder: (context, state) => NewSection(),
+    ),
   ],
 );

@@ -41,6 +41,29 @@ class _EvolutionSelectedState extends State<EvolutionSelected> {
       () => obtenerPokemonPorNombre(name),
     );
   }
+  @override
+  Widget build(BuildContext context){
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _evolutionFuture, 
+      builder: (context, snapshot) {
+        
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if(snapshot.hasError || !snapshot.hasData){
+          return const Text('No se pudieron cargar las evoluciones.');
+        }
+
+        final chain = snapshot.data!['chain'] as Map<String, dynamic>;
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: _buildStage(chain),
+        );
+      },
+    );
+  }
 
   Widget _buildStage(Map<String, dynamic> stage) {
 
@@ -141,16 +164,11 @@ class _EvolutionSelectedState extends State<EvolutionSelected> {
       .split(' ')
       .map((word) {
         if (word.isEmpty) return word;
-        return 'word[0].toUpperCase(){word.substring(1)}';
+        return '${word[0].toUpperCase()}${word.substring(1)}';
       })
       .join(' ');
   }
-  //el codigo sigue con falla solo le puse el override para que no marcara el error antes de hacer push pero aun no se visualiza en details.evoluciones nada
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
+
 }
 
 class _PokemonEvolutionCard extends StatelessWidget {
@@ -225,7 +243,7 @@ class _PokemonEvolutionCard extends StatelessWidget {
 
   String _capitalize(String value) {
     if (value.isEmpty) return value;
-    return 'value[0].toUpperCase(){value.substring(1)}';
+    return '${value[0].toUpperCase()}-${value.substring(1)}';
   }
 }
 
