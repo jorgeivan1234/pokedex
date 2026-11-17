@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../shared/widget/widget.dart';
 
 class GenerationScreen extends StatelessWidget {
@@ -14,7 +13,13 @@ class GenerationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Genercion'),
+        title: Text(
+          'Generaciones',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         centerTitle: true,
       ),
       drawer: const DrawerScreen(),

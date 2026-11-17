@@ -3,5 +3,15 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+        {
+            "name" : "Pokedex",
+            "request" : "launch",
+            "type" : "dart",
+            "toolArgs": [
+                "--dart-define=SUPABASE_URL=https://ltonadomiocttdmtsulw.supabase.co",
+                "--dart-define=SUPABASE_PUBLISHABLE_KEY=sb_publishable_yR9GihUKMDgkIgMg9ymBIQ_OutcF7l4"
+            ]
+        }
+    ]
 }

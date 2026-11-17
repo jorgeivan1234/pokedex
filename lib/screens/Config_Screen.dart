@@ -69,8 +69,7 @@ class _ButtonsView extends StatelessWidget {
                   color: Colors.red,
                 ),
                 title: Text('Introduccion'),
-                trailing: Text('0'),
-                 onTap: () => context.go('/tutorial'),
+                onTap: () => context.go('/tutorial'),
               ),
             ),
           ]
