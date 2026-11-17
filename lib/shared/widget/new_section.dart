@@ -5,6 +5,8 @@ class NewSection extends StatelessWidget {
     super.key
   });
 
+  // assets/images/white_2.gif
+
   @override
   Widget build(BuildContext context) {
     

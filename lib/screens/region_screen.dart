@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:pokedex/screens/specie_generation_screen.dart';
 import '../shared/widget/widget.dart';
+import 'screens.dart';
 
 class RegionScreen extends StatefulWidget {
 
@@ -67,7 +68,7 @@ class _RegionScreenState extends State<RegionScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Generacion ${widget.generation} - ${widget.name}'),
+                    Text('Generacion ${widget.generation} - Region de ${widget.name}'),
 
                     ListTile(
                       leading: const Icon(Icons.map_outlined),
@@ -108,7 +109,14 @@ class _RegionScreenState extends State<RegionScreen> {
                       leading: const Icon(Icons.catching_pokemon_rounded),
                       title: const Text('Species'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (context) => SpecieGenerationScreen(
+                              generation: widget.generation, name: widget.name,),
+                          )
+                        );
+                      }
                     ),
                     const Divider(height: 2),
                     ListTile(

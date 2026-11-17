@@ -66,11 +66,11 @@ class DrawerScreen extends StatelessWidget {
               ),
 
               ListTile(
-                leading: const Icon(Icons.dark_mode),
-                title: const Text('Sprites'),
+                leading: const Icon(Icons.newspaper),
+                title: const Text('Noticias'),
                 textColor: Colors.white,
                 iconColor: Colors.white,
-                onTap: () => context.go('/sprites'),
+                onTap: () => context.go('/noticias'),
               ),
 
               ListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pokedex/data/pokemon_description_game_data.dart';
 import 'package:pokedex/models/pokemon_game_model.dart';
 
@@ -19,22 +20,37 @@ class GameDescriptionScreen extends StatelessWidget {
     final description = matchingDescriptions.isEmpty
         ? null
         : matchingDescriptions.first;
+    
+    final title = description?.title ?? game.title;
+    final imagePath = description?.imagenAssets ?? game.imagenAssets;
+    final panelColor = description?.color ?? game.color;
+    final foregroundColor = ThemeData.estimateBrightnessForColor(panelColor) == Brightness.dark
+      ? Colors.white
+      : Colors.black;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title),
+        title: Text(title),
         centerTitle: true,
         backgroundColor: Colors.red,
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.arrow_back_ios_new_rounded),
+      //   onPressed: () => context.go('/juego'), 
+      // ),
       body: Stack(
         children: [
-          SizedBox.expand(
+          Positioned.fill(
             child: Image.asset(
-              'assets/images/ash.gif'
+              'assets/images/ash.gif',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return const ColoredBox(color: Colors.black);
+              },
             ),
           ),
-          SizedBox.expand(
-            child: Container(
+          Positioned.fill(
+            child: ColoredBox(
               color: Colors.black.withValues(alpha: 0.4),
             ),
           ),
@@ -43,43 +59,62 @@ class GameDescriptionScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 Image.asset(
-                  description?.imagenAssets ?? game.imagenAssets,
-                  height: 400,
-                  fit: BoxFit.contain
+                  imagePath,
+                  height: 300,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const SizedBox(
+                      height: 280,
+                      child: Center(
+                        child: Icon(
+                          Icons.image_not_supported_outlined,
+                          size: 64,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-            
+
                 const SizedBox(height: 16),
             
-                SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    color: description?.color ?? game.color,
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  color: panelColor,
+                  child: DefaultTextStyle.merge(
+                    style: TextStyle(color: foregroundColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          game.title,
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                color: foregroundColor,
+                                fontWeight: FontWeight.bold
+                              )
                         ),
 
-                        
+                        SizedBox(height: 12),
+
                         FilledButton(
-                          onPressed: (){}, 
-                          child: Text('Jugar'), 
+                          onPressed: null, 
+                          child: Text('Proximamente'), 
                         ),
                     
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 12),
                     
                         Text('Plataforma: ${description?.plataforma ?? game.plataforma}'),
                                                 
                         const SizedBox(height: 4),
-
+                                    
                         Text('Género: ${description?.genero ?? game.genero}'),
-
+                                    
                         const SizedBox(height: 4),
-
+                                    
                         Text('Generación: ${description?.generacion ?? game.generacion}'),
-
+                                    
                         if (description != null) ...[
                           const SizedBox(height: 4),
                           Text('Desarrollador: ${description.desarrollador}'),
@@ -110,6 +145,7 @@ class GameDescriptionScreen extends StatelessWidget {
           ),
         ],
       ),
+      
     );
   }
 }
