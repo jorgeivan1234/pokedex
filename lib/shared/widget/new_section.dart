@@ -17,15 +17,6 @@ class NewSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //titulo
-          Text(
-            'Noticias',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: colors.onSurface,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
           //contenedor que guardara el icono
           Container(
             width: double.infinity,

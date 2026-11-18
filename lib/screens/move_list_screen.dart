@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/shared/infraestructure/service/poke_api_service.dart';
-import 'package:pokedex/shared/widget/drawer_screen.dart';
 import 'package:pokedex/shared/widget/navigation_bar.dart';
 
 class MoveListScreen extends StatefulWidget {
@@ -34,17 +33,11 @@ class _MoveListScreenState extends State<MoveListScreen> {
         centerTitle: true,
         backgroundColor: Colors.red,
       ),
-      drawer: const DrawerScreen(),
-
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0, 
         onTap: (index) {
           if (index == 1) context.go('/home');
         }
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back_ios_new_outlined),
-        onPressed: () => context.go('/generation')
       ),
       body: Stack(
         children: [
@@ -56,7 +49,7 @@ class _MoveListScreenState extends State<MoveListScreen> {
           ),
           SizedBox(
             child: Container(
-              color: Colors.black.withValues(alpha: 0.1)
+              color: Colors.black.withValues(alpha: 0.3)
             ),
           ),
           FutureBuilder<List<Map<String, dynamic>>>(
@@ -84,10 +77,10 @@ class _MoveListScreenState extends State<MoveListScreen> {
                       decoration: InputDecoration(
                         labelText: 'Buscar Movimentos',
                         labelStyle: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         prefixIcon: Icon(Icons.search),
-                        prefixIconColor: Colors.black,
+                        prefixIconColor: Colors.white,
                         border: OutlineInputBorder()
                       ),
                       onChanged: (value){
@@ -103,7 +96,7 @@ class _MoveListScreenState extends State<MoveListScreen> {
                         child: Text(
                           'Esta generacion no tiene movimientos originarios de esta region',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold
                           ),
@@ -116,14 +109,14 @@ class _MoveListScreenState extends State<MoveListScreen> {
                           final move = filteredMoves[index];
                           return ListTile(
                             leading: Icon(Icons.move_down),
-                            iconColor: Colors.black,
+                            iconColor: Colors.white,
                             title: Text(
                               _formatName(move['name'] as String),
                             ),
-                            textColor: Colors.black,
+                            textColor: Colors.white,
                             trailing: const Icon(
                               Icons.chevron_left_outlined,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             onTap: () => context.go('/'),
                           );

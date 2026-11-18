@@ -20,7 +20,7 @@ class DrawerScreen extends StatelessWidget {
           ),
           SizedBox.expand(
             child: Container(
-              color: Colors.black.withValues(alpha: 0.4),
+              color: Colors.black.withValues(alpha: 0.3),
             ),
           ),
           ListView(
@@ -86,7 +86,7 @@ class DrawerScreen extends StatelessWidget {
                 title: const Text('Tabla de tipos'),
                 textColor: Colors.white,
                 iconColor: Colors.white,
-                onTap: () => context.go('/table_tipe'),
+                onTap: () => context.go('/table_type'),
               ),
 
               ListTile(

@@ -236,7 +236,7 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/noticias',
-      builder: (context, state) => NewSection(),
+      builder: (context, state) => const NewsScreen(),
     ),
   ],
 );

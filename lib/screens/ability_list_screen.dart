@@ -40,19 +40,12 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
           fontSize: 25,
         ),
       ),
-
-      //trae el drawer a details
-      drawer: const DrawerScreen(),
       //trae el widget de podexnavigatioa
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
         onTap: (index) {
           if (index == 1) context.go('/search');
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back_ios_new_rounded),
-        onPressed: () => context.go('/generation'), 
       ),
       body: Stack(
         children: [

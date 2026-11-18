@@ -79,6 +79,72 @@ final pokemonGames = [
     imagenAssets: 'assets/images/juegos/pokemon_cristal.jpg', 
     color: Colors.cyanAccent, 
   ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Rubi', 
+    title: 'Pokemon Edicion Rubi', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 21 de noviembre de 2002 junto con Pokemon edicion Zafiro.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_rubi.webp', 
+    color: Colors.redAccent, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Zafiro', 
+    title: 'Pokemon Edicion Zafiro', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 21 de noviembre de 2002 junto con Pokemon edicion Rubi.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_zafiro.webp', 
+    color: Colors.blueAccent, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Esmeralda', 
+    title: 'Pokemon Edicion Esmeralda', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 16 de septiembre de 2004.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_esmeralda.webp', 
+    color: Colors.greenAccent, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_rojo_fuego', 
+    title: 'Pokemon Edicion Rojo Fuego', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 29 de enero de 2004 junto con Pokemon edicion Verde Hoja.', 
+    generacion: 'Primera Generacion con Pokemon de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_rojo_fuego.webp', 
+    color: Colors.red, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_verde', 
+    title: 'Pokemon Edicion Verde Hoja', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 29 de enero de 2004 junto con Pokemon edicion Rojo Fuego.', 
+    generacion: 'Primera Generacion con Pokemon de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_verde_hoja.webp', 
+    color: Colors.green, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_', 
+    title: 'Pokemon Edicion ', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el .', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_.webp', 
+    color: Colors.red, 
+  ),
 ];
 
  

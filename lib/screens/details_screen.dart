@@ -146,6 +146,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   textoDescription,
                                   style: TextStyle(fontSize: 15, height: 1.5),
                                 ),
+
                               ),
 
                               _DetailsSection(
@@ -351,7 +352,7 @@ class _DetailsSection extends StatelessWidget {
   const _DetailsSection({
     required this.title,
     required this.icon,
-    required this.child,
+    required this.child, 
   });
 
   @override
@@ -375,6 +376,7 @@ class _DetailsSection extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
+                
               ],
             ),
 

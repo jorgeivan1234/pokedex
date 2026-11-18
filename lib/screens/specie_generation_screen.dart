@@ -47,10 +47,10 @@ class _SpecieGenerationScreenState extends State<SpecieGenerationScreen> {
       ),
       body: Stack(
         children: [
-          SizedBox(
+          Positioned.fill(
             child: Image.asset(
               'assets/images/unova.gif',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           FutureBuilder<List<Map<String, dynamic>>>(

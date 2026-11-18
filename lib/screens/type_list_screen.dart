@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/shared/infraestructure/service/poke_api_service.dart';
-import 'package:pokedex/shared/widget/drawer_screen.dart';
-import 'package:pokedex/shared/widget/navigation_bar.dart';
+import 'package:pokedex/shared/widget/widget.dart';
 
 class TypeListScreen extends StatefulWidget {
 
@@ -42,18 +41,11 @@ class _TypeListScreenState extends State<TypeListScreen> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-      drawer: const DrawerScreen(),
-
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0, 
         onTap: (index){
           if (index == 1) context.go('/search');
         }
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back_ios_rounded),
-        onPressed: () => context.go('/generation'),
       ),
       body: Stack(
         children: [

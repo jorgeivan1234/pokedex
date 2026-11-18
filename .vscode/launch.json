@@ -8,6 +8,8 @@
             "name" : "Pokedex",
             "request" : "launch",
             "type" : "dart",
+            "deviceId": "chrome",
+            "program": "lib/main.dart",
             "toolArgs": [
                 "--dart-define=SUPABASE_URL=https://ltonadomiocttdmtsulw.supabase.co",
                 "--dart-define=SUPABASE_PUBLISHABLE_KEY=sb_publishable_yR9GihUKMDgkIgMg9ymBIQ_OutcF7l4"

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/screens/specie_generation_screen.dart';
 import '../shared/widget/widget.dart';
-import 'screens.dart';
 
 class RegionScreen extends StatefulWidget {
 
@@ -98,13 +97,16 @@ class _RegionScreenState extends State<RegionScreen> {
                       trailing: const Icon(Icons.chevron_right),                      
                       onTap: () => context.push('/abilitiesList', extra: widget.generation),
                     ),
+
                     ListTile(
                       leading: const Icon(Icons.swap_calls),
                       title: const Text('Movimientos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/movesList', extra: widget.generation),
+                      onTap: () => context.push('/movesList', extra: widget.generation),
                     ),
+
                     const Divider(height: 2),
+
                     ListTile(
                       leading: const Icon(Icons.catching_pokemon_rounded),
                       title: const Text('Species'),
@@ -118,21 +120,26 @@ class _RegionScreenState extends State<RegionScreen> {
                         );
                       }
                     ),
+
                     const Divider(height: 2),
+
                     ListTile(
                       leading: const Icon(Icons.category),
                       title: const Text('Tipos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/typeList', extra: widget.generation),
+                      onTap: () => context.push('/typeList', extra: widget.generation),
                     ),
+
                     const Divider(height: 2),
+                    
                     ListTile(
                       leading: const Icon(Icons.videogame_asset_outlined),
                       title: const Text('Generacion'),
                       subtitle: const Text('Debut'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () => context.push('/proximamente'),
                     ),
+                    
                     const Divider(height: 2),
                   ],
                 ),
