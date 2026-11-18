@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -14,22 +15,50 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-
+  final _emailController = TextEditingController();
+  bool _isRegistering = false;
+  bool _ocultar = true;
 
   @override
   void dispose() {
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void _login(){
+  Future <void> _login() async{
     if(!_formKey.currentState!.validate()) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Formulario valido')
-      )
-    );
+    setState(() => _isRegistering = true);
+
+
+    try {
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      if (!mounted) return;
+      context.go('/home');
+    } on AuthException catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message)
+        )
+      );
+    } catch (error, stackTrace) {
+      debugPrint('Error al registrar al usuario: $error\n$stackTrace');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No se pudo completar el registro. Intentalo de nuevo.'),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isRegistering = false);
+      }
+    }
   }
 
   @override
@@ -70,16 +99,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,                     
                     children: [
                       // SizedBox(
-                      //   height: 450,
+                      //   height: 300,
+                      //   child: Image.asset(
+                      //     'assets/icon/pokemon.png',
+                      //     fit: BoxFit.contain,
+                      //     errorBuilder: (context, error, stackTrace) =>
+                      //     const Center(child: Text('No se pudo cargar la imagen')),
+                      //   ),
                       // ),
+
+
                       TextFormField(
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'Nombre',
+                          labelText: 'Correo electronico',
                           labelStyle: TextStyle(
                             color: Colors.white,
                           ),
                           prefixIcon: Icon(
-                          Icons.person_outline,
+                          Icons.email,
                             color: Colors.white,
                           ),
                           border: OutlineInputBorder(),
@@ -91,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(
                               color: Colors.black,
                               width:1.5,
@@ -100,106 +142,79 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         textInputAction: TextInputAction.next,
                         validator: (value){
-                          if(value == null || value.trim().isEmpty){
-                            return 'Escribe tu nombre';
+                          final email = value?.trim() ?? '';
+                          if(email.isEmpty){
+                            return 'Escribe tu correo';
                           }
-                        return null;
-                      }
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'Correo electronico',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                        prefixIcon: Icon(
-                        Icons.email,
-                          color: Colors.white,
-                        ),
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.cyan,
-                            width: 2,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width:1.5,
-                          ),
-                        ),
+                          final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(email);
+                          if(!emailIsValid){
+                            return 'escribe tu correo valido';
+                          }
+                          return null;                      
+                        }
                       ),
-                      textInputAction: TextInputAction.next,
-                      validator: (value){
-                        final email = value?.trim() ?? '';
-                        if(email.isEmpty){
-                          return 'Escribe tu correo';
-                        }
-                        final emailIsValid =  RegExp( r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(email);
-                        if(!emailIsValid){
-                          return 'escribe tu correo valido';
-                        }
-                        return null;
-                      }
-                    ),
 
+                      const SizedBox(height: 24),
 
-                    const SizedBox(height: 24),
-
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Contraseña',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.person_outline,
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: _ocultar,
+                        decoration: InputDecoration(
+                          labelText: 'Contraseña',
+                          labelStyle: TextStyle(
                             color: Colors.white,
-                        ),
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.cyan,
-                            width: 2,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.person_outline,
+                              color: Colors.white,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _ocultar = !_ocultar;
+                              });
+                            }, 
+                            icon: Icon(
+                              _ocultar ? Icons.visibility_off : Icons.visibility
+                            ),
+                          ),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Colors.cyan,
+                              width: 2,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width:1.5,
+                            ),
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width:1.5,
-                          ),
-                        ),
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Escribre tu contaseña';
+                          }
+                          return null;
+                        }
                       ),
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return 'Escribre tu contaseña';
-                        }
-                        if(value.length < 6){
-                          return 'usa al menos 6 caracteres';
-                        }
-                        return null;
-                      }
-                    ),
 
-                    SizedBox(height: 10),
+                      SizedBox(height: 10),
 
                       FilledButton(
-                        //temporal en lo que funciona
-                        // onPressed: _login,
-                        onPressed: () => context.go('/home'),
-                        child: const Text('Iniciar'),
+                        onPressed: _isRegistering ? null : _login,
+                        child: _isRegistering
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            ) : const Text( 'Iniciar Secion.')
                       ),
 
                       Row(
