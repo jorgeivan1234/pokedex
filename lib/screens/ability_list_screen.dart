@@ -123,7 +123,7 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
                           textColor: Colors.white,
                           trailing: const Icon(Icons.chevron_left_outlined),
                           onTap: () => context.push(
-                            '/habilitys',
+                            '/abilities',
                             extra: ability
                           ),
                         );

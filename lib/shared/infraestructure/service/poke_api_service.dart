@@ -45,17 +45,17 @@ Future<Map<String, dynamic>> obtenerPokemonPorNombre(String nombre) async {
   return jsonDecode(respuesta.body) as Map<String, dynamic>;
 }
 
-Future<Map<String, dynamic>> obtenerHabilidad() async {
-  final respuesta = await http.get(
-    Uri.parse('https://pokeapi.co/api/v2/ability?offset=0&limit=374'),
-  );
+// Future<Map<String, dynamic>> obtenerHabilidad() async {
+//   final respuesta = await http.get(
+//     Uri.parse('https://pokeapi.co/api/v2/ability?offset=0&limit=374'),
+//   );
 
-  if (respuesta.statusCode != 200) {
-    throw Exception('No se pudo cargar la habilidad.');
-  }
+//   if (respuesta.statusCode != 200) {
+//     throw Exception('No se pudo cargar la habilidad.');
+//   }
 
-  return jsonDecode(respuesta.body) as Map<String, dynamic>;
-}
+//   return jsonDecode(respuesta.body) as Map<String, dynamic>;
+// }
 
 Future<List<Map<String, dynamic>>> obtenerHabilidadPorGeneracion(
   int generation,
@@ -82,6 +82,17 @@ Future<List<Map<String, dynamic>>> obtenerHabilidadPorGeneracion(
       .map((habilidad) => Map<String, dynamic>.from(habilidad))
       .toList();
 }
+
+Future<Map<String, dynamic>> obtenerHabilidadPorUrl(String url) async {
+  final respuesta = await http.get(Uri.parse(url));
+
+  if (respuesta.statusCode != 200) {
+    throw Exception('No se pudo cargar la habiidad.');
+  }
+
+  return jsonDecode(respuesta.body) as Map<String, dynamic>;
+}
+
 
 Future<List<Map<String, dynamic>>> obtenerMovimientosPorGeneracion(
   int generation,

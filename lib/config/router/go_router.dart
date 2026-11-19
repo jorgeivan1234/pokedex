@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex/models/models.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/screens/type_list_screen.dart';
-import 'package:pokedex/shared/widget/widget.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
@@ -139,19 +138,22 @@ final appRouter = GoRouter(
       path: '/abilities',
       builder: (context, state) {
         final ability = state.extra;
+
         if (ability is Map<String, dynamic> &&
             ability['name'] is String &&
             ability['url'] is String) {
-          return AbilitiesScreen(ability: ability, pokemon: {},);
+          return AbilitiesScreen(
+            ability: ability
+          );
         }
 
         return Scaffold(
+          appBar: AppBar(
+            title: const Text('Habilidad'),
+            backgroundColor: Colors.red,
+          ),
           body: const Center(
             child: Text('No se recibieron los datos de la habilidad.'),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () => context.go('/home'), 
           ),
         );
       }
