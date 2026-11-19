@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../shared/widget/widget.dart';
 
 class GenerationScreen extends StatelessWidget {
@@ -14,7 +13,13 @@ class GenerationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Genercion'),
+        title: Text(
+          'Generaciones',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         centerTitle: true,
       ),
       drawer: const DrawerScreen(),
@@ -68,7 +73,7 @@ class GenerationScreen extends StatelessWidget {
                 },          
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.blue.shade900),
+                leading: Icon(Icons.catching_pokemon, color: Colors.blue),
                 title: Text(
                   'Generacion 2',
                   style: TextStyle(
@@ -89,7 +94,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.black),
+                leading: Icon(Icons.catching_pokemon, color: Colors.lime),
                 title: Text(
                   'Generacion 3',
                   style: TextStyle(
@@ -110,7 +115,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.deepPurple.shade900),
+                leading: Icon(Icons.catching_pokemon, color: Colors.purpleAccent),
                 title: Text(
                   'Generacion 4',
                   style: TextStyle(
@@ -152,7 +157,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.green.shade900),
+                leading: Icon(Icons.catching_pokemon, color: Colors.green),
                 title: Text(
                   'Generacion 6',
                   style: TextStyle(
@@ -173,7 +178,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.cyan.shade900),
+                leading: Icon(Icons.catching_pokemon, color: Colors.cyan),
                 title: Text(
                   'Generacion 7',
                   style: TextStyle(
@@ -194,7 +199,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.yellow.shade900),
+                leading: Icon(Icons.catching_pokemon, color: Colors.yellow),
                 title: Text(
                   'Generacion 8',
                   style: TextStyle(
@@ -215,7 +220,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon, color: Colors.teal.shade900),
+                leading: Icon(Icons.catching_pokemon, color: const Color.fromARGB(255, 2, 255, 230)),
                 title: Text(
                   'Generacion 9',
                   style: TextStyle(
@@ -236,7 +241,7 @@ class GenerationScreen extends StatelessWidget {
                 },  
               ),
               ListTile(
-                leading: Icon(Icons.catching_pokemon),
+                leading: Icon(Icons.catching_pokemon, color: Colors.amber),
                 title: Text(
                   'Generacion 10',
                   style: TextStyle(
