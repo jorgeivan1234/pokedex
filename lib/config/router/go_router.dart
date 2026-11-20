@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/models/models.dart';
+import 'package:pokedex/screens/moves_screen.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/screens/type_list_screen.dart';
 
@@ -218,6 +219,27 @@ final appRouter = GoRouter(
       },
     ),
 
+    GoRoute(
+      path: '/move',
+      builder: (context, state) {
+        final move = state.extra;
+
+        if (move is Map<String, dynamic> &&
+            move['name'] is String &&
+            move['url'] is String) {
+          return MovesScreen(
+            moves: move, 
+            pokemon: {},
+          );
+        }
+
+        return Scaffold(
+          body: const Center(
+            child: Text('No se recibieron los datos del movmiento.'),
+          ),
+        );
+      }
+    ),
 
     GoRoute(
       path: '/Game-Description',

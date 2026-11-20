@@ -93,7 +93,6 @@ Future<Map<String, dynamic>> obtenerHabilidadPorUrl(String url) async {
   return jsonDecode(respuesta.body) as Map<String, dynamic>;
 }
 
-
 Future<List<Map<String, dynamic>>> obtenerMovimientosPorGeneracion(
   int generation,
 ) async {
@@ -116,6 +115,16 @@ Future<List<Map<String, dynamic>>> obtenerMovimientosPorGeneracion(
       .whereType<Map>()
       .map((movimiento) => Map<String, dynamic>.from(movimiento))
       .toList();
+}
+
+Future<Map<String, dynamic>> obtenerMovimientoPorUrl(String url) async {
+  final respuesta = await http.get(Uri.parse(url));
+
+  if (respuesta.statusCode != 200) {
+    throw Exception('No se pudo cargar la habiidad.');
+  }
+
+  return jsonDecode(respuesta.body) as Map<String, dynamic>;
 }
 
 Future<List<Map<String, dynamic>>> obtenerTiposPorGeneracion(

@@ -18,7 +18,7 @@ class AbilitiesScreen extends StatefulWidget {
 
 class _AbilitiesScreenState extends State<AbilitiesScreen> {
 
-  late final Future<Map<String, dynamic>> _abilityFuture;
+  late Future<Map<String, dynamic>> _abilityFuture;
 
   @override
   void initState() {
@@ -27,7 +27,6 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
   }
 
   void _loadAbility() {
-    super.initState();
     _abilityFuture = obtenerHabilidadPorUrl(
       widget.ability['url'] as String
     );
@@ -39,12 +38,12 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
 
   String _formatName(String name) {
     return name
-          .replaceAll(' - ', '')
-          .split('')
-          .map((word) {
-            if (word.isEmpty) return word;
-            return 'word[0].toUpperCade(){word.substring(1)}';
-    }).join('');
+        .replaceAll('-', ' ')
+        .replaceAll('_', ' ')
+        .split(' ')
+        .where((word) => word.isNotEmpty)
+        .map((word) => '${word[0].toUpperCase()}${word.substring(1)}')
+        .join(' ');
   }
 
   Map<String, dynamic>? _findEntryLenguage(
@@ -52,7 +51,7 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
     String lenguage
   ) {
     for (final entry in entries.whereType<Map>()) {
-      final entryLenguage = entry['lenguage'];
+      final entryLenguage = entry['language'];
 
       if (entryLenguage is Map && entryLenguage ['name'] == lenguage) {
         return Map<String, dynamic>.from(entry);
@@ -75,8 +74,6 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
         ),
         centerTitle: true,
       ),
-      //trae el drawer a details
-      drawer: const DrawerScreen(),
       //trae el widget de podexnavigatio
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
@@ -143,45 +140,32 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
               final ability = snapshot.data!;
 
               final effectEntries = ability['effect_entries'] as List? ?? [];
+
               final flavorEntries = ability['flavor_text_entries'] as List? ?? [];
+              
               final pokemonEntries = ability['pokemon'] as List? ?? [];
 
-              Map<String, dynamic>? spanishEffect;
-              Map<String, dynamic>? englishEffect;
-              Map<String, dynamic>? spanishFlavor;
+              final spanishEffect = _findEntryLenguage(effectEntries, 'es');
 
-              for (final entry in effectEntries.whereType<Map>()) {
-                if ( entry['lenguage'] is Map && entry['lenguage']['name'] == 'es') {
-                  spanishEffect = Map<String, dynamic>.from(entry);
-                  break;
-                }
-              }
+              final englishEffect = _findEntryLenguage(effectEntries, 'en');
 
-              for (final entry in effectEntries.whereType<Map>()) {
-                if ( entry['lenguage'] is Map && entry['lenguage']['name'] == 'en') {
-                  englishEffect = Map<String, dynamic>.from(entry);
-                  break;
-                }
-              }
+              final spanishFlavor = _findEntryLenguage(flavorEntries, 'es');
+                            
+              final englishFlavor = _findEntryLenguage(flavorEntries, 'en');
 
               final description = spanishEffect?['effect'] ?? 
                                   englishEffect?['effect'] ?? 
                                  'Esta habilidad no tiene una descripcion disponible.';
 
-              for (final entry in flavorEntries..whereType<Map>()) {
-                if ( entry['lenguage'] is Map && entry['lenguage']['name'] == 'es') {
-                  spanishFlavor = Map<String, dynamic>.from(entry);
-                  break;
-                }
-              }
+              final flavorText = spanishFlavor?['flavor_text'] ?? englishFlavor?['flavor_text'];
 
               //whidget scroll con el fin de que no se desborden los pixeles
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Card(
-                  color: Colors.white.withValues(alpha: 0.9),
+                  color: Colors.white.withValues(alpha: 0.7),
                   child: Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -196,7 +180,7 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
                         const SizedBox(height: 16),
 
                         const Text(
-                          'Description',
+                          'Descripción',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -210,12 +194,12 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
                           textAlign: TextAlign.justify,
                         ),
 
-                        if (spanishFlavor != null) ...[
+                        if (flavorText != null) ...[
 
                           const SizedBox(height: 16),
 
                           const Text(
-                            'Texto adiciona',
+                            'Texto del juego',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -225,9 +209,7 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
                           const SizedBox(height: 8),
 
                           Text(
-                            spanishFlavor['flavor_text']
-                                          .toString()
-                                          .replaceAll('\n', ' '),
+                            flavorText.toString().replaceAll('\n', ' '),
                             textAlign: TextAlign.justify,
                           )
                         ],
@@ -240,6 +222,29 @@ class _AbilitiesScreenState extends State<AbilitiesScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+
+                        const SizedBox(height: 8),
+
+                        for (final entry in pokemonEntries.whereType<Map>())
+                          if (entry['pokemon'] is Map && entry['pokemon']['name'] is String)
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: Icon(
+                                entry['is_hidden'] == true
+                                      ? Icons.visibility_off
+                                      :Icons.catching_pokemon,
+                              ),
+                              title: Text(
+                                _formatName(
+                                  entry['pokemon']['name'] as String,
+                                ),
+                              ),
+
+                              subtitle: entry['is_hidden'] == true
+                                              ? const Text('Habilidad oculta')
+                                              : null
+
+                            )
                       ],               
                     ),
                   ),

@@ -2,7 +2,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/mappers/caracteristicas_mapper.dart';
-
 import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 

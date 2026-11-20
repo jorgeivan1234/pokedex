@@ -16,3 +16,4 @@ export 'juegos_screen.dart';
 export 'move_list_screen.dart';
 export 'game_description_screen.dart';
 export 'news_screen.dart';
+export 'moves_screen.dart';

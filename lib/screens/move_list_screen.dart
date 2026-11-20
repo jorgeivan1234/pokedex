@@ -118,7 +118,7 @@ class _MoveListScreenState extends State<MoveListScreen> {
                               Icons.chevron_left_outlined,
                               color: Colors.white,
                             ),
-                            onTap: () => context.go('/'),
+                            onTap: () => context.push('/move', extra: move),
                           );
                         },
                       ),

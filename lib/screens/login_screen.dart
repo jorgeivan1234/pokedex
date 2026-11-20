@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.blue,   
       appBar: AppBar(
         title: const Text(
-          'Iniciar Secion', 
+          'Iniciar Sesion', 
           style: TextStyle(              
             fontSize: 24,
             fontWeight: FontWeight.bold
