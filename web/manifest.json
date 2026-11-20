@@ -1,6 +1,6 @@
 {
-    "name": "pokedex",
-    "short_name": "pokedex",
+    "name": "api pokemon",
+    "short_name": "api pokemon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
