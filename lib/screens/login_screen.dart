@@ -165,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelStyle: TextStyle(
                             color: Colors.white,
                           ),
+                          
                           prefixIcon: Icon(
                             Icons.person_outline,
                               color: Colors.white,

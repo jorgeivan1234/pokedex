@@ -1,5 +1,5 @@
-import 'package:pokedex/models/pokemon_game_desciption.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/models/pokemon_game_desciption.dart';
 
 final pokemonDescriptionGame = [
 
@@ -21,6 +21,7 @@ final pokemonDescriptionGame = [
     generacion: 'Primera Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_rojo_jap.png', 
     color: Colors.red, 
+    imageback: 'assets/images/charizard.gif', 
 
   ), 
 
@@ -42,6 +43,7 @@ final pokemonDescriptionGame = [
     generacion: 'Primera Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_verde_jap.webp', 
     color: Colors.green, 
+    imageback: '', 
   ),
 
   PokemonGameDesciption(
@@ -67,6 +69,7 @@ final pokemonDescriptionGame = [
     generacion: 'Primera Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_blue.jpg', 
     color: Colors.blue, 
+    imageback: '', 
   ),
 
   PokemonGameDesciption(
@@ -85,6 +88,7 @@ final pokemonDescriptionGame = [
     generacion: 'Primera Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_yellow.jpg', 
     color: Colors.yellow, 
+    imageback: '', 
   ),
 
   PokemonGameDesciption(
@@ -105,6 +109,7 @@ final pokemonDescriptionGame = [
     generacion: 'Segunda Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_oro.jpg', 
     color: Colors.yellowAccent, 
+    imageback: '', 
   ),
 
   PokemonGameDesciption(
@@ -125,6 +130,7 @@ final pokemonDescriptionGame = [
     generacion: 'Segunda Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_plata.webp', 
     color: Colors.grey, 
+    imageback: '', 
   ),
 
   PokemonGameDesciption(
@@ -144,7 +150,63 @@ final pokemonDescriptionGame = [
     '\nEste juego no era compatible con Game Boy y Game Boy Pocket.', 
     generacion: 'Segunda Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_cristal.jpg', 
-    color: Colors.cyanAccent, 
+    color: Colors.cyanAccent,
+    imageback: '', 
+  ),
+
+    PokemonGameDesciption(
+    id: 'Pokemon_Rubi', 
+    title: 'Pokemon Edicion Rubi', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 21 de noviembre de 2002 junto con Pokemon edicion Zafiro.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_rubi.webp', 
+    color: Colors.redAccent, desarrollador: '', distribuidor: '', designer: '', imageback: '', 
+  ),
+
+  PokemonGameDesciption(
+    id: 'Pokemon_Zafiro', 
+    title: 'Pokemon Edicion Zafiro', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 21 de noviembre de 2002 junto con Pokemon edicion Rubi.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_zafiro.webp', 
+    color: Colors.blueAccent, desarrollador: '', distribuidor: '', designer: '', imageback: '', 
+  ),
+
+  PokemonGameDesciption(
+    id: 'Pokemon_Esmeralda', 
+    title: 'Pokemon Edicion Esmeralda', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 16 de septiembre de 2004.', 
+    generacion: 'Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_esmeralda.webp', 
+    color: Colors.greenAccent, desarrollador: '', distribuidor: '', designer: '', imageback: '', 
+  ),
+
+  PokemonGameDesciption(
+    id: 'Pokemon_rojo_fuego', 
+    title: 'Pokemon Edicion Rojo Fuego', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 29 de enero de 2004 junto con Pokemon edicion Verde Hoja.', 
+    generacion: 'Primera Generacion con Pokemon de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_rojo_fuego.webp', 
+    color: Colors.red, desarrollador: '', distribuidor: '', designer: '', imageback: '', 
+  ),
+
+  PokemonGameDesciption(
+    id: 'Pokemon_verde', 
+    title: 'Pokemon Edicion Verde Hoja', 
+    plataforma: 'Game Boy Advance', 
+    genero: 'RPG', 
+    descripcion: 'Lanzamiento en japon el 29 de enero de 2004 junto con Pokemon edicion Rojo Fuego.', 
+    generacion: 'Primera Generacion con Pokemon de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_verde_hoja.webp', 
+    color: Colors.green, desarrollador: '', distribuidor: '', designer: '', imageback: '', 
   ),
 
 ];

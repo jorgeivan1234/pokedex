@@ -6,23 +6,16 @@ import '../shared/utils/pokemon_type_color.dart';
 import '../shared/widget/widget.dart';
 
 class MovesScreen extends StatefulWidget {
-
-  final Map<String, dynamic> moves;               
+  final Map<String, dynamic> moves;
   final Map<String, dynamic> pokemon;
 
-
-  const MovesScreen({
-    super.key, 
-    required this.moves, 
-    required this.pokemon,
-  });
+  const MovesScreen({super.key, required this.moves, required this.pokemon});
 
   @override
   State<MovesScreen> createState() => _MovesScreenState();
 }
 
 class _MovesScreenState extends State<MovesScreen> {
-
   late Future<Map<String, dynamic>> _movesFuture;
 
   @override
@@ -32,9 +25,7 @@ class _MovesScreenState extends State<MovesScreen> {
   }
 
   void _loadMove() {
-    _movesFuture = obtenerMovimientoPorUrl(
-      widget.moves['url'] as String
-    );
+    _movesFuture = obtenerMovimientoPorUrl(widget.moves['url'] as String);
   }
 
   void _retryLoading() {
@@ -50,22 +41,23 @@ class _MovesScreenState extends State<MovesScreen> {
         .map((word) => '${word[0].toUpperCase()}${word.substring(1)}')
         .join(' ');
   }
+
   Map<String, dynamic>? _findEntryLenguage(
     List<dynamic> entries,
-    String lenguage
+    String lenguage,
   ) {
     for (final entry in entries.whereType<Map>()) {
       final entryLenguage = entry['language'];
 
-      if (entryLenguage is Map && entryLenguage ['name'] == lenguage) {
+      if (entryLenguage is Map && entryLenguage['name'] == lenguage) {
         return Map<String, dynamic>.from(entry);
       }
     }
     return null;
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //color del fondo scafoold
       backgroundColor: Colors.blue,
@@ -73,9 +65,7 @@ class _MovesScreenState extends State<MovesScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         //llama el nombre del pokemon para el titulo desde la api
-        title: Text(
-          _formatName(widget.moves['name'] as String)
-        ),
+        title: Text(_formatName(widget.moves['name'] as String)),
         centerTitle: true,
       ),
       //trae el widget de podexnavigatio
@@ -97,13 +87,11 @@ class _MovesScreenState extends State<MovesScreen> {
             ),
           ),
           Positioned.fill(
-            child: ColoredBox(
-              color: Colors.black.withValues(alpha: 0.2),
-            ),
+            child: ColoredBox(color: Colors.black.withValues(alpha: 0.2)),
           ),
 
           FutureBuilder<Map<String, dynamic>>(
-            future: _movesFuture, 
+            future: _movesFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -124,7 +112,7 @@ class _MovesScreenState extends State<MovesScreen> {
                         const SizedBox(height: 12),
                         FilledButton(
                           onPressed: _retryLoading,
-                          child: const Text('Intenta de nuevo.')
+                          child: const Text('Intenta de nuevo.'),
                         ),
                       ],
                     ),
@@ -144,8 +132,8 @@ class _MovesScreenState extends State<MovesScreen> {
               final move = snapshot.data!;
 
               final moveType = move['type'] is Map
-                                ? move['type']['name'].toString()
-                                : 'Desconcido';
+                  ? move['type']['name'].toString()
+                  : 'Desconcido';
 
               final colorCard = pokemonTypeColor(moveType);
 
@@ -153,26 +141,32 @@ class _MovesScreenState extends State<MovesScreen> {
 
               final flavorEntries = move['flavor_text_entries'] as List? ?? [];
 
-              final learnedByPokemon = move['learned_by_pokemon'] as List? ?? [];
+              final learnedByPokemon =
+                  move['learned_by_pokemon'] as List? ?? [];
 
-              final effect = _findEntryLenguage(effectEntries, 'es') ?? _findEntryLenguage(effectEntries, 'en');
+              final effect =
+                  _findEntryLenguage(effectEntries, 'es') ??
+                  _findEntryLenguage(effectEntries, 'en');
 
-              final flavor = _findEntryLenguage(flavorEntries, 'es') ?? _findEntryLenguage(flavorEntries, 'en');
+              final flavor =
+                  _findEntryLenguage(flavorEntries, 'es') ??
+                  _findEntryLenguage(flavorEntries, 'en');
 
-              final description = effect?['short_effect'] ?? 
-                                  effect?['effect'] ?? 
-                                 'Este movimiento no tiene una descripcion disponible.';
+              final description =
+                  effect?['short_effect'] ??
+                  effect?['effect'] ??
+                  'Este movimiento no tiene una descripcion disponible.';
 
               final flavorText = flavor?['flavor_text'];
 
-              final type = move['type'] is Map 
-                            ? move['type']['name'].toString()
-                            : 'Desconocido';
+              final type = move['type'] is Map
+                  ? move['type']['name'].toString()
+                  : 'Desconocido';
 
               final damageClass = move['damage_class'] is Map
-                                  ? move['damage_class']['name'].toString()
-                                  : 'Desconcido';
-                                  
+                  ? move['damage_class']['name'].toString()
+                  : 'Desconcido';
+
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Card(
@@ -184,9 +178,7 @@ class _MovesScreenState extends State<MovesScreen> {
                       children: [
                         Text(
                           _formatName(move['name'] as String),
-                            style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
+                          style: Theme.of(context).textTheme.headlineSmall
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
 
@@ -199,7 +191,7 @@ class _MovesScreenState extends State<MovesScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        
+
                         const SizedBox(height: 8),
 
                         Text(
@@ -208,7 +200,6 @@ class _MovesScreenState extends State<MovesScreen> {
                         ),
 
                         if (flavorText != null) ...[
-
                           const SizedBox(height: 16),
 
                           const Text(
@@ -224,11 +215,10 @@ class _MovesScreenState extends State<MovesScreen> {
                           Text(
                             flavorText.toString().replaceAll('\n', ' '),
                             textAlign: TextAlign.justify,
-                          )
+                          ),
                         ],
 
                         const SizedBox(height: 16),
-                        
 
                         const Text(
                           'Datos del movimiento',
@@ -268,25 +258,17 @@ class _MovesScreenState extends State<MovesScreen> {
                           if (entry['name'] is String)
                             ListTile(
                               contentPadding: EdgeInsets.zero,
-                              leading: Image.network(
-                                widget.pokemon['sprites']['front_default']
-                                    ?.toString() ??
-                                    '',
-                                height: 180,
-                                width: 180,
-                                fit: BoxFit.contain,
-                                errorBuilder: (_, __, ___)=> const Icon(
-                                  Icons.catching_pokemon,
-                                  size: 120,
-                                ),
+                              leading: const Icon(
+                                Icons.catching_pokemon,
+                                size: 40,
+                                color: Colors.white,
                               ),
                               title: Text(
-                                _formatName(
-                                  entry['name'] as String,
-                                ),
+                                _formatName(entry['name'] as String),
+                                style: const TextStyle(color: Colors.white),
                               ),
-                            )
-                      ],               
+                            ),
+                      ],
                     ),
                   ),
                 ),

@@ -12,6 +12,7 @@ class PokemonGameDesciption {
   final String generacion;
   final String imagenAssets;
   final Color color;
+  final String imageback;
   
 
   PokemonGameDesciption({
@@ -25,6 +26,7 @@ class PokemonGameDesciption {
     required this.descripcion, 
     required this.generacion, 
     required this.imagenAssets, 
-    required this.color,
+    required this.color, 
+    required this.imageback,
   });
 }
