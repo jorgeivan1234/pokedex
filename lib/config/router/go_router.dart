@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/models/models.dart';
+import 'package:pokedex/screens/moves_screen.dart';
 import 'package:pokedex/screens/screens.dart';
+import 'package:pokedex/screens/type_list_screen.dart';
 
 final appRouter = GoRouter(
   //pantalla inicial
-  initialLocation: '/register',
+  initialLocation: '/login',
   //ruutas de pantallas
   routes: [
     GoRoute(
@@ -116,22 +119,42 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/habilitys',
+      path: '/abilitiesList',
       builder: (context, state) {
-        final pokemon = state.extra;
-        //si el pokemon es el mapa con el string dymanic, regresar los detalles con lo que apunta a pokemon
-          if ( pokemon is Map<String, dynamic> ){
-            return HabilitysScreen(pokemon: pokemon);
-          }
+        final generation = state.extra;
 
-        //en caso de que no exista el pokemon o no este disponible
-        return  Scaffold(
-          body: const Center(
-            child: Text('No se recibieron los datos del Pokémon')
+        if (generation is int) {
+          return AbilitieListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () => context.go('/home'), 
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/abilities',
+      builder: (context, state) {
+        final ability = state.extra;
+
+        if (ability is Map<String, dynamic> &&
+            ability['name'] is String &&
+            ability['url'] is String) {
+          return AbilitiesScreen(
+            ability: ability
+          );
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Habilidad'),
+            backgroundColor: Colors.red,
+          ),
+          body: const Center(
+            child: Text('No se recibieron los datos de la habilidad.'),
           ),
         );
       }
@@ -151,10 +174,93 @@ final appRouter = GoRouter(
       path: '/tutorial',
       builder: (context, state) => TutorialScreen(),
     ),
+    
+    GoRoute(
+      path: '/juego',
+      builder: (context, state) => JuegosScreen(),
+    ),
 
     GoRoute(
       path: '/proximamente',
       builder: (context, state) => Proximamente(),
+    ),
+
+    GoRoute(
+      path: '/movesList',
+      builder: (context, state) {
+        final generation = state.extra;
+
+        if (generation is int) {
+          return MoveListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
+          ),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/typeList',
+      builder: (context, state) {
+        final generation = state.extra;
+
+        if (generation is int) {
+          return TypeListScreen(generation: generation);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se Recibio la generacion.'),
+          ),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/move',
+      builder: (context, state) {
+        final move = state.extra;
+
+        if (move is Map<String, dynamic> &&
+            move['name'] is String &&
+            move['url'] is String) {
+          return MovesScreen(
+            moves: move, 
+            pokemon: {},
+          );
+        }
+
+        return Scaffold(
+          body: const Center(
+            child: Text('No se recibieron los datos del movmiento.'),
+          ),
+        );
+      }
+    ),
+
+    GoRoute(
+      path: '/Game-Description',
+      builder: (context, state){
+        final game = state.extra;
+
+        if(game is PokemonGameModel){
+          return GameDescriptionScreen(game: game);
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: Text('No se recibieron ninguno de los datos del juego.'),
+          ),
+        );
+      }
+    ),
+
+    GoRoute(
+      path: '/noticias',
+      builder: (context, state) => const NewsScreen(),
     ),
   ],
 );
