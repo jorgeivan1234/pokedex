@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:pokedex/screens/specie_generation_screen.dart';
 import '../shared/widget/widget.dart';
 
 class RegionScreen extends StatefulWidget {
@@ -67,7 +67,7 @@ class _RegionScreenState extends State<RegionScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Generacion ${widget.generation} - ${widget.name}'),
+                    Text('Generacion ${widget.generation} - Region de ${widget.name}'),
 
                     ListTile(
                       leading: const Icon(Icons.map_outlined),
@@ -84,7 +84,7 @@ class _RegionScreenState extends State<RegionScreen> {
                               padding: const EdgeInsets.all(12),
                               child: Image.asset(
                                 ruta, fit: BoxFit.cover,
-                                scale: 0.4
+                                scale: 0.8
                               ),
                             ),
                           ),
@@ -92,33 +92,54 @@ class _RegionScreenState extends State<RegionScreen> {
                       },
                     ),
                     ListTile(
+                      leading: const Icon(Icons.psychology),
+                      title: const Text('Habilidades'),
+                      trailing: const Icon(Icons.chevron_right),                      
+                      onTap: () => context.push('/abilitiesList', extra: widget.generation),
+                    ),
+
+                    ListTile(
                       leading: const Icon(Icons.swap_calls),
                       title: const Text('Movimientos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () => context.push('/movesList', extra: widget.generation),
                     ),
+
                     const Divider(height: 2),
+
                     ListTile(
                       leading: const Icon(Icons.catching_pokemon_rounded),
                       title: const Text('Species'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (context) => SpecieGenerationScreen(
+                              generation: widget.generation, name: widget.name,),
+                          )
+                        );
+                      }
                     ),
+
                     const Divider(height: 2),
+
                     ListTile(
                       leading: const Icon(Icons.category),
                       title: const Text('Tipos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () => context.push('/typeList', extra: widget.generation),
                     ),
+
                     const Divider(height: 2),
+                    
                     ListTile(
                       leading: const Icon(Icons.videogame_asset_outlined),
                       title: const Text('Generacion'),
                       subtitle: const Text('Debut'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/proximamente'),
+                      onTap: () => context.push('/proximamente'),
                     ),
+                    
                     const Divider(height: 2),
                   ],
                 ),
