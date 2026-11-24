@@ -90,7 +90,7 @@ class _NewsScreenState extends State<NewsScreen> {
       image: 'assets/images/card_poke.jpg'
     ),
 
-      PokemonNews(
+    PokemonNews(
       title: 'Cómo ver el Campeonato Internacional Pokémon de Latinoamérica 2027.', 
       category: 'Eventos', 
       date: '19 Nov 2026', 
@@ -112,7 +112,7 @@ class _NewsScreenState extends State<NewsScreen> {
       'un gran corazón y adora a su familia, así que su Entrenadora le confía el cuidado de su bebé mientras ella está ocupada. '
       'Pero esta vez la tarea no será fácil. La brisa deja entrar por la ventana a un Whimsicott dispuesto a provocar un alboroto. '
       'Tampoco ayuda que Whimsicott vaya dejando a su paso esponjosas bolitas de algodón que hacen estornudar al pobre Mabosstiff.', 
-      image: 'assets/simages/poketoon.jpg'
+      image: 'assets/images/poketoon.jpg'
     )
 
   ];

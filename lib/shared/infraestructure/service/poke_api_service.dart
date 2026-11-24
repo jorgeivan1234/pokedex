@@ -208,3 +208,26 @@ Future<List<String>> _cargarNombresPokemon() async {
     .whereType<String>()
     .toList();
 }
+
+Future<Map<String, dynamic>> obtenerRelacionTipos(String nombre) async {
+  final respuesta = await http.get(
+    Uri.parse(
+      "https://pokeapi.co/api/v2/type/$nombre"
+    )
+  );
+
+  if (respuesta.statusCode != 200) {
+    throw Exception("No se pudieron encontrar los tipos");
+  }
+
+  final datos = jsonDecode(respuesta.body) as Map<String, dynamic>;
+  final relaciones = datos['damage_relations'];
+
+  if (relaciones is! Map) {
+    throw const FormatException(
+      "La respuesta no contiene la lista de los tipos"
+    );
+  }
+
+  return Map<String, dynamic>.from(relaciones);
+}

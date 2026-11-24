@@ -94,7 +94,7 @@ class DrawerScreen extends StatelessWidget {
                 title: const Text('estrategias'),
                 textColor: Colors.white,
                 iconColor: Colors.white,
-                onTap: () => context.go('/strategi'),
+                onTap: () => context.go('/strategy'),
               ),
 
               ListTile(

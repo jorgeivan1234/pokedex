@@ -262,5 +262,10 @@ final appRouter = GoRouter(
       path: '/noticias',
       builder: (context, state) => const NewsScreen(),
     ),
+
+    GoRoute(
+      path: '/table_type',
+      builder: (context, state) => const TableTypeScreen(),
+    ),
   ],
 );

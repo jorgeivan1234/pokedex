@@ -130,7 +130,7 @@ final pokemonDescriptionGame = [
     generacion: 'Segunda Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_plata.webp', 
     color: Colors.grey, 
-    imageback: '', 
+    imageback: 'assets/images/juegos/pokemon_plata.webp', 
   ),
 
   PokemonGameDesciption(
