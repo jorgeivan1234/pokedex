@@ -46,7 +46,7 @@ class PokemonGameCard extends StatelessWidget {
                   SizedBox(height: 8),
                   Text('Plataforma: ${game.plataforma}'),
                   Text('Genero: ${game.genero}'),
-                  Text(game.descripcion),
+                  Text(game.description),
                   Text(game.generacion),
                 ],
               ),
