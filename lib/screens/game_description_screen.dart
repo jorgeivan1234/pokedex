@@ -50,6 +50,7 @@ class GameDescriptionScreen extends StatelessWidget {
               foregroundColor: foregroundColor,
               generation: description?.generacion ?? game.generacion,
             ),
+
             const SizedBox(height: 16),
 
             Wrap(
@@ -72,7 +73,7 @@ class GameDescriptionScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             _ContentCard(
-              title: 'Acerca del juego',
+              title: 'Ficha del juego',
               icon: Icons.info_outline_rounded,
               child: Column(
                 children: [
@@ -80,157 +81,63 @@ class GameDescriptionScreen extends StatelessWidget {
                     icon: Icons.auto_awesome_outlined,
                     label: 'Generación',
                     value: description?.generacion ?? game.generacion, 
-                    foregroundColor: foregroundColor,
                   ),
 
-                  // if (_hasText(description?.desarrollador))
+                  if (_hasText(description?.desarrollador))
+                    _GameInfoRow(
+                      icon: Icons.code_rounded,
+                      label: 'Desarrollador',
+                      value: description!.desarrollador,
+                    ),
+                  if (_hasText(description?.distribuidor))
+                    _GameInfoRow(
+                      icon: Icons.business_outlined,
+                      label: 'Distribuidor',
+                      value: description!.distribuidor,
+                    ),
+                  if (_hasText(description?.designer))
+                    _GameInfoRow(
+                      icon: Icons.draw_outlined,
+                      label: 'Diseñador',
+                      value: description!.designer,
+                    ),
                 ],             
               ),
             ),
 
-            Container(
-              height: 280,
-              decoration: BoxDecoration(
-                color: panelColor.withValues(alpha: 0.88),
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.5),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    blurRadius: 18,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => Icon(
-                    Icons.videogame_asset_rounded,
-                    size: 80,
-                    color: foregroundColor,
-                  ),
+            const SizedBox(height: 14),
+
+            _ContentCard(
+              title: 'Acerca del juego', 
+              icon: Icons.menu_book_outlined, 
+              child: Text(
+                description?.descripcion ?? game.description,
+                style: TextStyle(
+                  color: Colors.blueGrey.shade800,
+                  fontSize: 15,
+                  height: 1.65,
                 ),
               ),
             ),
-            const SizedBox(height: 18),
-            Card(
-              color: panelColor.withValues(alpha: 0.94),
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: DefaultTextStyle(
-                  style: TextStyle(color: foregroundColor),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(
-                              color: foregroundColor,
-                              fontWeight: FontWeight.w800,
-                            ),
-                      ),
-                      const SizedBox(height: 14),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          _GameTag(
-                            icon: Icons.category_outlined,
-                            label: description?.genero ?? game.genero,
-                            color: panelColor,
-                          ),
-                          _GameTag(
-                            icon: Icons.videogame_asset_outlined,
-                            label: description?.plataforma ?? game.plataforma,
-                            color: panelColor,
-                          ),
-                        ],
-                      ),
-                      
 
-                      const SizedBox(height: 20),
-
-                      // _contentCard (
-
-                      // ),
-                      Text(
-                        'Información del juego',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: foregroundColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      _GameInfoRow(
-                        icon: Icons.auto_awesome_outlined,
-                        label: 'Generación',
-                        value: description?.generacion ?? game.generacion,
-                        foregroundColor: foregroundColor,
-                      ),
-                      if (description != null) ...[
-                        _GameInfoRow(
-                          icon: Icons.code_rounded,
-                          label: 'Desarrollador',
-                          value: description.desarrollador,
-                          foregroundColor: foregroundColor,
-                        ),
-                        _GameInfoRow(
-                          icon: Icons.business_outlined,
-                          label: 'Distribuidor',
-                          value: description.distribuidor,
-                          foregroundColor: foregroundColor,
-                        ),
-                      ],
-                      const SizedBox(height: 16),
-                      Text(
-                        'Acerca del juego',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: foregroundColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        description?.descripcion ?? game.description,
-                        textAlign: TextAlign.justify,
-                        style: Theme.of(context).textTheme.bodyMedium
-                            ?.copyWith(
-                              color: foregroundColor.withValues(alpha: 0.9),
-                              height: 1.5,
-                            ),
-                      ),
-                      if (description == null) ...[
-                        const SizedBox(height: 16),
-                        Text(
-                          'Aún no hay información ampliada para este juego.',
-                          style: TextStyle(
-                            color: foregroundColor.withValues(alpha: 0.75),
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
+            if (description == null) ...[
+              const SizedBox(height: 16),
+              Text(
+                'Aún no hay información ampliada para este juego.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.blueGrey.shade600,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
-            ),
-          ],
-        ),          
-      ),
+            ]
+          ]
+        )
+      )
     );
   }
+
+  bool _hasText(String? value) => value != null && value.trim().isNotEmpty;
 }
 
 class _GameTag extends StatelessWidget {
@@ -249,9 +156,9 @@ class _GameTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.18)),
+        border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -261,7 +168,8 @@ class _GameTag extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: color,
+              color: Colors.white,
+              fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -275,36 +183,43 @@ class _GameInfoRow extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  final Color foregroundColor;
 
   const _GameInfoRow({
     required this.icon,
     required this.label,
     required this.value,
-    required this.foregroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: foregroundColor.withValues(alpha: 0.8)),
+          Icon(
+            icon, 
+            size: 20, 
+            color: const Color(0xFF718096)),
+
           const SizedBox(width: 10),
+
           SizedBox(
             width: 110,
             child: Text(
               label,
-              style: TextStyle(color: foregroundColor.withValues(alpha: 0.75)),
+              style: const TextStyle(
+                color: Color(0xFF718096),
+                fontSize: 12,
+              ),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(
-                color: foregroundColor,
+              style: const TextStyle(
+                color: Color(0xFF263442),
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -323,7 +238,6 @@ class _GameHero extends StatelessWidget {
   final Color foregroundColor;
   final String generation;
 
-
   const _GameHero({
     required this.title,
     required this.imagePath,
@@ -335,9 +249,15 @@ class _GameHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280,
+      height: 300,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: panelColor.withValues(alpha: 0.88),
+        gradient: LinearGradient(
+          colors : [
+            panelColor.withValues(alpha: 0.9),
+            Color.lerp(panelColor, Colors.black, 0.16)!
+          ],
+        ),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.5),
@@ -345,22 +265,83 @@ class _GameHero extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 18,
+            blurRadius: 20,
             offset: const Offset(0, 8),
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Image.asset(
-          imagePath,
-          fit: BoxFit.contain,
-          errorBuilder: (_, __, ___) => Icon(
-            Icons.videogame_asset_rounded,
-            size: 80,
-            color: foregroundColor,
+      child: Stack(
+        children: [
+          Positioned(
+            right: -35,
+            top: -35,
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.1),
+              ),
+            ),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 11,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: foregroundColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: foregroundColor.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  child: Text(
+                    generation.toUpperCase(),
+                    style: TextStyle(
+                      color: foregroundColor,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+
+                Expanded(
+                  child: Center(
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, _, _) => Icon(
+                        Icons.videogame_asset_outlined,
+                        size: 82,
+                        color: foregroundColor.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ),
+                ),
+
+                Text(
+                  title, 
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: foregroundColor,
+                    fontSize:25,
+                    height: 1.1,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -376,11 +357,41 @@ class _ContentCard extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.child,
-    super.key
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      color: Colors.white,
+      elevation: 1,
+      shadowColor: const Color(0xFF17202B).withValues(alpha: 0.1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: const Color(0xFF526273), size: 21),
+
+            const SizedBox(width: 9),
+
+            Text(
+              title,
+              style: const TextStyle(
+                color: Color(0xFF17202B),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+            child,
+          
+          ],
+        ),
+      ),
+    );
   }
 }

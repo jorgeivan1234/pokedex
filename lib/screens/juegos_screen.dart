@@ -4,9 +4,30 @@ import 'package:pokedex/models/models.dart';
 import '../data/data.dart';
 import '../shared/widget/widget.dart';
 
-class JuegosScreen extends StatelessWidget {
+class JuegosScreen extends StatefulWidget {
 
   const JuegosScreen({super.key});
+
+  @override
+  State<JuegosScreen> createState() => _JuegosScreenState();
+}
+
+class _JuegosScreenState extends State<JuegosScreen> {
+
+  String? selectCategory;
+  String? selectPlataform;
+
+  final categories = PokemonGames
+        .map((game) => game.generacion.split(',').first.trim())
+        .toSet()
+        .toList()
+        ..sort();
+  
+  final plataform = PokemonGames
+        .map((game) => game.plataforma)
+        .toSet()
+        .toList()
+        ..sort();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +114,74 @@ class JuegosScreen extends StatelessWidget {
                               fontSize:14,
                             ),
                           ),
+
+                          const SizedBox(height: 10),
+
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Categoria',
+                              prefixIcon: Icon(
+                                Icons.filter_alt_outlined,
+                                color: Colors.red.shade700,
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red.shade700,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            hint: const Text('Todas'),
+                            items: const [
+                              'Primera Generacion',
+                              'Segunda Generacion',
+                              'Tercera Generacion',
+                              'Cuarta Generacion',
+                              'Quinta Generacion',
+                              'Sexta Generacion',
+                              'Septima Generacion',
+                              'Octava Generacion',
+                            ].map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                            onChanged: (category) {
+
+                            },
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          DropdownButtonFormField<String>(
+                            decoration: const InputDecoration(
+                              labelText: 'Consola',
+                              prefixIcon: Icon(Icons.videogame_asset_outlined),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(),
+                            ),
+                            hint: const Text('Todas'),
+                            items: const [
+                              'Game Boy',
+                              'Game Boy Color',
+                              'Game Boy Advance',
+                              'Nintendo DS',
+                              'Nintendo 3DS',
+                              'Nintendo Switch',
+                            ].map((platform) {
+                              return DropdownMenuItem(
+                                value: platform,
+                                child: Text(platform),
+                              );
+                            }).toList(),
+                            onChanged: (platform) {
+                              
+                            },
+                          )
                         ],
                       ),
                     ),

@@ -169,7 +169,7 @@ final pokemonGames = [
   ),
 
   PokemonGameModel(
-    id: 'Pokemon_HeartGold ', 
+    id: 'Pokemon_HeartGold', 
     title: 'Pokemon Edicion HeartGold ', 
     plataforma: 'Nintendo DS', 
     genero: 'RPG', 
@@ -180,7 +180,7 @@ final pokemonGames = [
   ),
 
   PokemonGameModel(
-    id: 'Pokemon_SoulSilver ', 
+    id: 'Pokemon_SoulSilver', 
     title: 'Pokemon Edicion SoulSilver ', 
     plataforma: 'Nintendo DS', 
     genero: 'RPG', 
@@ -258,14 +258,69 @@ final pokemonGames = [
   ),
 
   PokemonGameModel(
-    id: 'Pokemon_', 
-    title: 'Pokemon Edicion ', 
-    plataforma: 'Game Boy Advance', 
+    id: 'Pokemon_Rubi_Omega', 
+    title: 'Pokemon Edicion Rubi Omega', 
+    plataforma: 'Nintendo 3DS', 
     genero: 'RPG', 
-    description: 'Lanzamiento en japon el .', 
-    generacion: 'Tercera Generacion', 
-    imagenAssets: 'assets/images/juegos/pokemon_.webp', 
+    description: 'Lanzamiento en japon el 12 de noviembre de 2014 junto con Pokemon Edicion Zafiro Alfa.', 
+    generacion: 'Sexta Generacion, Remake de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_rubi_omega.webp', 
     color: Colors.red, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Zafiro_Alfa', 
+    title: 'Pokemon Edicion Zafiro Alfa', 
+    plataforma: 'Nintendo 3DS', 
+    genero: 'RPG', 
+    description: 'Lanzamiento en japon el 12 de noviembre de 2014 junto con Pokemon Edicion Rubi Omega.', 
+    generacion: 'Tercera Generacion, Remake de Tercera Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_zafiro_alfa.webp', 
+    color: Colors.red, 
+  ),
+  
+  PokemonGameModel(
+    id: 'Pokemon_Sol', 
+    title: 'Pokemon Edicion Sol', 
+    plataforma: 'Nintendo 3DS', 
+    genero: 'RPG', 
+    description: 'Lanzamiento en japon el 18 de noviembre de 2016 junto con Pokemon Edicion Luna.', 
+    generacion: 'Septima Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_sol.webp', 
+    color: Colors.yellowAccent, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Luna', 
+    title: 'Pokemon Edicion Luna', 
+    plataforma: 'Nintendo 3DS', 
+    genero: 'RPG', 
+    description: 'Lanzamiento en japon el 18 de noviembre de 2016 junto con Pokemon Edicion Sol.', 
+    generacion: 'Septima Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_luna.webp', 
+    color: Colors.indigo, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Ultra_Sol', 
+    title: 'Pokemon Edicion Ultra Sol', 
+    plataforma: 'Nintendo 3DS', 
+    genero: 'RPG', 
+    description: 'Lanzamiento en japon el 17 de noviembre de 2017 junto con Pokemon Edicion Ultra Luna.', 
+    generacion: 'Septima Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_ultra_sol.webp', 
+    color: Colors.yellowAccent, 
+  ),
+
+  PokemonGameModel(
+    id: 'Pokemon_Ultra_Luna', 
+    title: 'Pokemon Edicion Ultra Luna', 
+    plataforma: 'Nintendo 3DS', 
+    genero: 'RPG', 
+    description: 'Lanzamiento en japon el 17 de noviembre de 2017 junto con Pokemon Edicion Ultra Sol.', 
+    generacion: 'Septima Generacion', 
+    imagenAssets: 'assets/images/juegos/pokemon_ultra_luna.webp', 
+    color: Colors.indigo, 
   ),
 
   PokemonGameModel(
@@ -276,18 +331,7 @@ final pokemonGames = [
     description: 'Lanzamiento en japon el .', 
     generacion: 'Tercera Generacion', 
     imagenAssets: 'assets/images/juegos/pokemon_.webp', 
-    color: Colors.red, 
-  ),
-  
-  PokemonGameModel(
-    id: 'Pokemon_', 
-    title: 'Pokemon Edicion ', 
-    plataforma: 'Game Boy Advance', 
-    genero: 'RPG', 
-    description: 'Lanzamiento en japon el .', 
-    generacion: 'Tercera Generacion', 
-    imagenAssets: 'assets/images/juegos/pokemon_.webp', 
-    color: Colors.red, 
+    color: Colors.blue, 
   ),
 ];
 
