@@ -34,10 +34,7 @@ class _MoveListScreenState extends State<MoveListScreen> {
         backgroundColor: Colors.red,
       ),
       bottomNavigationBar: PokedexNavigationBar(
-        currentIndex: 0, 
-        onTap: (index) {
-          if (index == 1) context.go('/home');
-        }
+        currentIndex: 0,
       ),
       body: Stack(
         children: [

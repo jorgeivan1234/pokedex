@@ -228,9 +228,6 @@ class _NewsScreenState extends State<NewsScreen> {
       ),
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
       body: Stack(
         children: [

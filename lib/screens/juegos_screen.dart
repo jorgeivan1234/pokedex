@@ -6,7 +6,9 @@ import '../shared/widget/widget.dart';
 
 class JuegosScreen extends StatefulWidget {
 
-  const JuegosScreen({super.key});
+  final int? initialGeneration;
+
+  const JuegosScreen({super.key, this.initialGeneration});
 
   @override
   State<JuegosScreen> createState() => _JuegosScreenState();
@@ -14,20 +16,66 @@ class JuegosScreen extends StatefulWidget {
 
 class _JuegosScreenState extends State<JuegosScreen> {
 
-  String? selectCategory;
-  String? selectPlataform;
+  static const generationNames = <int, String>{
+    1: 'Primera Generacion',
+    2: 'Segunda Generacion',
+    3: 'Tercera Generacion',
+    4: 'Cuarta Generacion',
+    5: 'Quinta Generacion',
+    6: 'Sexta Generacion',
+    7: 'Septima Generacion',
+    8: 'Octava Generacion',
+    9: 'Novena Generacion',
+  };
 
-  final categories = PokemonGames
-        .map((game) => game.generacion.split(',').first.trim())
-        .toSet()
-        .toList()
-        ..sort();
+  static const generationNumbers = <String, int>{
+    'Primera Generacion': 1,
+    'Segunda Generacion': 2,
+    'Tercera Generacion': 3,
+    'Cuarta Generacion': 4,
+    'Quinta Generacion': 5,
+    'Sexta Generacion': 6,
+    'Septima Generacion': 7,
+    'Octava Generacion': 8,
+    'Novena Generacion': 9,
+  };
   
-  final plataform = PokemonGames
-        .map((game) => game.plataforma)
-        .toSet()
-        .toList()
-        ..sort();
+  String? selectedCategory;
+  String? selectedPlatform;
+  String? selectedSubCategory = 'Todos';
+
+
+  @override
+  void initState() {
+    super.initState();
+      selectedCategory = generationNames[widget.initialGeneration];
+    }
+  }
+
+  final categories = pokemonGames
+      .map((game) => game.generacion.split(',').first.trim())
+      .toSet()
+      .toList()
+    ..sort();
+
+  final platforms = pokemonGames
+      .map((game) => game.plataforma)
+      .toSet()
+      .toList()
+    ..sort();
+
+  List<PokemonGameModel> get filteredGames {
+    return pokemonGames.where((game) {
+      final gameCategory = game.generacion.split(',').first.trim();
+
+      final matchesCategory =
+          selectedCategory == null || gameCategory == selectedCategory;
+      final matchesPlatform =
+          selectedPlatform == null || game.plataforma == selectedPlatform;
+
+      return matchesCategory && matchesPlatform;
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,23 +182,17 @@ class _JuegosScreenState extends State<JuegosScreen> {
                               ),
                             ),
                             hint: const Text('Todas'),
-                            items: const [
-                              'Primera Generacion',
-                              'Segunda Generacion',
-                              'Tercera Generacion',
-                              'Cuarta Generacion',
-                              'Quinta Generacion',
-                              'Sexta Generacion',
-                              'Septima Generacion',
-                              'Octava Generacion',
-                            ].map((category) {
+                            value: selectedCategory,
+                            items: categories.map((category){
                               return DropdownMenuItem<String>(
                                 value: category,
                                 child: Text(category),
                               );
                             }).toList(),
                             onChanged: (category) {
-
+                              setState(() {
+                                selectedCategory = category;
+                              });
                             },
                           ),
 
@@ -164,24 +206,20 @@ class _JuegosScreenState extends State<JuegosScreen> {
                               fillColor: Colors.white,
                               border: OutlineInputBorder(),
                             ),
+                            value: selectedPlatform,
                             hint: const Text('Todas'),
-                            items: const [
-                              'Game Boy',
-                              'Game Boy Color',
-                              'Game Boy Advance',
-                              'Nintendo DS',
-                              'Nintendo 3DS',
-                              'Nintendo Switch',
-                            ].map((platform) {
+                            items: platforms.map((platform) {
                               return DropdownMenuItem(
                                 value: platform,
                                 child: Text(platform),
                               );
                             }).toList(),
                             onChanged: (platform) {
-                              
+                              setState(() {
+                                selectedPlatform = platform;
+                              });
                             },
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -211,7 +249,7 @@ class _JuegosScreenState extends State<JuegosScreen> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final game = pokemonGames[index];
+                    final game = filteredGames[index];
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 14),
@@ -224,7 +262,7 @@ class _JuegosScreenState extends State<JuegosScreen> {
                       ),
                     );
                   },
-                  childCount: pokemonGames.length,
+                  childCount: filteredGames.length,
                 ),
               ),
             )

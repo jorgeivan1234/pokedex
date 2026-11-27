@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/config/theme_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'config/router/go_router.dart';
 
 
@@ -19,8 +19,9 @@ Future<void> main () async {
     publishableKey: publishableKey
   );
 
+  await ThemeSettings.load();
+  
     runApp(const MainApp());
-
 }
 
 
@@ -30,12 +31,20 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //navegacion del router
-    return MaterialApp.router(
-      //quitaa la bandera de prueba
-      debugShowCheckedModeBanner: false,
-      title: 'api pokemon',
-      //utiliza go route para cambiar entre pantallas
-      routerConfig: appRouter,
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeSettings.darkMode,
+      builder: (context, modeDark, _) {
+        return MaterialApp.router(
+          //quitaa la bandera de prueba
+          debugShowCheckedModeBanner: false,
+          title: 'api pokemon',
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: modeDark,
+          //utiliza go route para cambiar entre pantallas
+          routerConfig: appRouter,
+        );
+      }
     );
   }
 }

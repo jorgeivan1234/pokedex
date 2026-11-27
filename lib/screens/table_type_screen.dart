@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pokedex/shared/widget/widget.dart';
 import '../shared/infraestructure/service/services.dart';
 import '../shared/utils/pokemon_type_color.dart';
@@ -42,10 +41,7 @@ class _TableTypeScreenState extends State<TableTypeScreen> {
       ),
       drawer: DrawerScreen(),
       bottomNavigationBar: PokedexNavigationBar(
-        currentIndex: 0, 
-        onTap: (index){
-          if (index == 1) context.go('/search');
-        }
+        currentIndex: 0,
       ),
       body: Stack(
         children: [

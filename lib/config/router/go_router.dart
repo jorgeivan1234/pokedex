@@ -182,7 +182,13 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/proximamente',
-      builder: (context, state) => Proximamente(),
+      builder: (context, state) {
+        final generation = state.extra;
+
+        return JuegosScreen(
+          initialGeneration: generation is int ? generation : null,
+        );
+      },
     ),
 
     GoRoute(

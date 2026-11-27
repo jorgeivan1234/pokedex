@@ -134,10 +134,12 @@ class _RegionScreenState extends State<RegionScreen> {
                     
                     ListTile(
                       leading: const Icon(Icons.videogame_asset_outlined),
-                      title: const Text('Generacion'),
-                      subtitle: const Text('Debut'),
+                      title: const Text('Juegos'),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.push('/proximamente'),
+                      onTap: () => context.push(
+                        '/juego',
+                        extra: widget.generation,  
+                      ),
                     ),
                     
                     const Divider(height: 2),
@@ -152,9 +154,6 @@ class _RegionScreenState extends State<RegionScreen> {
       backgroundColor: Colors.blue,
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
     );
   }

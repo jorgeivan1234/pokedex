@@ -191,9 +191,6 @@ class _SpritesScreenState extends State<SpritesScreen> {
       //trae el widget de podexnavigatio
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
     );
   }

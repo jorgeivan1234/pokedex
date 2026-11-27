@@ -26,10 +26,6 @@ class GenerationScreen extends StatelessWidget {
       backgroundColor: Colors.blue,
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-          return context.go('/home');
-        },
       ),
     
       floatingActionButton: FloatingActionButton(

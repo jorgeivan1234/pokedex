@@ -166,9 +166,6 @@ class _SearchScreenState extends State<SearchScreen> {
       //trae el widget de busqueda
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 1,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
     );
   }

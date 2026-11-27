@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pokedex/shared/infraestructure/service/poke_api_service.dart';
 
 import '../shared/utils/pokemon_type_color.dart';
@@ -71,9 +70,6 @@ class _MovesScreenState extends State<MovesScreen> {
       //trae el widget de podexnavigatio
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
       body: Stack(
         children: [

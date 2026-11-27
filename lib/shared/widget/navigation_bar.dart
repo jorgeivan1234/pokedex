@@ -3,12 +3,10 @@ import 'package:go_router/go_router.dart';
 
 class PokedexNavigationBar extends StatelessWidget {
   final int currentIndex;
-  final ValueChanged<int> onTap;
 
   const PokedexNavigationBar({
     super.key, 
     required this.currentIndex, 
-    required this.onTap,
   });
 
   @override
@@ -16,8 +14,9 @@ class PokedexNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       backgroundColor: const Color.fromARGB(255, 119, 235, 229),
       currentIndex: currentIndex,
-      // onTap: (value) => onItemTapped(context, value), 
-      onTap: onTap,
+      onTap: (index) {
+        context.go(index == 0 ? '/home' : '/search');
+      },
       elevation: 0,
       items: const [
         BottomNavigationBarItem(

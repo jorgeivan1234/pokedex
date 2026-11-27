@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pokedex/shared/infraestructure/service/poke_species_api_service.dart';
 import 'package:pokedex/shared/widget/widget.dart';
 
@@ -69,9 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
       body: Stack(
         children: [

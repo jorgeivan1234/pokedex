@@ -20,50 +20,45 @@ class PokemonFiltres extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // final types = pokemon['types'];
-    // final typePrincipal = types.isNotEmpty
-    //   ? types.first['type']['name'].toString()
-    //   : '';
-    // final colorCard = switch (typePrincipal){
-    //     'fire' => Colors.red.shade900,
-    //     'water' => const Color.fromARGB(255, 10, 123, 215),
-    //     'grass' => Colors.green,
-    //     'fighting' => Colors.grey,
-    //     'flying' => const Color.fromARGB(186, 239, 197, 194),
-    //     'poison' => Colors.purple,
-    //     'ground' => Colors.brown,
-    //     'normal' =>  const Color.fromARGB(206, 240, 214, 214), 
-    //     'rock' => const Color.fromARGB(255, 52, 29, 20), 
-    //     'bug' => Colors.greenAccent,
-    //     'ghost' => Colors.deepPurple,
-    //     'steel' => Colors.blueGrey,
-    //     'electric' => Colors.yellow,
-    //     'psychic' => Colors.purpleAccent,
-    //     'ice' => Colors.lightBlue,
-    //     'dark' => Colors.black,        
-    //     'dragon' => const Color.fromARGB(255, 116, 2, 255), 
-    //     'fairy' =>  Colors.pinkAccent, 
-    //     'stellar' => Colors.deepOrange,
-    //     'unknown' =>  Colors.amber, 
-    //     _ => Colors.indigo              
-    //   };
-
-    return Column(
-      children: [
-        DropdownButtonFormField(
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: DropdownButtonFormField<String>(
+          value: selectedTypes ?? "",
+          isExpanded: true,
+          menuMaxHeight: 300,
           dropdownColor: const Color.fromARGB(130, 53, 155, 238),
-          value: selectedTypes,
-          hint: Text(
-            'Todos los tipos',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.red,
+          ),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            labelText: 'Filtrar por tipo',
+            prefixIcon: Icon(
+              Icons.filter_alt,
+              color: Colors.red,
+            ),
+            filled: true,
+            fillColor: const Color.fromARGB(130, 53, 155, 238),
+            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.red, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.red, width: 2),
             ),
           ),
-          items:[
+          items: const [
             DropdownMenuItem(value: '', child: Text('')),
-            DropdownMenuItem(value: 'type', child: Text('Todos los tipos')),
             DropdownMenuItem(value: 'normal', child: Text('Normal')),
             DropdownMenuItem(value: 'fire', child: Text('Fuego')),
             DropdownMenuItem(value: 'water', child: Text('Agua')),
@@ -85,9 +80,10 @@ class PokemonFiltres extends StatelessWidget {
             DropdownMenuItem(value: 'stellar', child: Text('Astral')),
             DropdownMenuItem(value: 'unknown', child: Text('Desconocido')),
           ], 
-          onChanged: onTyeChanged
+          onChanged: (value) {
+            onTyeChanged(value == null || value.isEmpty ? null : value);
+          }
         ),
-      ],
     );
   }
 }

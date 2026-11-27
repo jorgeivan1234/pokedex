@@ -43,9 +43,6 @@ class _AbilitieListScreenState extends State<AbilitieListScreen> {
       //trae el widget de podexnavigatioa
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
       body: Stack(
         children: [

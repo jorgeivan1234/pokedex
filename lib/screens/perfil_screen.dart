@@ -194,9 +194,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
       //trae el widget de podexnavigatio
       bottomNavigationBar: PokedexNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) context.go('/search');
-        },
       ),
     );
   }

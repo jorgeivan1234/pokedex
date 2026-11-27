@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../config/theme_settings.dart';
 import '../shared/widget/widget.dart';
 
 class ConfigScreen extends StatelessWidget {
@@ -26,10 +27,7 @@ class ConfigScreen extends StatelessWidget {
       ),
       drawer: const DrawerScreen(),
       bottomNavigationBar: PokedexNavigationBar(
-        currentIndex: 0, 
-        onTap: (index){
-          if ( index == 1) context.go('/search');
-        }
+        currentIndex: 0,
       ),
       body: Stack(
         children: [
@@ -73,16 +71,21 @@ class __BottomViewState extends State<_BottomView> {
           children: [
             Card(
               color: Colors.white.withValues(alpha: 0.7),
-              child: SwitchListTile(
-                secondary: const Icon(
-                  Icons.dark_mode_outlined, 
-                  color: Colors.red
-                ),
-                title: const Text('Tema oscuro'),
-                value: temaOscuro, 
-                onChanged: (value) {
-                  setState(() => temaOscuro = value);
-                },
+              child: ValueListenableBuilder<ThemeMode>(
+                valueListenable: ThemeSettings.darkMode,
+                builder: (context, modeDark, _) {
+                  return SwitchListTile(
+                    secondary: const Icon(
+                      Icons.dark_mode, 
+                      color: Colors.red
+                    ),
+                    title: const Text('Modo oscuro'),
+                    value: modeDark == ThemeMode.dark, 
+                    onChanged: (value) {
+                      ThemeSettings.setDarkMode(value);
+                    },
+                  );
+                }
               ),
             ),
 

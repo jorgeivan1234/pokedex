@@ -9,6 +9,7 @@ class PokemonGameModel {
   final String generacion;
   final String imagenAssets;
   final Color color;
+  final int? remake;
 
   PokemonGameModel({
     required this.id, 
@@ -19,5 +20,6 @@ class PokemonGameModel {
     required this.generacion, 
     required this.imagenAssets, 
     required this.color, 
+    this.remake,
   });
 }

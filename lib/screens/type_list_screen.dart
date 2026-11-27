@@ -42,10 +42,7 @@ class _TypeListScreenState extends State<TypeListScreen> {
         centerTitle: true,
       ),
       bottomNavigationBar: PokedexNavigationBar(
-        currentIndex: 0, 
-        onTap: (index){
-          if (index == 1) context.go('/search');
-        }
+        currentIndex: 0,
       ),
       body: Stack(
         children: [
